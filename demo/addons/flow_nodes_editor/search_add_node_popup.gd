@@ -207,7 +207,7 @@ func setup(p_node_types: Dictionary, p_inputs: Array, p_has_selected_nodes: bool
 		"Point Ops": ["bounds_modifier", "transform", "build_rotation_from_up", "combine_points", "duplicate_point"],
 		"Sampler": ["copy", "sample_mesh", "select_points", "sample_spline"],
 		"Spatial": ["create_spline", "distance", "ray_cast"],
-		"Assets": ["assets", "spawn_meshes", "spawn_scenes"],
+		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "spawn_nodes"],
 		"Generators": ["grid", "noise", "relax"],
 		"Utility": ["input", "output", "subgraph", "loop", "sort", "merge", "partition", "scan_meshes", "scan_splines", "scan_nodes", "sequence_sample", "size"]
 	}

@@ -150,6 +150,12 @@ data = {
 "keep_alive": false,
 "to_node": &"id_0022_copy",
 "to_port": 0
+}, {
+"from_node": &"id_0024_random_color",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0025_spawn_nodes",
+"to_port": 0
 }],
 "min_pos": Vector2(-80, 200),
 "nodes": [{
@@ -733,13 +739,42 @@ data = {
 },
 "show_disconnected_inputs": false,
 "template": "random_color"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0025_spawn_nodes",
+"position": Vector2(2420, 150),
+"settings": {
+"assign_attributes": {
+"light_color": "color"
+},
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"node_class": "OmniLight3D",
+"random_seed": 1815715058,
+"title": "Spawn Lights",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "spawn_nodes"
 }],
 "type": "flow_graph_nodes",
 "version": 1
 }
 view_zoom = 0.466507
-view_offset = Vector2(306.704, -383.525)
-new_name_counter = 52
+view_offset = Vector2(177.45401, -383.525)
+new_name_counter = 53
 metadata/_custom_type_script = "uid://j6vjeb5cjjoy"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kf2sw"]
@@ -770,7 +805,2197 @@ graph = SubResource("Resource_dk6st")
 refresh_inputs = Callable()
 metadata/_custom_type_script = "uid://d1krtmb1urldl"
 
-[node name="@MultiMeshInstance3D@35985" type="MultiMeshInstance3D" parent="FlowGraphNode3D" unique_id=1368124768]
+[node name="OmniLight3D_0000" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=881939837]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0001" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1206790252]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0002" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=326403204]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0003" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1527658573]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0004" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1278579816]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0005" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=3382113]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0006" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=55861358]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0007" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=307481282]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0008" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=150783625]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0009" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=860591658]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0010" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1805951952]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 0, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0011" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=567765549]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0012" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1707194058]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0013" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1453335054]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0014" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1858172538]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0015" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1385662054]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0016" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=238154946]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0017" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1324910886]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0018" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2095392756]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0019" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=638721619]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0020" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=343875936]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0021" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1237692639]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 0, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0022" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=14105273]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 0, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0023" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=269200601]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0024" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=313494148]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0025" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=964859582]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0026" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1509957980]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0027" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=417648344]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0028" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=721986893]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0029" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1126105426]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0030" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1793856789]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0031" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1288711195]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0032" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=496279281]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0033" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1478767573]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0034" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=597732375]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 0, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0035" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1332842556]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 0, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0036" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1580493630]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 0, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0037" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1359919685]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 0, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0038" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1093461463]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0039" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=469913776]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0040" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1697535567]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0041" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=233510439]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0042" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=187103723]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0043" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1917279531]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0044" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=444456914]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0045" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1756028947]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0046" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=358668253]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0047" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=850861092]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0048" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2089689652]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 0, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0049" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2022296615]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 0, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0050" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=410558185]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 0, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0051" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=588774092]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0052" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1040957182]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0053" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1892079869]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0054" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2095626520]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0055" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=38661871]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0056" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1225427382]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0057" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1095833744]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0058" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1332588947]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0059" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=375963198]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0060" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1332109053]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0061" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1852047237]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 0, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0062" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1794014753]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 0, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0063" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1053861700]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 0, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0064" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1419125168]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 0, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0065" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1292620207]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 0, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0066" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1910830363]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 0, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0067" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1308989684]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 0, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0068" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1319104873]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 0, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0069" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1622059803]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 0, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0070" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2104029997]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 0, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0071" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1512900573]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 0, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0072" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1220708223]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0073" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=669419717]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0074" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1095630700]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0075" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=259093462]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0076" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=283183284]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0077" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1644008449]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0078" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1871235491]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0079" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=71890636]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, -1.7639999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0080" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1357957119]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 0, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0081" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=219186806]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0082" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1957152129]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0083" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=815224785]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0084" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1676991930]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0085" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1787995419]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0086" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=642567347]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0087" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1379416825]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0088" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1620380488]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0089" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2143492564]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 0, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0090" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=935841347]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 0, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0091" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1271559937]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0092" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=374637007]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0093" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1136357752]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0094" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=303900511]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0095" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=427768956]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0096" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1113616876]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0097" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1675849443]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, -0.5879998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0098" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=987550881]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0099" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2132225538]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0100" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1921289900]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 0, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0101" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1947736973]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 0, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0102" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=598265626]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.44069, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0103" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1603267012]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0104" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=935178063]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0105" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1609656556]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0106" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1307111008]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0107" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=412405719]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0108" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=842777349]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0109" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1907079556]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0110" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=779649806]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0111" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=181804749]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0112" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1417039496]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0113" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=322540609]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 0, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0114" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=783017457]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 0, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0115" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=26607239]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.34069, 0, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0116" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=540344865]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 0, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0117" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=85489679]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 0, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0118" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1154381471]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0119" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=302336792]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0120" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1644534126]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0121" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1548332449]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0122" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1561562344]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0123" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1656965091]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0124" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1200182599]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0125" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=518049191]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0126" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1210243322]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 0, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0127" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=337429001]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 0, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0128" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=359749093]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 0, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0129" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=299021756]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0130" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=467573899]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0131" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2034296058]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0132" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1844835169]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0133" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1566874711]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0134" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=799853535]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0135" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1400536640]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0136" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1219401141]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0137" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1175776054]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 0, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0138" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1821971112]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 0, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0139" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=338190361]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 0, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0140" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=90440296]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 0, 1.7640002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0141" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1931194822]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 0, 1.7640002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0142" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=132768735]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 0, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0143" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1654383337]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 0, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0144" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=274284431]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 0, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0145" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=926690010]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 0, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0146" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=130286863]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0147" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=585723139]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0148" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1398656728]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0149" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=839440741]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0150" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1380493650]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0151" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=450342253]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0152" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1753247063]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0153" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2022536239]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0154" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=654570260]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0155" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1336177228]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0156" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=126133]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 3, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0157" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=394752409]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0158" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=363033904]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0159" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1822312613]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0160" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2084955672]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0161" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=126291564]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0162" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=983055074]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0163" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=681789115]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0164" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=308356165]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0165" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=877178294]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0166" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=452655913]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0167" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1656086260]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 3, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0168" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1759611978]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0169" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=756822504]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 3, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0170" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1985606044]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0171" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1963294499]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0172" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2037922554]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0173" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1075841174]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0174" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=487761581]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0175" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=348937166]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0176" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=953073455]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0177" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1315148039]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0178" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=984983928]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0179" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1211287055]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0180" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1840247672]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0181" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=312921275]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 3, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0182" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1765053966]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0183" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=514646382]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 3, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0184" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1021496120]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0185" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1293896726]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0186" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1229361844]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0187" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1519314069]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0188" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1699434675]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0189" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=501036334]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0190" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1146810390]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0191" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2007709679]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0192" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=365108048]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0193" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=387016998]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0194" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1466616795]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0195" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=419600506]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 3, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0196" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1086497849]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 3, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0197" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=125693379]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0198" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1865394331]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0199" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1337009230]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0200" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1410749160]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0201" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=749700353]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0202" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=328223129]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0203" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1992528790]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0204" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=556944311]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0205" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1546658726]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0206" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=269836356]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0207" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1033448881]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 3, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0208" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1185210305]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0209" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1512579520]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0210" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=964608716]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0211" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=817540518]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 3, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0212" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1574733368]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0213" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=711596188]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 3, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0214" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=487342004]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 3, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0215" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=734221568]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0216" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1018696702]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 3, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0217" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1372839132]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 3, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0218" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=976281714]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0219" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1770149322]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0220" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1971943488]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0221" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=10884847]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0222" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1364415266]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0223" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=736405738]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0224" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=475561328]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0225" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=501324386]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0226" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2082927694]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 3, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0227" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=92147079]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0228" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1825202140]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0229" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=168028742]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0230" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1445087413]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0231" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=294507214]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0232" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1699197730]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0233" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=84879289]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0234" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=22446840]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0235" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1642262059]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 3, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0236" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1580814845]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 3, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0237" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=970253856]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0238" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1828228528]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0239" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=846896017]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0240" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=128936902]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0241" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1531219328]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0242" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=317886588]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0243" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2125979115]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0244" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=244445351]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0245" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2052540597]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, -0.5879998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0246" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=638712335]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 3, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0247" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=825229088]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 3, -0.5879998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0248" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=382287957]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.44069, 3, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0249" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=262560922]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0250" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1647692465]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0251" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2039082885]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0252" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=716656358]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0253" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=405400606]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0254" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=995661822]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0255" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=68138153]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0256" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=631158543]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0257" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1062922250]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0258" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=921531163]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0259" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1215546417]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0260" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1334436749]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 3, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0261" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=371925677]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.34069, 3, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0262" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1039989690]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0263" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=974863246]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0264" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1986886454]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0265" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=765519217]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0266" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=181007096]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0267" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=983804328]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0268" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=149846482]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0269" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=891306011]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0270" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1803754552]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0271" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1159802292]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0272" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1183641622]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 3, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0273" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=725749011]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 3, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0274" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=316068413]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 3, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0275" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=211975300]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0276" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1705248648]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0277" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1356467072]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0278" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=102431885]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0279" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=175455247]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0280" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1981684854]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0281" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1817632301]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0282" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=835631873]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0283" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=476927531]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 3, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0284" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=98948944]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 3, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0285" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2107847559]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 3, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0286" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1399480389]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 3, 1.7640002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0287" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1801644915]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 3, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0288" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1778299143]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 3, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0289" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=126336]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 3, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0290" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=551847615]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 3, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0291" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1090466135]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 3, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0292" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=937534078]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0293" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1606393925]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0294" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1824528241]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0295" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=490393902]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0296" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=55474794]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0297" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1869157367]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0298" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=294421397]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0299" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1657427124]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, -1.4699999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0300" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=66878816]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, -1.4699999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0301" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1012668335]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, -1.4699999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0302" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1935541212]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 6, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0303" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1687893316]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0304" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=324265578]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0305" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=305843149]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0306" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=855302169]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0307" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1289919812]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, -0.88199985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0308" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=250481390]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0309" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=570728736]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0310" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=79554177]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0311" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=83860897]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0312" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2062624775]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, -0.88199985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0313" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=400778678]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 6, -0.88199985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0314" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1662929047]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0315" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1183056213]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 6, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0316" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1902840328]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0317" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2090233740]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0318" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=317943926]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0319" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2063736452]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0320" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1333020059]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0321" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1328282263]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0322" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=577483877]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0323" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=405544253]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0324" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=569800641]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, -0.29399985)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0325" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=730028966]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0326" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=831737496]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 6, -0.29399985)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0327" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=497249893]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 6, -0.29399985)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0328" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=342560441]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.29069, 6, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0329" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=531688168]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 6, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0330" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2144954801]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0331" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=898500625]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0332" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=134770893]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, 0.29400018)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0333" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1513068401]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0334" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=217544979]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0335" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1942405768]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0336" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1433591630]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0337" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=756816492]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0338" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=725462444]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0339" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=877528601]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0340" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1847391955]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 6, 0.29400018)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0341" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1989215122]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.19069, 6, 0.29400018)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0342" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1961526879]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.59069, 6, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0343" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1652451778]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0344" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=458675888]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0345" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1233241678]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0346" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=300832343]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0347" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1980957237]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, 0.8820002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0348" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1643459029]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0349" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=987647390]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0350" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1589033237]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0351" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1987318290]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0352" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=116141852]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, 0.8820002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0353" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2069808244]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.89069, 6, 0.8820002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0354" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1376965016]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.89069, 6, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0355" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1243746848]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.19069, 6, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0356" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1562816637]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.49069, 6, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0357" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1762884929]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.79069, 6, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0358" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=599888985]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.09069, 6, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0359" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=243570919]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.39069, 6, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0360" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=224976921]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.69069, 6, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0361" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1266983583]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.99069, 6, 1.4700003)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0362" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2054685050]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.290689, 6, 1.4700003)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0363" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1900152890]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.590691, 6, 1.4700003)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0364" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1903628687]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0365" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=66293489]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, -1.7639999)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0366" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=30153411]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0367" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=358689737]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0368" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=488073533]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0369" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=523822033]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0370" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=4136184]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, -1.7639999)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0371" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1925994562]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, -1.7639999)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0372" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1743860073]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 6, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0373" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=473335894]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0374" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=34698736]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0375" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1896883332]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0376" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2140367229]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0377" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=326307513]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0378" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1909709438]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, -1.1759998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0379" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=324690357]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, -1.1759998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0380" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2062009000]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0381" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=729155902]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 6, -1.1759998)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0382" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1616023409]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0383" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=976683654]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0384" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1771951201]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0385" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1290900818]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0386" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=119363895]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0387" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1172342100]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0388" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1970592503]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0389" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2030741234]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0390" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=949824414]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0391" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=104217590]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0392" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=496996624]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 6, -0.5879998)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0393" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1464480141]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 6, -0.5879998)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0394" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1455755416]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.44069, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0395" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=2022568387]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0396" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=693164728]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0397" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=446416971]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0398" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=704822893]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0399" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=835054064]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0400" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1301861539]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, 1.7523766e-07)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0401" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=498765381]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0402" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1910073437]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0403" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1380443296]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, 1.7523766e-07)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0404" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1164322217]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0405" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1150675415]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0406" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=896607162]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0407" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1818859046]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.34069, 6, 1.7523766e-07)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0408" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1980526715]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 6.74069, 6, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0409" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1726319420]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 6, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0410" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=333291123]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0411" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=625657625]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0412" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=947325316]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0413" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=603437803]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0414" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1673360742]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0415" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=744530529]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, 0.5880002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0416" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=71495467]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0417" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=277385643]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0418" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1156652595]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 6, 0.5880002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0419" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1626171673]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 10.040689, 6, 0.5880002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0420" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=164153671]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.04069, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0421" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=514978225]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0422" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1839319867]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0423" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1410346487]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0424" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=304234922]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, 1.1760002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0425" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=725238142]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0426" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1015716428]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0427" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1360359808]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, 1.1760002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0428" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1944994762]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0429" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1965673638]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.74069, 6, 1.1760002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0430" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=239465051]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.34069, 6, 1.7640002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0431" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1995708584]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.6406903, 6, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0432" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1385417858]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 7.94069, 6, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0433" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1967127505]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.240689, 6, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0434" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=762351261]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.540689, 6, 1.7640002)
+light_color = Color(0, 0.749, 1, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0435" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=259762149]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 8.84069, 6, 1.7640002)
+light_color = Color(1, 0.843, 0, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0436" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1628520461]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.14069, 6, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="OmniLight3D_0437" type="OmniLight3D" parent="FlowGraphNode3D" unique_id=1294802159]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 9.440689, 6, 1.7640002)
+light_color = Color(1, 0.078, 0.576, 1)
+metadata/flow_owner = &"id_0025_spawn_nodes"
+
+[node name="@MultiMeshInstance3D@36497" type="MultiMeshInstance3D" parent="FlowGraphNode3D" unique_id=438340255]
 material_override = SubResource("StandardMaterial3D_kf2sw")
 multimesh = SubResource("MultiMesh_frxqg")
 metadata/flow_owner = &"id_0020_spawn_meshes"
