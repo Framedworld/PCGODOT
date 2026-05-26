@@ -423,14 +423,14 @@ func populatePopupMenu() -> PopupMenu:
 
 	# Categorized node submenus
 	var cat_map = {
-		"Attributes": ["add_attribute", "attribute_rename", "remove_attribute", "attribute_filter_range", "point_filter_range", "mutate_seed", "add_tags", "delete_tags", "replace_tags"],
+		"Attributes": ["add_attribute", "attribute_rename", "remove_attribute", "attribute_filter_range", "point_filter_range", "mutate_seed", "add_tags", "delete_tags", "replace_tags", "load_data_table", "data_table_row_to_attribute_set", "load_pcg_data_asset"],
 		"Math": ["math_op", "remap", "expression", "reduce", "boolean"],
-		"Splines": ["create_spline", "sample_spline", "distance", "scan_splines"],
-		"Meshes": ["sample_mesh", "mesh_sampler", "scan_meshes", "point_from_mesh", "texture_sampler"],
-		"Spatial": ["substract", "difference", "intersection", "union", "point_neighborhood", "attribute_set_to_point", "point_to_attribute_set", "ray_cast", "physics_overlap_query"],
-		"Assets": ["assets", "spawn_meshes", "spawn_scenes"],
+		"Splines": ["create_spline", "sample_spline", "distance", "scan_splines", "clip_points_by_polygon", "clip_paths", "polygon_operation", "split_splines", "create_surface_from_spline", "create_surface_from_polygon"],
+		"Meshes": ["sample_mesh", "mesh_sampler", "scan_meshes", "point_from_mesh", "texture_sampler", "points_from_imported_scene", "load_alembic_file"],
+		"Spatial": ["substract", "difference", "intersection", "union", "point_neighborhood", "attribute_set_to_point", "point_to_attribute_set", "ray_cast", "physics_overlap_query", "physics_shape_sweep", "navigation_region_sampler"],
+		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "spawn_nodes", "apply_on_actor", "points_from_imported_scene", "load_alembic_file", "load_pcg_data_asset"],
 		"Generators": ["grid", "noise", "relax", "self_pruning", "dungeon_generator", "volume_sampler"],
-		"Utility": ["input", "output", "subgraph", "loop", "debug", "sort", "merge", "partition", "filter", "copy", "points_from_scene", "points_from_tilemap", "points_from_gridmap", "get_points_count", "get_loop_index"]
+		"Utility": ["input", "output", "subgraph", "loop", "debug", "sort", "merge", "partition", "filter", "copy", "points_from_scene", "point_from_player_pawn", "points_from_tilemap", "points_from_gridmap", "get_points_count", "get_loop_index"]
 	}
 	
 	# Helper to find category of a node template

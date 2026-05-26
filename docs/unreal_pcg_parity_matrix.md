@@ -15,7 +15,7 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 | Select / Select (Multi) | `select`, `select_multi` | Present | Must | Keep |
 | Switch | `switch` | Present | Must | Keep |
 | Filter Data By Tag / Type / Attribute | `filter_data_by_tag`, `filter_data_by_type`, `filter_data_by_attribute` | Present | Must | Keep |
-| Attribute Filter / Point Filter | `filter` (generic) | Partial | Must | Add explicit range presets/docs parity |
+| Attribute Filter / Point Filter | `filter`, `attribute_filter_range`, `point_filter_range` | Present | Must | Keep |
 | Add Attribute / Delete Attributes | `add_attribute`, `remove_attribute` | Present | Must | Keep |
 | Match And Set Attributes | `match_and_set` | Present | Must | Keep |
 | Attribute Boolean Op | `boolean` | Present (new) | Must | Hardened; keep in menu/search |
@@ -23,7 +23,7 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 | Point Neighborhood | `point_neighborhood` | Present (new) | Must | Keep |
 | Point From Mesh | `point_from_mesh` | Present (new) | Must | Keep |
 | Mesh Sampler | `mesh_sampler` (alias), `sample_mesh` | Present (new alias) | Must | Keep both names |
-| Points From Scene / Get Actor-style point source | `points_from_scene`, `scan_nodes` | Partial | Must | Keep alias; expand actor filtering options |
+| Points From Scene / Get Actor-style point source | `points_from_scene`, `scan_nodes`, `point_from_player_pawn` | Present | Must | Keep; Godot runtime/player source now covered |
 | Copy Points | `copy` | Present (enhanced) | Must | Added source/target mode + inheritance controls |
 | Transform Points | `transform` | Present | Must | Keep |
 | Surface Sampler | `surface_sampler` | Present | Must | Keep |
@@ -55,14 +55,14 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 
 | Unreal node / category | Godot equivalent | Status | Priority | Action |
 |---|---|---|---|---|
-| Data Table Row to Attribute Set / Load Data Table | - | Missing | Nice | Add data table import nodes |
-| Load Alembic File / Load PCG Data Asset | - | Missing | Nice | Add external asset import adapters |
+| Data Table Row to Attribute Set / Load Data Table | `load_data_table`, `data_table_row_to_attribute_set` | Present (new) | Nice | Keep; expand spreadsheet formats later if needed |
+| Load Alembic File / Load PCG Data Asset | `load_alembic_file`, `points_from_imported_scene`, `load_pcg_data_asset` | Present (new) | Nice | Keep; adapters cover Godot imported scene/mesh resources and JSON/Resource PCG data |
 | Add/Delete/Replace Tags | `add_tags`, `delete_tags`, `replace_tags`, `filter_data_by_tag` | Present (new) | Nice | Keep |
-| Apply On Actor / Proxy | - | Missing | Nice | Add runtime/property application nodes |
-| Polygon Operation / Clip Paths / Split Splines | - | Missing | Nice | Add spline/polygon boolean toolset |
+| Apply On Actor / Proxy | `apply_on_actor` | Present (new) | Nice | Keep; applies transforms/properties to existing Godot nodes |
+| Polygon Operation / Clip Paths / Split Splines | `polygon_operation`, `clip_paths`, `clip_points_by_polygon`, `split_splines` | Present (new) | Nice | Keep; add true polygon boolean geometry later if required |
 | World Volumetric Query | `physics_overlap_query` | Present (new) | Nice | Keep |
-| Point From Player Pawn | - | Missing | Nice | Add runtime source node |
-| Create Surface From Polygon/Spline | - | Missing | Nice | Add derived surface constructors |
+| Point From Player Pawn | `point_from_player_pawn` | Present (new) | Nice | Keep |
+| Create Surface From Polygon/Spline | `create_surface_from_polygon`, `create_surface_from_spline` | Present (new) | Nice | Keep |
 
 ## Already Added In This Burn-Down
 
@@ -83,6 +83,7 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 - parity upgrades on `copy`, `noise`, `ray_cast`, `spawn_meshes`, `spawn_scenes`, `spawn_nodes`
 - Godot-specific: `points_from_tilemap`, `points_from_gridmap`, `physics_overlap_query`
 - tag operations: `add_tags`, `delete_tags`, `replace_tags` (+ `tags_mutate`)
+- data/import/apply/spline nice-pass nodes: `load_data_table`, `data_table_row_to_attribute_set`, `load_pcg_data_asset`, `points_from_imported_scene`, `load_alembic_file`, `apply_on_actor`, `clip_points_by_polygon`, `clip_paths`, `polygon_operation`, `split_splines`, `create_surface_from_polygon`, `create_surface_from_spline`, `point_from_player_pawn`
 - menu/search/template registration updates (`flow_editor.gd`, `search_add_node_popup.gd`, `node_templates.csv`)
 
 ## Godot-First Extensions (beyond Unreal parity)
@@ -90,3 +91,6 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 1. `points_from_tilemap`: read used cells from `TileMapLayer` into 3D points.
 2. `points_from_gridmap`: read used cells/items from `GridMap` into points.
 3. `physics_overlap_query`: per-point shape overlap checks for Godot physics workflows.
+4. `navigation_region_sampler`: sample `NavigationRegion3D` navigation meshes into points.
+5. `physics_shape_sweep`: per-point Godot shape casts/sweeps.
+6. `points_from_imported_scene`: treat Godot imported scenes/meshes (including Alembic when imported as a scene resource) as PCG point sources.
