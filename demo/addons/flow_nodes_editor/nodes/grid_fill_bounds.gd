@@ -19,33 +19,36 @@ func _safe_cell_size() -> Vector3:
 		maxf(absf(settings.cell_size.z), 0.0001)
 	)
 
-func _append_bounds(center : Vector3, size : Vector3, cell_size : Vector3, out_positions : PackedVector3Array, seen : Dictionary) -> PackedVector3Array:
-	var half_size := size.abs() * 0.5
-	var min_pos := center - half_size
-	var max_pos := center + half_size
-	var min_x : int = floori(min_pos.x / cell_size.x)
-	var max_x : int = ceili(max_pos.x / cell_size.x) - 1
-	var min_y : int = floori(min_pos.y / cell_size.y)
-	var max_y : int = ceili(max_pos.y / cell_size.y) - 1
-	var min_z : int = floori(min_pos.z / cell_size.z)
-	var max_z : int = ceili(max_pos.z / cell_size.z) - 1
-	if not settings.fill_y_axis:
-		min_y = roundi(center.y / cell_size.y)
-		max_y = min_y
+func _axis_positions(center : float, size : float, step : float) -> PackedFloat32Array:
+	var count : int = maxi(1, roundi(absf(size) / step))
+	var positions := PackedFloat32Array()
+	positions.resize(count)
+	var first := center - (float(count - 1) * step * 0.5)
+	for idx : int in range(count):
+		positions[idx] = first + float(idx) * step
+	return positions
 
-	for x : int in range(min_x, max_x + 1):
-		for y : int in range(min_y, max_y + 1):
-			for z : int in range(min_z, max_z + 1):
-				var key := "%d,%d,%d" % [x, y, z]
+func _cell_key(pos : Vector3, cell_size : Vector3) -> String:
+	return "%d,%d,%d" % [
+		roundi(pos.x / cell_size.x),
+		roundi(pos.y / cell_size.y),
+		roundi(pos.z / cell_size.z)
+	]
+
+func _append_bounds(center : Vector3, size : Vector3, cell_size : Vector3, out_positions : PackedVector3Array, seen : Dictionary) -> PackedVector3Array:
+	var xs := _axis_positions(center.x, size.x, cell_size.x)
+	var ys := _axis_positions(center.y, size.y, cell_size.y) if settings.fill_y_axis else PackedFloat32Array([center.y])
+	var zs := _axis_positions(center.z, size.z, cell_size.z)
+
+	for x : float in xs:
+		for y : float in ys:
+			for z : float in zs:
+				var pos := Vector3(x, y, z)
+				var key := _cell_key(pos, cell_size)
 				if seen.has(key):
 					continue
 				seen[key] = true
-				var out_y : float = center.y if not settings.fill_y_axis else (float(y) + 0.5) * cell_size.y
-				out_positions.append(Vector3(
-					(float(x) + 0.5) * cell_size.x,
-					out_y,
-					(float(z) + 0.5) * cell_size.z
-				))
+				out_positions.append(pos)
 				if out_positions.size() >= settings.max_points:
 					return out_positions
 	return out_positions

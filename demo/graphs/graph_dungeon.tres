@@ -1,178 +1,535 @@
 [gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://dpmtn1hiukblj"]
 
-[ext_resource type="Resource" uid="uid://ck1mnk4ux41ch" path="res://graphs/subgraph_dungeon_floor.tres" id="1_73p5x"]
-[ext_resource type="Resource" uid="uid://dx0lk0atvbqep" path="res://graphs/subgraph_dungeon_wall.tres" id="2_4swmn"]
-[ext_resource type="Resource" uid="uid://cjm6m6ynrpiag" path="res://graphs/subgraph_dungeon_pillar.tres" id="3_5quuh"]
-[ext_resource type="Resource" uid="uid://o2uhfwqnu0jd" path="res://graphs/subgraph_dungeon_chest.tres" id="4_a5c13"]
-[ext_resource type="Resource" uid="uid://dm0wyk2gb7nft" path="res://graphs/subgraph_dungeon_lighting.tres" id="5_oia4u"]
-[ext_resource type="Resource" uid="uid://dpmtn1hiukselect" path="res://graphs/subgraph_dungeon_select_rooms.tres" id="6_select"]
+[ext_resource type="Resource" uid="uid://xxv8byn3what" path="res://graphs/subgraph_dungeon_select_rooms.tres" id="6_select"]
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="7_4swmn"]
 [ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="7_opd0d"]
 
 [resource]
 script = ExtResource("7_opd0d")
 data = {
 "frames": [],
-"links": [{
-"from_node": "dungeon_room_candidates",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "room_selector_loop",
-"to_port": 0
-}, {
-"from_node": "room_selector_loop",
-"from_port": 1,
-"keep_alive": false,
-"to_node": "dungeon_expand_rooms",
-"to_port": 0
-}, {
-"from_node": "room_selector_loop",
-"from_port": 1,
-"keep_alive": false,
-"to_node": "dungeon_connect_rooms",
-"to_port": 0
-}, {
-"from_node": "room_selector_loop",
-"from_port": 1,
-"keep_alive": false,
-"to_node": "sub_chest",
-"to_port": 0
-}, {
-"from_node": "dungeon_expand_rooms",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "merge_floors",
-"to_port": 0
-}, {
-"from_node": "dungeon_connect_rooms",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "merge_floors",
-"to_port": 0
-}, {
-"from_node": "merge_floors",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "dungeon_walls_and_doors",
-"to_port": 0
-}, {
-"from_node": "merge_floors",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "sub_floor",
-"to_port": 0
-}, {
-"from_node": "dungeon_walls_and_doors",
-"from_port": 0,
-"keep_alive": false,
-"to_node": "sub_wall",
-"to_port": 0
-}, {
-"from_node": "dungeon_walls_and_doors",
-"from_port": 2,
-"keep_alive": false,
-"to_node": "sub_lighting",
-"to_port": 0
-}, {
-"from_node": "dungeon_walls_and_doors",
-"from_port": 3,
-"keep_alive": false,
-"to_node": "sub_pillar",
-"to_port": 0
-}],
-"min_pos": Vector2(0, 0),
+"links": [],
+"min_pos": Vector2(-20, 20),
 "nodes": [{
-"name": "dungeon_room_candidates",
-"position": Vector2(50, 200),
-"settings": {
-"candidate_count": 40,
-"cell_size": 2.0,
-"grid_height": 24,
-"grid_width": 24,
-"max_room_size": 6,
-"min_room_size": 3,
-"random_seed": 54321
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
 },
-"template": "dungeon_room_candidates"
-}, {
-"name": "room_selector_loop",
-"position": Vector2(300, 200),
+"name": &"candidate_sampler",
+"position": Vector2(240, 220),
 "settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"num_points": 28,
+"point_size": Vector3(1, 1, 1),
+"random_seed": 12031,
+"title": "Surface Sampler",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "surface_sampler"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"snap_room_positions",
+"position": Vector2(460, 220),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"grid_size": Vector3(4, 0, 4),
+"inspect_enabled": false,
+"random_seed": 2206898691,
+"snap_position": true,
+"snap_rotation": false,
+"snap_scale": false,
+"title": "Snap to Grid",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "snap_to_grid"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"rand_w_steps",
+"position": Vector2(680, 80),
+"settings": {
+"attribute_name": "RoomWidthSteps",
+"data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 3.0,
+"min_value": 1.0,
+"random_seed": 23011,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
+},
+"show_disconnected_inputs": false,
+"template": "attribute_random"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_steps_x_2",
+"position": Vector2(900, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthSteps",
+"in_nameB": "2.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomWidthEven",
+"random_seed": 544207574,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_make_odd",
+"position": Vector2(1120, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthEven",
+"in_nameB": "1.0",
+"inspect_enabled": false,
+"operation": 0,
+"out_name": "RoomWidthTiles",
+"random_seed": 3419507868,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_to_world",
+"position": Vector2(1340, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthTiles",
+"in_nameB": "4.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomWidthWorld",
+"random_seed": 1474577701,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"rand_h_steps",
+"position": Vector2(1560, 80),
+"settings": {
+"attribute_name": "RoomHeightSteps",
+"data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 3.0,
+"min_value": 1.0,
+"random_seed": 23047,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
+},
+"show_disconnected_inputs": false,
+"template": "attribute_random"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_steps_x_2",
+"position": Vector2(1780, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightSteps",
+"in_nameB": "2.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomHeightEven",
+"random_seed": 2615753519,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_make_odd",
+"position": Vector2(2000, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightEven",
+"in_nameB": "1.0",
+"inspect_enabled": false,
+"operation": 0,
+"out_name": "RoomHeightTiles",
+"random_seed": 1693466780,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": false,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_to_world",
+"position": Vector2(2220, 80),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightTiles",
+"in_nameB": "4.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomHeightWorld",
+"random_seed": 3710692941,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"rand_prio",
+"position": Vector2(2440, 80),
+"settings": {
+"attribute_name": "RoomPriority",
+"data_type": 0,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 1.0,
+"min_value": 0.0,
+"random_seed": 51721,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
+},
+"show_disconnected_inputs": false,
+"template": "attribute_random"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"rand_id",
+"position": Vector2(2660, 80),
+"settings": {
+"attribute_name": "RoomID",
+"data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 1.0,
+"min_value": 0.0,
+"random_seed": 2517228197,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": true
+},
+"show_disconnected_inputs": false,
+"template": "attribute_random"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"compose_room_size",
+"position": Vector2(2880, 160),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"default_value": Vector3(1, 1, 1),
+"disabled": false,
+"inspect_enabled": false,
+"out_attribute": "size",
+"random_seed": 1643088544,
+"title": "Compose Vector",
+"trace": false,
+"x_attribute": "RoomWidthWorld",
+"y_attribute": "",
+"z_attribute": "RoomHeightWorld"
+},
+"show_disconnected_inputs": false,
+"template": "compose_vector"
+}, {
+"args_port": {
+"In": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"sort_candidates",
+"position": Vector2(3100, 160),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 2326260565,
+"sort_by": "RoomPriority",
+"sort_descending": true,
+"title": "Sort",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "sort"
+}, {
+"args_port": {
+"SelectedRooms": {
+"connected": false,
+"port": 1
+},
+"Stream": {
+"connected": false,
+"port": 0
+}
+},
+"name": &"room_selector_loop",
+"position": Vector2(3320, 220),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
 "feedback_param_name": "SelectedRooms",
 "graph": ExtResource("6_select"),
+"inspect_enabled": false,
 "item_input_name": "CandidateRoom",
-"output_attribute_name": "RejectedRooms"
+"output_attribute_name": "RejectedRooms",
+"random_seed": 2030747885,
+"title": "Loop",
+"trace": false
 },
+"show_disconnected_inputs": false,
 "template": "loop"
 }, {
-"name": "dungeon_expand_rooms",
-"position": Vector2(550, 100),
-"settings": {
-"cell_size": 2.0
+"args_port": {
+"Bounds": {
+"connected": false,
+"port": 0
+}
 },
-"template": "dungeon_expand_rooms"
+"name": &"room_floor_cells",
+"position": Vector2(3560, 0),
+"settings": {
+"bounds_center": Vector3(0, 0, 0),
+"bounds_size": Vector3(10, 1, 10),
+"cell_size": Vector3(4, 1, 4),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"fill_y_axis": false,
+"inspect_enabled": false,
+"max_points": 20000,
+"random_seed": 4256137640,
+"title": "Grid Fill Bounds",
+"trace": false,
+"use_input_bounds": true
+},
+"show_disconnected_inputs": false,
+"template": "grid_fill_bounds"
 }, {
-"name": "dungeon_connect_rooms",
-"position": Vector2(550, 300),
+"args_port": {},
+"name": &"dungeon_bounds",
+"position": Vector2(0, 220),
 "settings": {
-"cell_size": 2.0,
-"random_seed": 54321
+"center": Vector3(0, 0, 0),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 558000819,
+"size": Vector3(56, 1, 56),
+"title": "Make Bounds",
+"trace": false
 },
-"template": "dungeon_connect_rooms"
-}, {
-"name": "merge_floors",
-"position": Vector2(750, 200),
-"settings": {
-"merge_all_attributes": true
-},
-"template": "merge"
-}, {
-"name": "dungeon_walls_and_doors",
-"position": Vector2(950, 300),
-"settings": {
-"cell_size": 2.0,
-"random_seed": 54321,
-"torch_probability": 0.15
-},
-"template": "dungeon_walls_and_doors"
-}, {
-"name": "sub_floor",
-"position": Vector2(950, 50),
-"settings": {
-"graph": ExtResource("1_73p5x")
-},
-"template": "subgraph"
-}, {
-"name": "sub_wall",
-"position": Vector2(1200, 150),
-"settings": {
-"graph": ExtResource("2_4swmn")
-},
-"template": "subgraph"
-}, {
-"name": "sub_pillar",
-"position": Vector2(1200, 300),
-"settings": {
-"graph": ExtResource("3_5quuh")
-},
-"template": "subgraph"
-}, {
-"name": "sub_chest",
-"position": Vector2(550, 450),
-"settings": {
-"graph": ExtResource("4_a5c13")
-},
-"template": "subgraph"
-}, {
-"name": "sub_lighting",
-"position": Vector2(1200, 450),
-"settings": {
-"graph": ExtResource("5_oia4u")
-},
-"template": "subgraph"
+"show_disconnected_inputs": false,
+"template": "make_bounds"
 }],
 "type": "flow_graph_nodes",
 "version": 1
 }
-view_zoom = 0.9090909
-view_offset = Vector2(-50.0, -50.0)
-new_name_counter = 1
+view_zoom = 0.9743587
+view_offset = Vector2(-347.33508, -133.89319)

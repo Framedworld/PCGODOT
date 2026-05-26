@@ -14,416 +14,1365 @@ script = ExtResource("8_wiskw")
 data = {
 "frames": [],
 "links": [{
-"from_node": "dungeon_bounds",
+"from_node": &"dungeon_bounds",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "candidate_sampler",
+"to_node": &"candidate_sampler",
 "to_port": 0
 }, {
-"from_node": "candidate_sampler",
+"from_node": &"candidate_sampler",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "rand_w",
+"to_node": &"snap_room_positions",
 "to_port": 0
 }, {
-"from_node": "rand_w",
+"from_node": &"snap_room_positions",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "rand_h",
+"to_node": &"rand_w_steps",
 "to_port": 0
 }, {
-"from_node": "rand_h",
+"from_node": &"rand_w_steps",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "rand_prio",
+"to_node": &"w_steps_x_2",
 "to_port": 0
 }, {
-"from_node": "rand_prio",
+"from_node": &"w_steps_x_2",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "rand_id",
+"to_node": &"w_make_odd",
 "to_port": 0
 }, {
-"from_node": "rand_id",
+"from_node": &"w_make_odd",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "w_x_2",
+"to_node": &"w_to_world",
 "to_port": 0
 }, {
-"from_node": "w_x_2",
+"from_node": &"w_to_world",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "h_x_2",
+"to_node": &"rand_h_steps",
 "to_port": 0
 }, {
-"from_node": "h_x_2",
+"from_node": &"rand_h_steps",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "compose_room_size",
+"to_node": &"h_steps_x_2",
 "to_port": 0
 }, {
-"from_node": "compose_room_size",
+"from_node": &"h_steps_x_2",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "snap_room_positions",
+"to_node": &"h_make_odd",
 "to_port": 0
 }, {
-"from_node": "snap_room_positions",
+"from_node": &"h_make_odd",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "add_type_chest_candidates",
+"to_node": &"h_to_world",
 "to_port": 0
 }, {
-"from_node": "add_type_chest_candidates",
+"from_node": &"h_to_world",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "add_selected_false",
+"to_node": &"rand_prio",
 "to_port": 0
 }, {
-"from_node": "add_selected_false",
+"from_node": &"rand_prio",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "room_selector_loop",
+"to_node": &"rand_id",
 "to_port": 0
 }, {
-"from_node": "room_selector_loop",
+"from_node": &"rand_id",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"compose_room_size",
+"to_port": 0
+}, {
+"from_node": &"compose_room_size",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"sort_candidates",
+"to_port": 0
+}, {
+"from_node": &"sort_candidates",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"room_selector_loop",
+"to_port": 0
+}, {
+"from_node": &"room_selector_loop",
 "from_port": 1,
 "keep_alive": false,
-"to_node": "dungeon_connect_rooms",
+"to_node": &"room_floor_cells",
 "to_port": 0
 }, {
-"from_node": "room_selector_loop",
+"from_node": &"room_selector_loop",
 "from_port": 1,
 "keep_alive": false,
-"to_node": "expand_room_floors",
+"to_node": &"corridor_cells",
 "to_port": 0
 }, {
-"from_node": "room_selector_loop",
+"from_node": &"room_selector_loop",
 "from_port": 1,
 "keep_alive": false,
-"to_node": "sub_chest",
+"to_node": &"select_chest_rooms",
 "to_port": 0
 }, {
-"from_node": "expand_room_floors",
+"from_node": &"room_floor_cells",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "set_cell_type_room",
+"to_node": &"merge_floor_cells",
 "to_port": 0
 }, {
-"from_node": "set_cell_type_room",
+"from_node": &"corridor_cells",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "set_type_room_tiles",
+"to_node": &"merge_floor_cells",
 "to_port": 0
 }, {
-"from_node": "set_type_room_tiles",
+"from_node": &"merge_floor_cells",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "merge_all_floors",
+"to_node": &"dedupe_floor_cells",
 "to_port": 0
 }, {
-"from_node": "dungeon_connect_rooms",
+"from_node": &"dedupe_floor_cells",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "expand_corridor_floors",
+"to_node": &"floor_unit_size",
 "to_port": 0
 }, {
-"from_node": "expand_corridor_floors",
+"from_node": &"floor_unit_size",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "set_cell_type_corridor",
+"to_node": &"set_type_floor",
 "to_port": 0
 }, {
-"from_node": "set_cell_type_corridor",
+"from_node": &"set_type_floor",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "set_type_corridor_tiles",
+"to_node": &"sub_floor",
 "to_port": 0
 }, {
-"from_node": "set_type_corridor_tiles",
+"from_node": &"dedupe_floor_cells",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "merge_all_floors",
-"to_port": 1
+"to_node": &"grid_boundary",
+"to_port": 0
 }, {
-"from_node": "merge_all_floors",
+"from_node": &"grid_boundary",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "prune_floor_overlaps",
+"to_node": &"wall_unit_size",
 "to_port": 0
 }, {
-"from_node": "prune_floor_overlaps",
+"from_node": &"wall_unit_size",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "dungeon_walls_and_doors",
+"to_node": &"set_type_wall",
 "to_port": 0
 }, {
-"from_node": "prune_floor_overlaps",
+"from_node": &"set_type_wall",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "sub_floor",
+"to_node": &"sub_wall",
 "to_port": 0
 }, {
-"from_node": "dungeon_walls_and_doors",
+"from_node": &"grid_boundary",
+"from_port": 1,
+"keep_alive": false,
+"to_node": &"pillar_unit_size",
+"to_port": 0
+}, {
+"from_node": &"pillar_unit_size",
 "from_port": 0,
 "keep_alive": false,
-"to_node": "sub_wall",
+"to_node": &"set_type_pillar",
 "to_port": 0
 }, {
-"from_node": "dungeon_walls_and_doors",
-"from_port": 2,
+"from_node": &"set_type_pillar",
+"from_port": 0,
 "keep_alive": false,
-"to_node": "sub_lighting",
+"to_node": &"sub_pillar",
 "to_port": 0
 }, {
-"from_node": "dungeon_walls_and_doors",
-"from_port": 3,
+"from_node": &"grid_boundary",
+"from_port": 0,
 "keep_alive": false,
-"to_node": "sub_pillar",
+"to_node": &"select_torch_walls",
+"to_port": 0
+}, {
+"from_node": &"select_torch_walls",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"torch_unit_size",
+"to_port": 0
+}, {
+"from_node": &"torch_unit_size",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"set_type_torch",
+"to_port": 0
+}, {
+"from_node": &"select_chest_rooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"chest_unit_size",
+"to_port": 0
+}, {
+"from_node": &"chest_unit_size",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"set_type_chest",
+"to_port": 0
+}, {
+"from_node": &"set_type_chest",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"sub_chest",
+"to_port": 0
+}, {
+"from_node": &"set_type_torch",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"sub_lighting",
 "to_port": 0
 }],
-"min_pos": Vector2(0, 0),
+"min_pos": Vector2(0, 240),
 "nodes": [{
-"name": "dungeon_bounds",
-"position": Vector2(50, 200),
+"args_port": {},
+"name": &"dungeon_bounds",
+"position": Vector2(0, 0),
 "settings": {
-"size": Vector3(48, 1, 48)
+"center": Vector3(0, 0, 0),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 845376717,
+"size": Vector3(56, 1, 56),
+"title": "Make Bounds",
+"trace": false
 },
+"show_disconnected_inputs": false,
 "template": "make_bounds"
 }, {
-"name": "candidate_sampler",
-"position": Vector2(250, 200),
-"settings": {
-"num_points": 40
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"candidate_sampler",
+"position": Vector2(320, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"num_points": 28,
+"point_size": Vector3(1, 1, 1),
+"random_seed": 12031,
+"title": "Surface Sampler",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "surface_sampler"
 }, {
-"name": "rand_w",
-"position": Vector2(450, 100),
-"settings": {
-"attribute_name": "RoomWidth",
-"data_type": 1,
-"max_value": 6.0,
-"min_value": 3.0
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"snap_room_positions",
+"position": Vector2(620, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"grid_size": Vector3(4, 0, 4),
+"inspect_enabled": false,
+"random_seed": 4010138963,
+"snap_position": true,
+"snap_rotation": false,
+"snap_scale": false,
+"title": "Snap to Grid",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "snap_to_grid"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"rand_w_steps",
+"position": Vector2(940, 0),
+"settings": {
+"attribute_name": "RoomWidthSteps",
+"data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 3.0,
+"min_value": 1.0,
+"random_seed": 23011,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
+},
+"show_disconnected_inputs": false,
 "template": "attribute_random"
 }, {
-"name": "rand_h",
-"position": Vector2(650, 100),
-"settings": {
-"attribute_name": "RoomHeight",
-"data_type": 1,
-"max_value": 6.0,
-"min_value": 3.0
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
 },
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_steps_x_2",
+"position": Vector2(1240, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthSteps",
+"in_nameB": "2.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomWidthEven",
+"random_seed": 695997584,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_make_odd",
+"position": Vector2(1560, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthEven",
+"in_nameB": "1.0",
+"inspect_enabled": false,
+"operation": 0,
+"out_name": "RoomWidthTiles",
+"random_seed": 2891067874,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"w_to_world",
+"position": Vector2(1860, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomWidthTiles",
+"in_nameB": "4.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomWidthWorld",
+"random_seed": 1373794186,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"rand_h_steps",
+"position": Vector2(2180, 0),
+"settings": {
+"attribute_name": "RoomHeightSteps",
+"data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 3.0,
+"min_value": 1.0,
+"random_seed": 23047,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
+},
+"show_disconnected_inputs": false,
 "template": "attribute_random"
 }, {
-"name": "rand_prio",
-"position": Vector2(850, 100),
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_steps_x_2",
+"position": Vector2(2480, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightSteps",
+"in_nameB": "2.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomHeightEven",
+"random_seed": 1220315528,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_make_odd",
+"position": Vector2(2800, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightEven",
+"in_nameB": "1.0",
+"inspect_enabled": false,
+"operation": 0,
+"out_name": "RoomHeightTiles",
+"random_seed": 4281995502,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"h_to_world",
+"position": Vector2(3100, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "RoomHeightTiles",
+"in_nameB": "4.0",
+"inspect_enabled": false,
+"operation": 2,
+"out_name": "RoomHeightWorld",
+"random_seed": 2424669652,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"rand_prio",
+"position": Vector2(3420, 0),
 "settings": {
 "attribute_name": "RoomPriority",
 "data_type": 0,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
 "max_value": 1.0,
-"min_value": 0.0
+"min_value": 0.0,
+"random_seed": 51721,
+"title": "Attribute Random",
+"trace": false,
+"use_index_as_value": false
 },
+"show_disconnected_inputs": false,
 "template": "attribute_random"
 }, {
-"name": "rand_id",
-"position": Vector2(1050, 100),
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"rand_id",
+"position": Vector2(3720, 0),
 "settings": {
 "attribute_name": "RoomID",
 "data_type": 1,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"max_value": 1.0,
+"min_value": 0.0,
+"random_seed": 732307886,
+"title": "Attribute Random",
+"trace": false,
 "use_index_as_value": true
 },
+"show_disconnected_inputs": false,
 "template": "attribute_random"
 }, {
-"name": "w_x_2",
-"position": Vector2(1250, 50),
-"settings": {
-"in_nameA": "RoomWidth",
-"in_nameB": "2.0",
-"operation": 2,
-"out_name": "w_sz"
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
-"template": "math_op"
-}, {
-"name": "h_x_2",
-"position": Vector2(1450, 50),
+"name": &"compose_room_size",
+"position": Vector2(4040, 0),
 "settings": {
-"in_nameA": "RoomHeight",
-"in_nameB": "2.0",
-"operation": 2,
-"out_name": "h_sz"
-},
-"template": "math_op"
-}, {
-"name": "compose_room_size",
-"position": Vector2(1650, 100),
-"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
 "default_value": Vector3(1, 1, 1),
+"disabled": false,
+"inspect_enabled": false,
 "out_attribute": "size",
-"x_attribute": "w_sz",
+"random_seed": 1736692376,
+"title": "Compose Vector",
+"trace": false,
+"x_attribute": "RoomWidthWorld",
 "y_attribute": "",
-"z_attribute": "h_sz"
+"z_attribute": "RoomHeightWorld"
 },
+"show_disconnected_inputs": false,
 "template": "compose_vector"
 }, {
-"name": "snap_room_positions",
-"position": Vector2(1850, 100),
-"settings": {
-"grid_size": Vector3(2, 0, 2),
-"snap_position": true
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
-"template": "snap_to_grid"
-}, {
-"name": "add_type_chest_candidates",
-"position": Vector2(2050, 100),
+"name": &"sort_candidates",
+"position": Vector2(4340, 0),
 "settings": {
-"cte_float": 4.0,
-"data_type": 2,
-"name": "type"
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 1000054401,
+"sort_by": "RoomPriority",
+"sort_descending": true,
+"title": "Sort",
+"trace": false
 },
-"template": "add_attribute"
+"show_disconnected_inputs": false,
+"template": "sort"
 }, {
-"name": "add_selected_false",
-"position": Vector2(2250, 100),
-"settings": {
-"cte_bool": false,
-"data_type": 0,
-"name": "bSelectedRoom"
+"args_port": {
+"SelectedRooms": {
+"connected": false,
+"port": 1
 },
-"template": "add_attribute"
-}, {
-"name": "room_selector_loop",
-"position": Vector2(2450, 200),
+"Stream": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"room_selector_loop",
+"position": Vector2(4660, 0),
 "settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
 "feedback_param_name": "SelectedRooms",
 "graph": ExtResource("1_admjt"),
+"inspect_enabled": false,
 "item_input_name": "CandidateRoom",
-"output_attribute_name": "RejectedRooms"
+"output_attribute_name": "RejectedRooms",
+"random_seed": 222386122,
+"title": "Loop",
+"trace": false
 },
+"show_disconnected_inputs": false,
 "template": "loop"
 }, {
-"name": "dungeon_connect_rooms",
-"position": Vector2(2700, 350),
-"settings": {
-"cell_size": 2.0,
-"random_seed": 54321
+"args_port": {
+"Bounds": {
+"connected": true,
+"port": 0
+}
 },
-"template": "dungeon_connect_rooms"
+"name": &"room_floor_cells",
+"position": Vector2(5100, 240),
+"settings": {
+"bounds_center": Vector3(0, 0, 0),
+"bounds_size": Vector3(10, 1, 10),
+"cell_size": Vector3(4, 1, 4),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"fill_y_axis": false,
+"inspect_enabled": false,
+"max_points": 20000,
+"random_seed": 3882737714,
+"title": "Grid Fill Bounds",
+"trace": false,
+"use_input_bounds": true
+},
+"show_disconnected_inputs": false,
+"template": "grid_fill_bounds"
 }, {
-"name": "expand_room_floors",
-"position": Vector2(2700, 100),
-"settings": {
-"distribution": 1,
-"new_size_factor": 1.0,
-"sampling_distance": 2.0
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
-"template": "sample_points"
+"name": &"corridor_cells",
+"position": Vector2(5100, 40),
+"settings": {
+"axis_order": 0,
+"cell_size": Vector3(4, 1, 4),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"deduplicate_cells": true,
+"disabled": false,
+"include_input_points": true,
+"inspect_enabled": false,
+"path_index_attribute": "CorridorPath",
+"random_seed": 2393260851,
+"title": "Grid Connect Points",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "grid_connect_points"
 }, {
-"name": "set_cell_type_room",
-"position": Vector2(2900, 100),
-"settings": {
-"cte_string": "Room",
-"data_type": 5,
-"name": "CellType"
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
-"template": "add_attribute"
-}, {
-"name": "set_type_room_tiles",
-"position": Vector2(3100, 100),
+"name": &"merge_floor_cells",
+"position": Vector2(5400, 40),
 "settings": {
-"cte_float": 0.0,
-"data_type": 2,
-"name": "type"
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 925331710,
+"title": "Merge",
+"trace": false
 },
-"template": "add_attribute"
-}, {
-"name": "expand_corridor_floors",
-"position": Vector2(2900, 350),
-"settings": {
-"distribution": 1,
-"new_size_factor": 1.0,
-"sampling_distance": 2.0
-},
-"template": "sample_points"
-}, {
-"name": "set_cell_type_corridor",
-"position": Vector2(3100, 350),
-"settings": {
-"cte_string": "Corridor",
-"data_type": 5,
-"name": "CellType"
-},
-"template": "add_attribute"
-}, {
-"name": "set_type_corridor_tiles",
-"position": Vector2(3300, 350),
-"settings": {
-"cte_float": 0.0,
-"data_type": 2,
-"name": "type"
-},
-"template": "add_attribute"
-}, {
-"name": "merge_all_floors",
-"position": Vector2(3500, 200),
-"settings": {
-"merge_all_attributes": true
-},
+"show_disconnected_inputs": false,
 "template": "merge"
 }, {
-"name": "prune_floor_overlaps",
-"position": Vector2(3700, 200),
-"settings": {
-"radius": 0.9
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"dedupe_floor_cells",
+"position": Vector2(5720, 40),
+"settings": {
+"cell_size": 4.0,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"keep_self_intersections": false,
+"mode": 1,
+"prefer_attribute": "",
+"prefer_value": "",
+"random_seed": 705226513,
+"title": "Self Pruning",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "self_pruning"
 }, {
-"name": "dungeon_walls_and_doors",
-"position": Vector2(3900, 300),
-"settings": {
-"cell_size": 2.0,
-"random_seed": 54321,
-"torch_probability": 0.15
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
-"template": "dungeon_walls_and_doors"
+"name": &"floor_unit_size",
+"position": Vector2(6020, 640),
+"settings": {
+"bounds_max": Vector3(0.5, 0.5, 0.5),
+"bounds_min": Vector3(-0.5, -0.5, -0.5),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"mode": 0,
+"random_seed": 3146376808,
+"title": "Bounds Modifier",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "bounds_modifier"
 }, {
-"name": "sub_floor",
-"position": Vector2(3900, 50),
-"settings": {
-"graph": ExtResource("2_lefd7")
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"set_type_floor",
+"position": Vector2(6460, 640),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 0.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "type",
+"random_seed": 258639928,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"points": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"sub_floor",
+"position": Vector2(6760, 640),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("2_lefd7"),
+"inspect_enabled": false,
+"random_seed": 2887409910,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "subgraph"
 }, {
-"name": "sub_wall",
-"position": Vector2(4150, 150),
-"settings": {
-"graph": ExtResource("3_8t3ph")
+"args_port": {
+"Filled Cells": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"grid_boundary",
+"position": Vector2(6020, 40),
+"settings": {
+"cell_size": Vector3(4, 1, 4),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"include_corners": true,
+"inspect_enabled": false,
+"normal_attribute": "boundary_normal",
+"random_seed": 2455492645,
+"title": "Grid Boundary",
+"trace": false,
+"type_attribute": "boundary_type",
+"wall_height": 1.0,
+"wall_thickness": 1.0
+},
+"show_disconnected_inputs": false,
+"template": "grid_boundary"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"wall_unit_size",
+"position": Vector2(6460, 40),
+"settings": {
+"bounds_max": Vector3(0.5, 0.5, 0.5),
+"bounds_min": Vector3(-0.5, -0.5, -0.5),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"mode": 0,
+"random_seed": 680383152,
+"title": "Bounds Modifier",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "bounds_modifier"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"set_type_wall",
+"position": Vector2(6760, 40),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 1.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "type",
+"random_seed": 2335847866,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"points": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"sub_wall",
+"position": Vector2(7180, 40),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("3_8t3ph"),
+"inspect_enabled": false,
+"random_seed": 521637806,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "subgraph"
 }, {
-"name": "sub_pillar",
-"position": Vector2(4150, 300),
-"settings": {
-"graph": ExtResource("4_br400")
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"pillar_unit_size",
+"position": Vector2(6460, 240),
+"settings": {
+"bounds_max": Vector3(0.5, 0.5, 0.5),
+"bounds_min": Vector3(-0.5, -0.5, -0.5),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"mode": 0,
+"random_seed": 1687564695,
+"title": "Bounds Modifier",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "bounds_modifier"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"set_type_pillar",
+"position": Vector2(6760, 240),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 2.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "type",
+"random_seed": 742400467,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"points": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"sub_pillar",
+"position": Vector2(7180, 240),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("4_br400"),
+"inspect_enabled": false,
+"random_seed": 2157611369,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "subgraph"
 }, {
-"name": "sub_chest",
-"position": Vector2(2700, 500),
-"settings": {
-"graph": ExtResource("5_woyq1")
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"select_torch_walls",
+"position": Vector2(6460, 440),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 8123,
+"ratio": 0.08,
+"title": "Select Points",
+"trace": false,
+"weight_name": ""
+},
+"show_disconnected_inputs": false,
+"template": "select_points"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"torch_unit_size",
+"position": Vector2(6760, 440),
+"settings": {
+"bounds_max": Vector3(0.5, 0.5, 0.5),
+"bounds_min": Vector3(-0.5, -0.5, -0.5),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"mode": 0,
+"random_seed": 2326125912,
+"title": "Bounds Modifier",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "bounds_modifier"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"set_type_torch",
+"position": Vector2(7180, 440),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 3.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "type",
+"random_seed": 2413317497,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"points": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"sub_lighting",
+"position": Vector2(7600, 440),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("6_ysciv"),
+"inspect_enabled": false,
+"random_seed": 857627141,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "subgraph"
 }, {
-"name": "sub_lighting",
-"position": Vector2(4150, 450),
-"settings": {
-"graph": ExtResource("6_ysciv")
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
 },
+"name": &"select_chest_rooms",
+"position": Vector2(5100, 840),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 19237,
+"ratio": 0.35,
+"title": "Select Points",
+"trace": false,
+"weight_name": ""
+},
+"show_disconnected_inputs": false,
+"template": "select_points"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"chest_unit_size",
+"position": Vector2(5400, 840),
+"settings": {
+"bounds_max": Vector3(0.5, 0.5, 0.5),
+"bounds_min": Vector3(-0.5, -0.5, -0.5),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"mode": 0,
+"random_seed": 2120513951,
+"title": "Bounds Modifier",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "bounds_modifier"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"set_type_chest",
+"position": Vector2(5720, 840),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 4.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "type",
+"random_seed": 1163303075,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"points": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"sub_chest",
+"position": Vector2(6020, 840),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("5_woyq1"),
+"inspect_enabled": false,
+"random_seed": 3762328283,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
 "template": "subgraph"
 }],
 "type": "flow_graph_nodes",
 "version": 1
 }
+view_zoom = 0.54838294
+view_offset = Vector2(249.35963, -175.22174)

@@ -28,6 +28,26 @@ func _to_cell(pos : Vector3, cell_size : Vector3) -> Vector3i:
 func _to_pos(cell : Vector3i, cell_size : Vector3) -> Vector3:
 	return Vector3(float(cell.x) * cell_size.x, float(cell.y) * cell_size.y, float(cell.z) * cell_size.z)
 
+func _is_occupied(occupied : Dictionary, cell : Vector3i) -> bool:
+	return occupied.has(_key(cell))
+
+func _is_corner_vertex(occupied : Dictionary, cell : Vector3i, sx : int, sz : int) -> bool:
+	var samples : Array[bool] = [
+		_is_occupied(occupied, cell),
+		_is_occupied(occupied, cell + Vector3i(sx, 0, 0)),
+		_is_occupied(occupied, cell + Vector3i(0, 0, sz)),
+		_is_occupied(occupied, cell + Vector3i(sx, 0, sz)),
+	]
+	var occupied_count := 0
+	for filled : bool in samples:
+		if filled:
+			occupied_count += 1
+	if occupied_count == 1 or occupied_count == 3:
+		return true
+	if occupied_count != 2:
+		return false
+	return samples[0] == samples[3] and samples[1] == samples[2]
+
 func _append_record(records : Array, pos : Vector3, rot : Vector3, size : Vector3, normal : Vector3, type_name : String) -> void:
 	records.append({
 		"position": pos,
@@ -113,12 +133,10 @@ func execute(_ctx : FlowData.EvaluationContext):
 		if settings.include_corners:
 			for sx : int in [-1, 1]:
 				for sz : int in [-1, 1]:
-					var side_x := cell + Vector3i(sx, 0, 0)
-					var side_z := cell + Vector3i(0, 0, sz)
-					if occupied.has(_key(side_x)) and occupied.has(_key(side_z)):
-						continue
-					var corner_key := "%d,%d,%d,%d,%d" % [cell.x, cell.y, cell.z, sx, sz]
+					var corner_key := "%d,%d,%d" % [cell.x * 2 + sx, cell.y, cell.z * 2 + sz]
 					if corner_seen.has(corner_key):
+						continue
+					if not _is_corner_vertex(occupied, cell, sx, sz):
 						continue
 					corner_seen[corner_key] = true
 					var corner_pos := center + Vector3(
