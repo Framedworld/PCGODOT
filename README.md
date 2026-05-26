@@ -1,89 +1,137 @@
-# Flow Graph (Flow Nodes Editor)
+# PCGODOT (Flow Graph)
 
-Procedural content graph for Godot 4.6 — an editor plugin inspired by Unreal Engine 5’s PCG. Build point sets, transform them, and spawn meshes/scenes through a visual flow graph.
+[![Godot Engine](https://img.shields.io/badge/Godot-%23FFFFFF.svg?style=flat&logo=godot-engine&logoColor=cyan)](https://godotengine.org)
+[![Version](https://img.shields.io/badge/Version-1.1.0--aligned-blue.svg)](#)
 
-## Description
+**PCGODOT** is a highly powerful, node-based Procedural Content Generation (PCG) framework for Godot 4.6, heavily inspired by **Unreal Engine 5's PCG**. It enables developers to construct intricate point-set distributions, manipulate spatial attributes, and spawn meshes or scenes procedurally using a visual flow graph.
 
-Flow Graph is an editor-only tool that lets you assemble procedural pipelines using nodes. It focuses on point-set generation and transformation (sampling, CSG on points, partitioning, expressions, etc.), with live 3D debug and a Data Inspector to inspect results at each step.
+This version has been upgraded to align **1:1 with Unreal Engine's PCG Node Reference**, featuring improved control flow, advanced filtering, and a polished dark HSL theme.
 
-Flow graphs are regular Godot resources and can expose typed inputs for reuse.
+---
 
-## Install
+## 🎨 Gallery & Showcases
 
-1. Copy the folders below into your project:
-    * ```demo/addons/flow_nodes_editor``` 
-    * ```demo/bin```
-2. In Godot: **Project** → **Project Settings** → **Plugins** and enable "Flow Nodes Editor"
+### 1. Sampling Meshes (Discarding Hard Edges)
+Distribute points across the faces of a 3D Mesh (e.g. the letter "B") while optionally pruning points near hard edges.
+![Sampling Mesh](demo/addons/flow_nodes_editor/doc/demo_sample_mesh.png)
 
-##  Quickstart
+### 2. Random Subscenes Distribution (Forests & Paths)
+Distribute different subscenes randomly along curves and paths using attributes, custom rotation-alignment filters, and scene scanners.
+![Random Subscenes](demo/addons/flow_nodes_editor/doc/demo_random_subscenes.png)
 
-In a scene 3D:
+### 3. Unified Filters & Category Popup
+Browse nodes structured into standardized categories matching Unreal PCG. Select filters such as `Filter Data by Attribute`, `Filter Data by Tag`, and `Filter Data by Type`.
+![Filters](demo/addons/flow_nodes_editor/doc/demo_filter.png)
 
-* Add a node of type ```FlowGraphNode3D```
-* Open the Data Flow dock (appears on the right when the plugin is enabled).
-* Press **Shit+A** (or **Right click**) in the graph to open **Add Node….**
-* Add a node, e.g. ```Grid```
-* Press ```D``` to toggle the 3D debug on that node - points appear as white boxes in the viewport.
-* Adjust the selected node’s parameters (e.g. grid count/size).
-* Press ```E``` to toggle the **Data Inspector** and inspect the actual per-point values.
-    * Click on each row to highlight the point in the 3d scene as a magenta point
+### 4. Proximity Sampling & Distance to Density
+Sample points and scale their density values smoothly based on their distance/proximity to curves or splines.
+![Distance to Density](demo/addons/flow_nodes_editor/doc/demo_distance.png)
 
-## Handy Shortcuts
+### 5. Nested Subgraphs & Selection Collapse
+Create nested graphs and easily collapse selected nodes into a reusable Subgraph.
+![Subgraph Collapse](demo/addons/flow_nodes_editor/doc/demo_subgraph_popup.png)
 
-* **Shift+A** / **Right-click**: Add node
-* **D**: Toggle 3D point debug
-* **E**: Toggle Data Inspector
-* **G**: Toggle Enable/Disable Node
-* **C**: Create a comments box around selected nodes
-* **X**: Deletes selected nodes
-* **R**: Forces reevaluation of selected nodes
+### 6. Procedural Helical Colonnade & Rubble Scatter
+Generate complex procedural architecture such as helical towers. Combines curve sampling with coordinate transforms, relative lintel placement, and duplicate scatter operations to create debris and rubble.
+![Helical Colonnade](demo/addons/flow_nodes_editor/doc/demo_flashy_colonnade_v2.png)
 
-## Features
+### 7. Fall Guys Hexagons
+Generate dynamic gameplay platforms such as the multi-colored hexagon grid inspired by Fall Guys. Use the **Random Color** node to assign random color attributes from a palette to a MultiMesh, set against volumetric fog, global illumination, and manual twilight lighting.
+![Fall Guys Hexagons](demo/addons/flow_nodes_editor/doc/demo_spawn_nodes_v2.png)
 
-* **+30 nodes** including:
-    - Sampling splines (contour and interior)
-    - Sampling meshes
-    - CSG-like ops on point sets (union/intersect/diff behavior)
-    - Scene/mesh spawning with custom parameters
-    - Expressions evaluation
-    - Partition / Reduce / Merge / Sort
-    - Ray casting into the scene to place/query points
-    - Match and Set to assign custom assets to the points
-    - Change point distribution using godot Curve editors
-    - Scene scanning to gather metadata/attributes into the flow
-* **Grid-based Data Inspector** with selection highlighting
-* **3D Debug** overlays with color cues
-* **Graphs as resource** with optional **typed inputs**
-* **Copy/Paste nodes** into the clipboard as JSON
+---
 
-## Samples
+## 🚀 Key Features
 
-A ready-to-run Godot 4.4 project is in demo folder. Explore graphs in demo/demos.
+* **Unreal Engine PCG Alignment (1:1)**: Unified categories, names, and logic schemas conforming to the Unreal PCG specifications.
+* **+50 Nodes**: A robust suite of nodes covering:
+  * Spline & Mesh sampling (surface, volume, interior).
+  * Math operations, custom expressions, and reductions.
+  * Tagging, attribute manipulation, and boolean data filters.
+  * Raycasting, collision setup, and spatial queries.
+  * Spawning of raw engine node classes (`OmniLight3D`, `VoxelGIProbe`, etc.) with point attribute mapping.
+  * Random HSV or custom-palette color generation.
+* **Advanced Subgraphs & Loops**: Seamlessly nest graphs inside other graphs with local parameters, custom outputs, and array loops.
+* **Core Tagging Support**: A dedicated `tags` property (`PackedStringArray`) inside data elements for advanced tag-based filtering.
+* **Live 3D Debug Overlay**: Direct 3D viewport visualizations showing point positions, density gradients, scale, and rotations.
+* **Grid Data Inspector**: Step-by-step table viewing of attributes at any node in the graph, with active highlighting in the 3D viewport.
+* **Copy/Paste**: Import/export graph components instantly as JSON.
 
-### Sampling Top Faces of Mesh
-![Sampling Top Faces of Mesh](demo/addons/flow_nodes_editor/doc/demo_sample_mesh.png)
+---
 
-### Procedural Basic Bridge
-![Procedural Basic Bridge](demo/addons/flow_nodes_editor/doc/demo_bridge.gif)
+## 📂 Node Library Categories
 
-And the Associated graph
+PCGODOT organizes nodes according to the official Unreal Engine PCG structure:
 
-![Demo Bridge Graph](demo/addons/flow_nodes_editor/doc/demo_bridge_graph.png) 
+### 🧩 Subgraphs & Control Flow
+* **Subgraph**: Runs another PCG graph resource inline.
+* **Loop**: Evaluates a subgraph repeatedly over elements.
+* **Output**: Exposes custom output ports for subgraphs.
+* **Branch**: Directs point-sets down different paths based on conditions.
+* **Select**: Routes a single dataset dynamically.
+* **Select Multi**: Merges and routes multiple datasets.
+* **Switch**: Evaluates multiple pathways using integer keys.
 
-## Platforms
-    
-Precompiled versions of the plugin are provided for Windows and OSX platforms. But it should compile without problems in the Linux.
+### 📊 Filtering & Sampling
+* **Filter Data by Tag**: Isolates points based on their string tags.
+* **Filter Data by Attribute**: Evaluates comparisons (e.g. `density > 0.5`) to isolate points.
+* **Filter Data by Type**: Filters data points by spatial class type.
+* **Select Points**: Samples points based on ratios or thresholds.
+* **Sample Mesh**: Distributes points across a 3D Mesh's faces.
+* **Sample Spline**: Follows or fills 3D curves.
 
-The tool is an editor tool, so it should work where the editor works. Most of the code is currently gdscript, except for wrappers classes to implement KDTrees (from https://github.com/jlblancoc/nanoflann) and RTrees (from https://github.com/nushoin/RTree)
+### 📐 Point Ops & Densities
+* **Bounds Modifier**: Shrinks, expands, or aligns point bounds.
+* **Build Rotation from Up**: Generates correct rotations matching custom surface normals.
+* **Combine Points**: Combines spatial properties of multiple points.
+* **Duplicate Point**: Multiplies points with custom offsets.
+* **Density Remap**: Modulates point density values using curve remapping.
+* **Distance to Density**: Scales point density based on proximity to other objects.
 
-## Roadmap
+### 🏷️ Metadata & Attributes
+* **Random Color**: Generates random colors for each point (individually or from a curated palette).
+* **Add/Remove Attribute**: Dynamically adds or removes custom point attributes.
+* **Match and Set**: Sets attributes by matching values.
 
-See the [file](demo/addons/flow_nodes_editor/README.md) 
+### 📦 Assets & Spawning
+* **Spawn Nodes**: Instantiates raw Godot nodes (e.g. `OmniLight3D`, `VoxelGI`) at point locations, transferring attributes directly to node properties.
+* **Spawn Meshes / Scenes**: Places MultiMesh instances or scene instances on points.
 
-The plugin is functional, but I have not yet used in any serious project inside Godot. If you try to use it and find problems/suggestions please open an issue.
+---
 
-## Build From Sources
+## 🛠️ Installation & Setup
 
-    $ git submodule update --init
-    $ scons
+1. Copy the following folders from this repository into your Godot project's root:
+   * `demo/addons/flow_nodes_editor`
+   * `demo/bin`
+2. Open your project in Godot: **Project** → **Project Settings** → **Plugins**.
+3. Locate **Flow Nodes Editor** and toggle the status to **Enabled**.
 
+---
+
+## 🎮 Quickstart Guide
+
+In a 3D Scene:
+1. Create a `FlowGraphNode3D` node.
+2. In the right-hand panel, select the **Data Flow** dock (appears when the node is selected).
+3. Press **Shift+A** (or **Right-click**) inside the graph to open the **Add Node** panel.
+4. Add a generator like **Grid**, then connect it to **Spawn Scenes** or **Spawn Meshes**.
+5. Press **D** on a selected node to toggle its 3D debug visualizer.
+6. Press **E** to toggle the bottom **Data Inspector** and view the raw attributes of each point.
+
+---
+
+## 🏗️ Building from Sources
+
+If you want to compile the KdTree and RTree C++ wrappers yourself:
+
+```bash
+git submodule update --init
+scons
+```
+Precompiled binaries for Windows and macOS are included under `demo/bin/` by default.
+
+---
+
+## 📄 License
+This project is licensed under the MIT License. Feel free to adapt and expand it!
