@@ -53,7 +53,6 @@
 "match_and_set","Match And Set"
 "math_op","Math"
 "merge","Merge"
-"mesh_sampler","Mesh Sampler"
 "mutate_seed","Mutate Seed"
 "noise","Noise"
 "navigation_region_sampler","Navigation Region Sampler"

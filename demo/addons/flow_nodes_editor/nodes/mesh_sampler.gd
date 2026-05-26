@@ -9,5 +9,6 @@ func _init():
 		"settings" : SampleMeshNodeSettings,
 		"ins" : [{ "label": "Meshes", "data_type": FlowData.DataType.NodeMesh }],
 		"outs" : [{ "label" : "Out" }],
+		"auto_register" : false,
 		"tooltip" : "Samples points on a mesh surface. Unreal-style alias of Sample Mesh.",
 	}

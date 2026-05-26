@@ -22,7 +22,7 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 | Difference (Spatial) | `difference` | Present (new) | Must | Hardened; keep in menu/search |
 | Point Neighborhood | `point_neighborhood` | Present (new) | Must | Keep |
 | Point From Mesh | `point_from_mesh` | Present (new) | Must | Keep |
-| Mesh Sampler | `mesh_sampler` (alias), `sample_mesh` | Present (new alias) | Must | Keep both names |
+| Mesh Sampler | `sample_mesh`; hidden compatibility alias `mesh_sampler` | Present | Must | Keep alias loadable, hide duplicate from add-node UI |
 | Points From Scene / Get Actor-style point source | `points_from_scene`, `scan_nodes`, `point_from_player_pawn` | Present | Must | Keep; Godot runtime/player source now covered |
 | Copy Points | `copy` | Present (enhanced) | Must | Added source/target mode + inheritance controls |
 | Transform Points | `transform` | Present | Must | Keep |
@@ -71,7 +71,7 @@ Scope compared against: `demo/addons/flow_nodes_editor/nodes/*.gd` (non-`_settin
 - `point_neighborhood` + `point_neighborhood_settings`
 - `point_from_mesh` + `point_from_mesh_settings`
 - `points_from_scene` + `points_from_scene_settings`
-- `mesh_sampler` (UE naming alias for `sample_mesh`)
+- `mesh_sampler` (UE naming alias for `sample_mesh`, hidden from add-node UI to avoid duplicate choices)
 - `attribute_rename` + `attribute_rename_settings`
 - `intersection` (UE naming alias) + `union` (UE naming alias)
 - `attribute_filter_range` + `point_filter_range` (+ settings)
