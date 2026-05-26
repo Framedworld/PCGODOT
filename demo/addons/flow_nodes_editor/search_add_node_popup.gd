@@ -214,13 +214,13 @@ func setup(p_node_types: Dictionary, p_inputs: Array, p_outputs: Array, p_has_se
 		"Density": ["curve_remap_density", "density_remap", "distance_to_density"],
 		"Filter": ["filter", "filter_data_by_tag", "filter_data_by_attribute", "filter_data_by_type", "attribute_filter_range", "point_filter_range", "self_pruning", "substract", "difference", "intersection", "union"],
 		"Math": ["math_op", "expression", "reduce", "boolean"],
-		"Metadata": ["add_attribute", "attribute_rename", "remove_attribute", "add_tags", "delete_tags", "replace_tags", "make_vector", "compose_vector", "decompose_vector", "attribute_random", "match_and_set", "mutate_seed", "random_color", "load_data_table", "data_table_row_to_attribute_set", "load_pcg_data_asset"],
-		"Point Ops": ["bounds_modifier", "transform", "build_rotation_from_up", "combine_points", "duplicate_point", "snap_to_grid", "point_neighborhood", "attribute_set_to_point", "point_to_attribute_set"],
-		"Sampler": ["copy", "sample_mesh", "point_from_mesh", "select_points", "sample_spline", "surface_sampler", "volume_sampler", "texture_sampler", "points_from_imported_scene", "load_alembic_file", "navigation_region_sampler"],
+		"Metadata": ["add_attribute", "attribute_rename", "remove_attribute", "add_tags", "delete_tags", "replace_tags", "make_vector", "compose_vector", "decompose_vector", "attribute_random", "match_and_set", "mutate_seed", "random_color", "point_to_attribute_set", "attribute_set_to_point", "load_data_table", "data_table_row_to_attribute_set", "load_pcg_data_asset"],
+		"Point Ops": ["bounds_modifier", "transform", "build_rotation_from_up", "combine_points", "duplicate_point", "snap_to_grid", "point_neighborhood"],
+		"Sampler": ["copy", "copy_points", "sample_mesh", "point_from_mesh", "select_points", "sample_spline", "surface_sampler", "volume_sampler", "texture_sampler", "points_from_imported_scene", "load_alembic_file", "navigation_region_sampler"],
 		"Spatial": ["create_spline", "distance", "ray_cast", "physics_overlap_query", "physics_shape_sweep", "clip_points_by_polygon", "clip_paths", "polygon_operation", "split_splines", "create_surface_from_spline", "create_surface_from_polygon"],
 		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "spawn_nodes", "apply_on_actor", "points_from_imported_scene", "load_alembic_file", "load_pcg_data_asset"],
-		"Generators": ["grid", "noise", "relax", "dungeon_generator", "make_bounds"],
-		"Utility": ["input", "output", "subgraph", "loop", "sort", "merge", "partition", "scan_meshes", "scan_splines", "scan_nodes", "points_from_scene", "point_from_player_pawn", "points_from_tilemap", "points_from_gridmap", "sequence_sample", "size", "get_points_count", "get_loop_index"]
+		"Generators": ["grid", "noise", "relax", "dungeon_generator", "make_bounds", "grid_fill_bounds", "grid_connect_points", "grid_boundary"],
+		"Utility": ["input", "output", "subgraph", "loop", "sort", "merge", "merge_points", "partition", "scan_meshes", "scan_splines", "scan_nodes", "points_from_scene", "point_from_player_pawn", "points_from_tilemap", "points_from_gridmap", "sequence_sample", "size", "get_points_count", "get_data_count", "get_entries_count", "get_loop_index", "transform_points"]
 	}
 
 	

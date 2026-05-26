@@ -12,8 +12,15 @@ func _init():
 		"hide_inputs" : true
 	}
 
-func getMeta() -> Dictionary:
+func is_multi_port() -> bool:
 	if node_template == "input":
+		if settings and settings.name != "in_val" and settings.name != "":
+			return false
+		return true
+	return false
+
+func getMeta() -> Dictionary:
+	if is_multi_port():
 		var outs = []
 		var editor = getEditor()
 		if editor and editor.current_resource:
@@ -34,17 +41,18 @@ func getMeta() -> Dictionary:
 	return meta_node
 
 func getTitle() -> String:
-	if node_template == "input":
+	if is_multi_port():
 		return "Inputs"
 	return settings.name
 
 func refreshFromSettings():
 	super.refreshFromSettings()
-	if node_template == "input":
+	if is_multi_port():
 		pass
 	else:
-		var color := getColorForFlowDataType( settings.data_type )
-		set_slot_color_right( 0, color )
+		if is_slot_enabled_right( 0 ):
+			var color := getColorForFlowDataType( settings.data_type )
+			set_slot_color_right( 0, color )
 
 func onPropChanged( prop_name : String ):
 	super.onPropChanged( prop_name )
@@ -53,7 +61,7 @@ func onPropChanged( prop_name : String ):
 
 func _ready():
 	super._ready()
-	if node_template == "input":
+	if is_multi_port():
 		var editor = getEditor()
 		if editor and editor.current_resource:
 			if not editor.current_resource.in_params_changed.is_connected(_on_in_params_changed):
@@ -62,7 +70,7 @@ func _ready():
 
 func _exit_tree():
 	super._exit_tree()
-	if node_template == "input":
+	if is_multi_port():
 		var editor = getEditor()
 		if editor and editor.current_resource:
 			if editor.current_resource.in_params_changed.is_connected(_on_in_params_changed):
@@ -73,7 +81,7 @@ func _on_in_params_changed():
 
 func initFromScript():
 	super.initFromScript()
-	if node_template == "input":
+	if is_multi_port():
 		var spacer = Control.new()
 		spacer.custom_minimum_size.y = 4
 		add_child(spacer)
@@ -112,7 +120,7 @@ func execute( ctx : FlowData.EvaluationContext ):
 	if not ctx.graph:
 		return
 		
-	if node_template == "input":
+	if is_multi_port():
 		for i in range(ctx.graph.in_params.size()):
 			var param = ctx.graph.in_params[i]
 			if not param:

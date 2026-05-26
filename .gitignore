@@ -18,3 +18,38 @@ plugin/*.obj
 plugin/*.os
 
 *.DS_Store
+
+# Local editor/tooling state
+.sconsign.dblite
+demo/bin/~*.TMP
+demo/editor_screenshot.png
+demo/editor_screenshot.png.import
+demo/orchestrator_preview/
+demo/scenes/mcp_test_scene*.tscn
+demo/scratch/
+
+# Local assistant/editor integrations; not part of the distributable addon.
+demo/addons/godot_ai/
+demo/addons/godot_mcp/
+demo/addons/orchestrator/
+
+# The dungeon demo uses a tiny curated subset of the CC0 KayKit pack.
+# Keep the full local pack ignored except for the referenced demo assets.
+demo/addons/kaykit_dungeon_remastered/**
+!demo/addons/kaykit_dungeon_remastered/
+!demo/addons/kaykit_dungeon_remastered/Assets/
+!demo/addons/kaykit_dungeon_remastered/Assets/LICENSE.txt
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/chest_gold.glb
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/chest_gold.glb.import
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/floor_tile_large.gltf.glb
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/floor_tile_large.gltf.glb.import
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/pillar.gltf.glb
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/pillar.gltf.glb.import
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/torch_mounted.gltf.glb
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/torch_mounted.gltf.glb.import
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/wall.gltf.glb
+!demo/addons/kaykit_dungeon_remastered/Assets/gltf/wall.gltf.glb.import
+
+# Godot may generate transient imports for documentation screenshots while editing.
+demo/addons/flow_nodes_editor/doc/*.png.import

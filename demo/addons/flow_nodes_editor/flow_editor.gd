@@ -282,32 +282,34 @@ func registerNodeType(node_type_name: String, file_name: String):
 		if file_name.begins_with("uid://"):
 			push_warning("Skipping uid-based node script reference: %s" % file_name)
 		return
-	var loaded_class := load(full_res_path) as Script
+	if not ResourceLoader.exists(full_res_path, "Script"):
+		push_warning("Skipping missing node script %s" % full_res_path)
+		return
+	var loaded_class : Script = ResourceLoader.load(full_res_path, "Script", ResourceLoader.CACHE_MODE_REPLACE) as Script
 	if not loaded_class:
-		push_error("Failed to load class %s" % full_res_path)
+		push_error("Failed to load class %s" % full_res_path )
 		return
 	if not loaded_class.can_instantiate():
-		push_error("Script %s failed to compile or cannot be instantiated" % full_res_path)
+		var reload_err := loaded_class.reload(false)
+		if reload_err != OK or not loaded_class.can_instantiate():
+			push_error("Script %s failed to compile or cannot be instantiated" % full_res_path)
+			return
+	print( "Loading class %s" % full_res_path )
+	var instance = loaded_class.new()
+	var flow_node := instance as FlowNodeBase
+	if not flow_node:
+		push_warning("Skipping non-FlowNode script %s" % full_res_path)
+		if instance is Object:
+			instance.free()
 		return
-	print("Loading class %s" % full_res_path)
-	var created = loaded_class.new()
-	if created == null:
-		push_error("Failed to instantiate script %s" % full_res_path)
-		return
-	var instance := created as FlowNodeBase
-	if not instance:
-		push_error("Script %s does not extend FlowNodeBase" % full_res_path)
-		if created is Object:
-			created.free()
-		return
-	var meta = instance.getMeta()
-	instance.free()
-	if typeof(meta) != TYPE_DICTIONARY:
-		push_error("Script %s returned invalid node meta data" % full_res_path)
+	var meta = flow_node.getMeta()
+	flow_node.free()
+	if meta.is_empty():
+		push_warning("Skipping node with empty metadata %s" % full_res_path)
 		return
 	meta.factory = loaded_class
 	#print( "Registering node type %s" % node_type_name )
-	node_types[node_type_name] = meta
+	node_types[ node_type_name ] = meta
 
 func registerInputNodeType( input ):
 	var node_type_name := "input_%s" % input.name
@@ -319,8 +321,13 @@ func registerOutputNodeType( output ):
 
 func scanAvailableNodes():
 	node_types.clear()
-	var files := ResourceLoader.list_directory(directory_path)
-	files.sort()
+	var files : PackedStringArray
+	var dir := DirAccess.open(directory_path)
+	if dir:
+		files = dir.get_files()
+	else:
+		files = ResourceLoader.list_directory(directory_path)
+	var node_files : PackedStringArray = []
 	for file in files:
 		var file_name := String(file)
 		if not _is_node_script_file_name(file_name):
@@ -328,7 +335,11 @@ func scanAvailableNodes():
 		var stem := file_name.get_basename()
 		if stem.ends_with("_settings"):
 			continue
-		registerNodeType(stem, file_name)
+		node_files.append(file_name)
+	node_files.sort()
+	for file in node_files:
+		var stem := file.get_basename()
+		registerNodeType( stem, file )
 
 	# Dynamic input_* and output_* templates depend on the graph being edited.
 	if current_resource:
@@ -423,14 +434,14 @@ func populatePopupMenu() -> PopupMenu:
 
 	# Categorized node submenus
 	var cat_map = {
-		"Attributes": ["add_attribute", "attribute_rename", "remove_attribute", "attribute_filter_range", "point_filter_range", "mutate_seed", "add_tags", "delete_tags", "replace_tags", "load_data_table", "data_table_row_to_attribute_set", "load_pcg_data_asset"],
+		"Attributes": ["add_attribute", "attribute_rename", "remove_attribute", "attribute_filter_range", "point_filter_range", "mutate_seed", "add_tags", "delete_tags", "replace_tags", "point_to_attribute_set", "attribute_set_to_point", "load_data_table", "data_table_row_to_attribute_set", "load_pcg_data_asset"],
 		"Math": ["math_op", "remap", "expression", "reduce", "boolean"],
 		"Splines": ["create_spline", "sample_spline", "distance", "scan_splines", "clip_points_by_polygon", "clip_paths", "polygon_operation", "split_splines", "create_surface_from_spline", "create_surface_from_polygon"],
 		"Meshes": ["sample_mesh", "scan_meshes", "point_from_mesh", "texture_sampler", "points_from_imported_scene", "load_alembic_file"],
-		"Spatial": ["substract", "difference", "intersection", "union", "point_neighborhood", "attribute_set_to_point", "point_to_attribute_set", "ray_cast", "physics_overlap_query", "physics_shape_sweep", "navigation_region_sampler"],
-		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "spawn_nodes", "apply_on_actor", "points_from_imported_scene", "load_alembic_file", "load_pcg_data_asset"],
-		"Generators": ["grid", "noise", "relax", "self_pruning", "dungeon_generator", "volume_sampler"],
-		"Utility": ["input", "output", "subgraph", "loop", "debug", "sort", "merge", "partition", "filter", "copy", "points_from_scene", "point_from_player_pawn", "points_from_tilemap", "points_from_gridmap", "get_points_count", "get_loop_index"]
+		"Spatial": ["substract", "difference", "intersection", "union", "point_neighborhood", "ray_cast", "physics_overlap_query", "physics_shape_sweep", "navigation_region_sampler"],
+		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "apply_on_actor", "points_from_imported_scene", "load_alembic_file", "load_pcg_data_asset"],
+		"Generators": ["grid", "grid_fill_bounds", "grid_connect_points", "grid_boundary", "noise", "relax", "self_pruning", "dungeon_generator", "volume_sampler"],
+		"Utility": ["input", "output", "subgraph", "loop", "debug", "sort", "merge", "merge_points", "partition", "filter", "copy", "copy_points", "transform_points", "points_from_scene", "point_from_player_pawn", "points_from_tilemap", "points_from_gridmap", "size", "get_points_count", "get_data_count", "get_entries_count", "get_loop_index"]
 	}
 	
 	# Helper to find category of a node template

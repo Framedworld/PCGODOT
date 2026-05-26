@@ -14,11 +14,8 @@ func _init():
 
 func execute( ctx : FlowData.EvaluationContext ):
 	var in_data : FlowData.Data = get_input(0)
-	if in_data == null:
-		if ctx.owner == null and Engine.is_editor_hint():
-			set_output(0, FlowData.Data.new())
-			return
-		setError("Input 'In' is not connected")
+	if in_data == null or in_data.size() == 0:
+		set_output(0, FlowData.Data.new())
 		return
 		
 	var in_trs = in_data.getTransformsStream()

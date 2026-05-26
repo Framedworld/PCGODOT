@@ -256,7 +256,7 @@ func refreshFromSettings():
 	if ( not settings.debug_enabled and draw_debug ) or settings.disabled:
 		draw_debug.cleanup_multimesh_direct()
 	
-	if settings and "data_type" in settings:
+	if settings and "data_type" in settings and node_template != "add_attribute" and node_template != "attribute_random":
 		var meta := getMeta()
 		var outs = meta.get("outs", [])
 		for idx in range(outs.size()):
@@ -265,8 +265,9 @@ func refreshFromSettings():
 				var data_type = out_data.get("data_type", FlowData.DataType.Invalid)
 				if data_type == FlowData.DataType.Invalid:
 					var color = getColorForFlowDataType(settings.data_type)
-					set_slot_color_right(idx, color)
-					set_slot_type_right(idx, settings.data_type)
+					if is_slot_enabled_right(idx):
+						set_slot_color_right(idx, color)
+						set_slot_type_right(idx, settings.data_type)
 	
 func setError( new_err : String ):
 	if new_err:
@@ -569,7 +570,7 @@ func initFromScript():
 				var data_type = out_data.get( "data_type", FlowData.DataType.Invalid )
 				if data_type == FlowData.DataType.Invalid and out_data.has( "type"):
 					data_type = getFlowDataTypeFromGdScriptType( out_data.type )
-				if data_type == FlowData.DataType.Invalid and settings and "data_type" in settings:
+				if data_type == FlowData.DataType.Invalid and settings and "data_type" in settings and node_template != "add_attribute" and node_template != "attribute_random":
 					data_type = settings.data_type
 				if data_type != FlowData.DataType.Invalid:
 					var color = getColorForFlowDataType( data_type )	

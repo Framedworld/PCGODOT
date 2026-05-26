@@ -36,14 +36,16 @@ func run( ctx : FlowData.EvaluationContext ):
 				# Create an empty container with the current offset (just before us adding our content)
 				var container = in_data.newContainerOfType( stream.data_type )
 				container.resize( offset )
-				var err = out_data.registerStream( stream_name, container )
+				var err = out_data.registerStream( stream_name, container, stream.data_type )
 				# print( "    Created new stream %s" % err )
 			
 			# Now... access it	
 			var out_stream = out_data.findStream( stream_name )
 
 			# else, if data_type matches...
-			if stream.data_type != out_stream.data_type:
+			if out_stream == null:
+				print("ERROR: Failed to find or register stream ", stream_name)
+			elif stream.data_type != out_stream.data_type:
 				print( "    Stream %s is already defined with type %s, but new data has the same stream with name %s" % [ stream_name, out_stream.data_type, stream.data_type ] )
 				# Try cast?
 								

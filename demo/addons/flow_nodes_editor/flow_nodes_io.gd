@@ -208,7 +208,7 @@ static func copySelectionToClipboard( editor : Control ):
 
 static func pasteNodeFromClipboard( editor : Control ):
 	var json_str = DisplayServer.clipboard_get( )
-	var dict := JSON.parse_string(json_str)
+	var dict = JSON.parse_string(json_str)
 	_paste_nodes_from_dict( dict, editor )
 
 static func duplicateSelecteddNodes( editor : Control ):
@@ -328,7 +328,38 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 	
 	# Feed subgraph inputs from input_data_map
 	for node in ordered_nodes:
+		var is_specific_input = false
+		var specific_input_name = ""
 		if node.node_template == "input":
+			if node.settings and node.settings.name != "" and node.settings.name != "in_val":
+				for param in graph.in_params:
+					if param and param.name == node.settings.name:
+						is_specific_input = true
+						specific_input_name = param.name
+						break
+		elif node.node_template.begins_with("input_"):
+			is_specific_input = true
+			specific_input_name = node.settings.name
+
+		if is_specific_input:
+			var val = input_data_map.get(specific_input_name, null)
+			if val:
+				# Create a new Data object to rename/register the stream under the input's name
+				var target_data = load("res://addons/flow_nodes_editor/flow_data.gd").Data.new()
+				for stream_name in val.streams:
+					var stream = val.streams[stream_name]
+					target_data.registerStream(stream_name, stream.container, stream.data_type)
+
+				# Ensure that the main stream is registered under input_name
+				if val.streams.size() > 0 and not target_data.hasStream(specific_input_name):
+					var main_stream_name = val.last_added_stream_name
+					if main_stream_name == "" or not val.hasStream(main_stream_name):
+						main_stream_name = val.streams.keys()[val.streams.size() - 1]
+					var main_stream = val.streams[main_stream_name]
+					target_data.registerStream(specific_input_name, main_stream.container, main_stream.data_type)
+				node.set_output(0, target_data)
+		elif node.node_template == "input":
+			# Generic multi-port inputs node
 			for i in range(graph.in_params.size()):
 				var param = graph.in_params[i]
 				if param:
@@ -351,24 +382,6 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 							container.resize(1)
 							container[0] = new_value
 					node.set_output(i, target_data)
-		elif node.node_template.begins_with("input_"):
-			var input_name = node.settings.name
-			var val = input_data_map.get(input_name, null)
-			if val:
-				# Create a new Data object to rename/register the stream under the input's name
-				var target_data = load("res://addons/flow_nodes_editor/flow_data.gd").Data.new()
-				for stream_name in val.streams:
-					var stream = val.streams[stream_name]
-					target_data.registerStream(stream_name, stream.container, stream.data_type)
-				
-				# Ensure that the main stream is registered under input_name
-				if val.streams.size() > 0 and not target_data.hasStream(input_name):
-					var main_stream_name = val.last_added_stream_name
-					if main_stream_name == "" or not val.hasStream(main_stream_name):
-						main_stream_name = val.streams.keys()[val.streams.size() - 1]
-					var main_stream = val.streams[main_stream_name]
-					target_data.registerStream(input_name, main_stream.container, main_stream.data_type)
-				node.set_output(0, target_data)
 
 	# Execute nodes in topological order
 	for node in ordered_nodes:
@@ -377,6 +390,11 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 			
 		node.inputs.clear()
 		var num_ins = node.getMeta().get("ins", []).size()
+		if node.node_template == "output":
+			if "out_params" in graph and graph.out_params.size() > 0:
+				num_ins = graph.out_params.size()
+			else:
+				num_ins = max(num_ins, 1)
 		node.inputs.resize(num_ins)
 		for conn in node.deps:
 			var src = instances.get(conn.from_node)
@@ -386,12 +404,37 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 					node.inputs[conn.to_port] = src_bulk[conn.from_port]
 					
 		node.preExecute(ctx)
-		node.execute(ctx)
+		if node.settings.disabled:
+			node.executedDisabled(ctx)
+		else:
+			node.run(ctx)
 		
 	# Collect output data
 	var outputs = {}
 	for node in node_list:
+		var is_specific_output = false
+		var specific_output_name = ""
 		if node.node_template == "output":
+			if node.settings and node.settings.name != "" and node.settings.name != "out_val":
+				if "out_params" in graph:
+					for param in graph.out_params:
+						if param and param.name == node.settings.name:
+							is_specific_output = true
+							specific_output_name = param.name
+							break
+		elif node.node_template.begins_with("output_"):
+			is_specific_output = true
+			specific_output_name = node.settings.name
+
+		if is_specific_output:
+			if node.generated_bulks.size() > 0:
+				var bulk = node.generated_bulks[node.generated_bulks.size() - 1]
+				if bulk.size() > 0:
+					outputs[specific_output_name] = bulk[0]
+			elif node.inputs.size() > 0 and node.inputs[0] != null:
+				outputs[specific_output_name] = node.inputs[0]
+		elif node.node_template == "output":
+			# Generic multi-port outputs node
 			if "out_params" in graph and graph.out_params.size() > 0:
 				for i in range(graph.out_params.size()):
 					var param = graph.out_params[i]
@@ -407,13 +450,4 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 						outputs[out_name] = bulk[0]
 				elif node.inputs.size() > 0 and node.inputs[0] != null:
 					outputs[out_name] = node.inputs[0]
-		elif node.node_template.begins_with("output_"):
-			var out_name = node.settings.name
-			if node.generated_bulks.size() > 0:
-				var bulk = node.generated_bulks[node.generated_bulks.size() - 1]
-				if bulk.size() > 0:
-					outputs[out_name] = bulk[0]
-			elif node.inputs.size() > 0 and node.inputs[0] != null:
-				outputs[out_name] = node.inputs[0]
 	return outputs
-

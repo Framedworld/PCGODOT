@@ -249,6 +249,9 @@ func blueNoiseSampling( ctx : FlowData.EvaluationContext, in_trs : FlowData.Tran
 		
 func execute( ctx : FlowData.EvaluationContext ):
 	var in_data : FlowData.Data = get_input(0)
+	if in_data == null or in_data.size() == 0:
+		set_output( 0, FlowData.Data.new() )
+		return
 	var in_trs : FlowData.TransformsStream = in_data.getTransformsStream()
 	if in_trs == null:
 		setError( "Input does not provide position, rotation or scale streams" )
