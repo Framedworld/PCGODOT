@@ -276,7 +276,11 @@ func registerOutputNodeType( output ):
 	registerNodeType( node_type_name, "output.gd")
 
 func scanAvailableNodes():
-	var files := ResourceLoader.list_directory(directory_path) 
+	var files: PackedStringArray
+	if DirAccess.dir_exists_absolute(directory_path):
+		files = DirAccess.get_files_at(directory_path)
+	else:
+		files = ResourceLoader.list_directory(directory_path)
 	for file in files:
 		var stem = file.get_basename()
 		if stem.ends_with("_settings"):

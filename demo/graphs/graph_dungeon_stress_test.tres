@@ -144,7 +144,7 @@ data = {
 "from_port": 0,
 "keep_alive": false,
 "to_node": "merge_all_floors",
-"to_port": 1
+"to_port": 0
 }, {
 "from_node": "merge_all_floors",
 "from_port": 0,
