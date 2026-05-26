@@ -1,0 +1,381 @@
+[gd_scene format=3 uid="uid://ba1j60nw8w44"]
+
+[ext_resource type="Script" uid="uid://d1krtmb1urldl" path="res://addons/flow_nodes_editor/flow_node.gd" id="1_y3m1v"]
+[ext_resource type="Resource" uid="uid://82l0lv6r0c63" path="res://demos/scene_3p_data.tres" id="2_dsas5"]
+[ext_resource type="Script" uid="uid://7g705n2fjnlr" path="res://addons/flow_nodes_editor/user_resource.gd" id="2_y3m1v"]
+[ext_resource type="Resource" uid="uid://duluelvd82ocy" path="res://demos/totem_data.tres" id="3_y3m1v"]
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="5_rmfun"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="6_4rrgr"]
+[ext_resource type="PackedScene" uid="uid://b6q4l56g02tqn" path="res://scenes/scene_3p.tscn" id="7_rmfun"]
+[ext_resource type="Script" uid="uid://dbtbo3vh5nl2c" path="res://scenes/scene_3p.gd" id="8_4rrgr"]
+[ext_resource type="PackedScene" uid="uid://bhacwufn13rf6" path="res://scenes/totem.tscn" id="9_djsgy"]
+[ext_resource type="Script" uid="uid://dqajkneld6h6" path="res://scenes/totem.gd" id="10_3b5bf"]
+
+[sub_resource type="Curve3D" id="Curve3D_pkeol"]
+bake_interval = 2.0
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 5, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, -5, 0, 0, 0, 0, 0, 0, 40, 0, 0),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[sub_resource type="Resource" id="Resource_1kchh"]
+script = ExtResource("6_4rrgr")
+data = {
+"frames": [],
+"links": [{
+"from_node": &"id_0001_scan_splines",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0002_sample_spline",
+"to_port": 0
+}, {
+"from_node": &"id_0002_sample_spline",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0003_transform",
+"to_port": 0
+}, {
+"from_node": &"id_0003_transform",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0005_match_and_set",
+"to_port": 0
+}, {
+"from_node": &"id_0004_assets",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0005_match_and_set",
+"to_port": 1
+}, {
+"from_node": &"id_0005_match_and_set",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0006_filter",
+"to_port": 0
+}, {
+"from_node": &"id_0006_filter",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0007_spawn_scenes",
+"to_port": 0
+}],
+"min_pos": Vector2(300, 120),
+"nodes": [{
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0003_transform",
+"position": Vector2(620, 180),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"offset_max": Vector3(0, 0, 0),
+"offset_min": Vector3(0, 0, 0),
+"random_seed": 12345,
+"rotation_local_space": true,
+"rotation_max": Vector3(0, 360, 0),
+"rotation_min": Vector3(0, 0, 0),
+"scale_max": Vector3(1, 1, 1),
+"scale_min": Vector3(1, 1, 1),
+"title": "Transform",
+"trace": false,
+"uniform_scale": true
+},
+"show_disconnected_inputs": false,
+"template": "transform"
+}, {
+"args_port": {},
+"name": &"id_0004_assets",
+"position": Vector2(0, 0),
+"settings": {
+"assets": Array[ExtResource("2_y3m1v")]([ExtResource("2_dsas5"), ExtResource("3_y3m1v")]),
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 12345,
+"title": "Assets",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "assets"
+}, {
+"args_port": {
+"Attributes": {
+"connected": true,
+"port": 1
+},
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0005_match_and_set",
+"position": Vector2(940, 180),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"match_attr": "",
+"random_seed": 12345,
+"title": "Match And Set",
+"trace": false,
+"weight_attr": "weight"
+},
+"show_disconnected_inputs": false,
+"template": "match_and_set"
+}, {
+"args_port": {},
+"name": &"id_0001_scan_splines",
+"position": Vector2(0, 180),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"group_name": "",
+"inspect_enabled": false,
+"random_seed": 12345,
+"required_meta_bool": &"",
+"title": "Scan Splines",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "scan_splines"
+}, {
+"args_port": {
+"Splines": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0002_sample_spline",
+"position": Vector2(320, 180),
+"settings": {
+"adjust_to_borders": true,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"distance_attribute": "distance",
+"fill_curve": false,
+"fill_mode": 0,
+"inspect_enabled": false,
+"num_random_samples": 10,
+"random_seed": 12345,
+"sample_segments_centers": false,
+"sampling_mode": 0,
+"title": "Sample Spline",
+"trace": false,
+"uniform_interval": 2.0
+},
+"show_disconnected_inputs": false,
+"template": "sample_spline"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"id_0006_filter",
+"position": Vector2(1240, 180),
+"settings": {
+"condition": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "front.z",
+"in_nameB": "0.0",
+"inspect_enabled": false,
+"random_seed": 12345,
+"threshold": 0.01,
+"title": "Filter Rotations",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "filter"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0007_spawn_scenes",
+"position": Vector2(1560, 180),
+"settings": {
+"assign_attributes": {},
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 12345,
+"scene": null,
+"scene_attribute": "scene",
+"title": "Spawn Scenes",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "spawn_scenes"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+view_zoom = 0.62092125
+view_offset = Vector2(257.37347, -282.01395)
+new_name_counter = 8
+
+[node name="DemoRandomSubscenes" type="Node3D" unique_id=450235488]
+
+[node name="Path3D" type="Path3D" parent="." unique_id=1121778474]
+curve = SubResource("Curve3D_pkeol")
+
+[node name="FlowGraphNode3D" type="Node3D" parent="." unique_id=626730821]
+script = ExtResource("1_y3m1v")
+graph = SubResource("Resource_1kchh")
+refresh_inputs = Callable()
+
+[node name="Scene_0000" type="Node3D" parent="FlowGraphNode3D" unique_id=864950378 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.9041591, 0, -0.6117012, 0, 2, 0, 0.6117012, 0, -1.9041591, 0, 0, 0)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0001" type="Node3D" parent="FlowGraphNode3D" unique_id=444725176 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.9790518, 0, -0.2887105, 0, 2, 0, 0.2887105, 0, -1.9790518, 2.5, 0, 1.25)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0002" type="Node3D" parent="FlowGraphNode3D" unique_id=1590710645 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-0.72346944, 0, -1.8645622, 0, 2, 0, 1.8645622, 0, -0.72346944, 3.75, 0, 1.875)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0003" type="Node3D" parent="FlowGraphNode3D" unique_id=572445433 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-0.1841941, 0, -1.9915, 0, 2, 0, 1.9915, 0, -0.1841941, 5, 0, 2.5)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0004" type="Node3D" parent="FlowGraphNode3D" unique_id=2144055419 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-1.8705617, 0, -0.70781285, 0, 2, 0, 0.70781285, 0, -1.8705617, 6.25, 0, 3.125)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0005" type="Node3D" parent="FlowGraphNode3D" unique_id=1785626299 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-1.9079475, 0, -0.5997803, 0, 2, 0, 0.5997803, 0, -1.9079475, 9.999999, 0, 4.9999995)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0006" type="Node3D" parent="FlowGraphNode3D" unique_id=1415238839 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.4058148, 0, -1.4225628, 0, 2, 0, 1.4225628, 0, -1.4058148, 12.499999, 0, 3.7500005)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0007" type="Node3D" parent="FlowGraphNode3D" unique_id=1061823949 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.8874645, 0, 0.66142094, 0, 2, 0, -0.66142094, 0, -1.8874645, 13.749998, 0, 3.125001)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0008" type="Node3D" parent="FlowGraphNode3D" unique_id=2116184900 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.974672, 0, -0.31728622, 0, 2, 0, 0.31728622, 0, -1.974672, 14.999998, 0, 2.500001)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0009" type="Node3D" parent="FlowGraphNode3D" unique_id=63206094 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-0.30879274, 0, -1.976018, 0, 2, 0, 1.976018, 0, -0.30879274, 16.249998, 0, 1.8750007)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0010" type="Node3D" parent="FlowGraphNode3D" unique_id=371719742 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-1.024199, 0, -1.7178522, 0, 2, 0, 1.7178522, 0, -1.024199, 21.25, 0, -0.62499964)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0011" type="Node3D" parent="FlowGraphNode3D" unique_id=788582573 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-0.40740994, 0, -1.9580647, 0, 2, 0, 1.9580647, 0, -0.40740994, 22.5, 0, -1.2499999)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0012" type="Node3D" parent="FlowGraphNode3D" unique_id=546454321 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-0.5698082, 0, 1.917112, 0, 2, 0, -1.917112, 0, -0.5698082, 23.749998, 0, -1.874999)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0013" type="Node3D" parent="FlowGraphNode3D" unique_id=517011106 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.7007304, 0, 1.0523859, 0, 2, 0, -1.0523859, 0, -1.7007304, 26.249998, 0, -3.1249993)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0014" type="Node3D" parent="FlowGraphNode3D" unique_id=1654453041 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-1.9988608, 0, -0.06749189, 0, 2, 0, 0.06749189, 0, -1.9988608, 27.499996, 0, -3.7499986)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0015" type="Node3D" parent="FlowGraphNode3D" unique_id=428447705 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.2709494, 0, 1.5442435, 0, 2, 0, -1.5442435, 0, -1.2709494, 28.749998, 0, -4.3749995)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0016" type="Node3D" parent="FlowGraphNode3D" unique_id=134514053 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-0.75483215, 0, -1.8520876, 0, 2, 0, 1.8520876, 0, -0.75483215, 29.999996, 0, -4.999998)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0017" type="Node3D" parent="FlowGraphNode3D" unique_id=655709236 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-0.2629634, 0, -1.9826372, 0, 2, 0, 1.9826372, 0, -0.2629634, 34.999996, 0, -2.5000017)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0018" type="Node3D" parent="FlowGraphNode3D" unique_id=213467844 instance=ExtResource("7_rmfun")]
+transform = Transform3D(-1.9048606, 0, 0.609513, 0, 2, 0, -0.609513, 0, -1.9048606, 36.25, 0, -1.8750005)
+script = ExtResource("8_4rrgr")
+metadata/flow_owner = &"id_0007_spawn_scenes"
+
+[node name="Scene_0019" type="Node3D" parent="FlowGraphNode3D" unique_id=581735395 groups=["totem"] instance=ExtResource("9_djsgy")]
+transform = Transform3D(-1.9908975, 0, -0.19059616, 0, 2, 0, 0.19059616, 0, -1.9908975, 38.750004, 0, -0.624999)
+script = ExtResource("10_3b5bf")
+metadata/flow_owner = &"id_0007_spawn_scenes"

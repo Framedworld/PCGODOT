@@ -13,7 +13,7 @@ func _init():
 func getTitle() -> String:
 	return MathOpNodeSettings.eOperation.keys()[settings.operation]	
 
-func execute( _ctx : FlowData.EvaluationContext ):
+func execute( ctx : FlowData.EvaluationContext ):
 	var time_start_init = Time.get_ticks_usec()	
 	
 	var is_single_arg = settings.isSingleArgument()
@@ -26,6 +26,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 	var in_dataA: FlowData.Data = get_input(0)
 	var sA = in_dataA.findStream( settings.in_nameA )
 	if sA == null:
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_data = FlowData.Data.new()
+			set_output(0, empty_data)
+			return
 		setError( "Input A %s not found" % [settings.in_nameA])
 		return
 	var num_elemsA := in_dataA.size()
@@ -46,6 +50,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 			sB = newFloatStream( in_dataA.size(), "Constant %s" % settings.in_nameB, v )
 		else:
 			if not is_single_arg:
+				if ctx.owner == null and Engine.is_editor_hint():
+					var empty_data = FlowData.Data.new()
+					set_output(0, empty_data)
+					return
 				setError( "Input B %s not found, and can't be interpreted as a constant number" % [settings.in_nameB])
 				return
 
@@ -58,10 +66,20 @@ func execute( _ctx : FlowData.EvaluationContext ):
 				sB = newFloatStream( num_elemsA, sA.name + " as float", sB.container[0])
 			elif sB.data_type == FlowData.DataType.Vector:
 				sB = newStream( num_elemsA, sA.name + " as vector3", sB.container[0], FlowData.DataType.Vector )
+			elif sB.data_type == FlowData.DataType.Color:
+				sB = newStream( num_elemsA, sA.name + " as color", sB.container[0], FlowData.DataType.Color )
 			else:
-				setError( "Num elements from A nd B do not match (%d vs %d). But In B data type must be a float or Vector3" % [num_elemsA, num_elemsB])
-				
+				if ctx.owner == null and Engine.is_editor_hint():
+					var empty_data = FlowData.Data.new()
+					set_output(0, empty_data)
+					return
+				setError( "Num elements from A nd B do not match (%d vs %d). But In B data type must be a float, Vector3, or Color" % [num_elemsA, num_elemsB])
+				return
 		else:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				return
 			setError( "Num elements from A nd B do not match (%d vs %d)" % [num_elemsA, num_elemsB])
 			return
 	var num_elems := num_elemsA
@@ -164,12 +182,21 @@ func execute( _ctx : FlowData.EvaluationContext ):
 						outC[i] = inA[i] - inB[i]
 				MathOpNodeSettings.eOperation.Divide:
 					for i in num_elems:
+						if inB[i] == 0.0:
+							setError( "Division by zero" )
+							return
 						outC[i] = inA[i] / inB[i]
 				MathOpNodeSettings.eOperation.Modulo:
 					for i in num_elems:
+						if inB[i] == 0.0:
+							setError( "Modulo by zero" )
+							return
 						outC[i] = fmod(inA[i], inB[i])
 				MathOpNodeSettings.eOperation.Frac:
 					for i in num_elems:
+						if inB[i] == 0.0:
+							setError( "Modulo by zero" )
+							return
 						outC[i] = fmod(inA[i], inB[i])
 				MathOpNodeSettings.eOperation.Min:
 					for i in num_elems:
@@ -184,6 +211,9 @@ func execute( _ctx : FlowData.EvaluationContext ):
 					for i in num_elems:
 						var iA := int( inA[i] + 1e-6 )
 						var iB := int( inB[i] + 1e-6 )
+						if iB == 0:
+							setError( "Modulo by zero" )
+							return
 						outI[i] = iA % iB
 				MathOpNodeSettings.eOperation.Pow:
 					for i in num_elems:
@@ -210,6 +240,9 @@ func execute( _ctx : FlowData.EvaluationContext ):
 						outC[i] = inA[i] - inB[i]
 				MathOpNodeSettings.eOperation.Divide:
 					for i in num_elems:
+						if inB[i].x == 0.0 or inB[i].y == 0.0 or inB[i].z == 0.0:
+							setError( "Division by zero" )
+							return
 						outC[i] = inA[i] / inB[i]
 				_:
 					setError( "Vector3 vs Vector3 operation not supported yet")
@@ -226,9 +259,63 @@ func execute( _ctx : FlowData.EvaluationContext ):
 						outC[i] = inA[i] * inB[i]
 				MathOpNodeSettings.eOperation.Divide:
 					for i in num_elems:
+						if inB[i] == 0.0:
+							setError( "Division by zero" )
+							return
 						outC[i] = inA[i] / inB[i]
 				_:
 					setError( "Vector3 vs Float operation not supported yet")
+			out_container = outC
+
+		elif sA.data_type == FlowData.DataType.Color && sB.data_type == FlowData.DataType.Color:
+			var inA : PackedColorArray = sA.container
+			var inB : PackedColorArray = sB.container
+			var outC := PackedColorArray()
+			outC.resize( num_elems )
+			
+			match settings.operation:
+				MathOpNodeSettings.eOperation.Multiply:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r * inB[i].r, inA[i].g * inB[i].g, inA[i].b * inB[i].b, inA[i].a * inB[i].a)
+				MathOpNodeSettings.eOperation.Add:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r + inB[i].r, inA[i].g + inB[i].g, inA[i].b + inB[i].b, inA[i].a + inB[i].a)
+				MathOpNodeSettings.eOperation.Substract:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r - inB[i].r, inA[i].g - inB[i].g, inA[i].b - inB[i].b, inA[i].a - inB[i].a)
+				MathOpNodeSettings.eOperation.Divide:
+					for i in num_elems:
+						if inB[i].r == 0.0 or inB[i].g == 0.0 or inB[i].b == 0.0 or inB[i].a == 0.0:
+							setError( "Division by zero" )
+							return
+						outC[i] = Color(inA[i].r / inB[i].r, inA[i].g / inB[i].g, inA[i].b / inB[i].b, inA[i].a / inB[i].a)
+				_:
+					setError( "Color vs Color operation not supported yet")
+			out_container = outC
+
+		elif sA.data_type == FlowData.DataType.Color && sB.data_type == FlowData.DataType.Float:
+			var inA : PackedColorArray = sA.container
+			var inB : PackedFloat32Array = sB.container
+			var outC := PackedColorArray()
+			outC.resize( num_elems )
+			match settings.operation:
+				MathOpNodeSettings.eOperation.Multiply:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r * inB[i], inA[i].g * inB[i], inA[i].b * inB[i], inA[i].a * inB[i])
+				MathOpNodeSettings.eOperation.Divide:
+					for i in num_elems:
+						if inB[i] == 0.0:
+							setError( "Division by zero" )
+							return
+						outC[i] = Color(inA[i].r / inB[i], inA[i].g / inB[i], inA[i].b / inB[i], inA[i].a / inB[i])
+				MathOpNodeSettings.eOperation.Add:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r + inB[i], inA[i].g + inB[i], inA[i].b + inB[i], inA[i].a + inB[i])
+				MathOpNodeSettings.eOperation.Substract:
+					for i in num_elems:
+						outC[i] = Color(inA[i].r - inB[i], inA[i].g - inB[i], inA[i].b - inB[i], inA[i].a - inB[i])
+				_:
+					setError( "Color vs Float operation not supported yet")
 			out_container = outC
 
 		elif sA.data_type == FlowData.DataType.Int && sB.data_type == FlowData.DataType.Int:
@@ -248,9 +335,15 @@ func execute( _ctx : FlowData.EvaluationContext ):
 						outC[i] = inA[i] - inB[i]
 				MathOpNodeSettings.eOperation.Divide:
 					for i in num_elems:
+						if inB[i] == 0:
+							setError( "Division by zero" )
+							return
 						outC[i] = inA[i] / inB[i]
 				MathOpNodeSettings.eOperation.ModuloInt:
 					for i in num_elems:
+						if inB[i] == 0:
+							setError( "Modulo by zero" )
+							return
 						outC[i] = inA[i] % inB[i]
 				MathOpNodeSettings.eOperation.Min:
 					for i in num_elems:
@@ -263,6 +356,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 			out_container = outC
 	
 		else:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				return
 			setError( "Input A and B have incompatible/unsupported data types (%s vs %s)" % [sA.data_type, sB.data_type])
 			return
 

@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cat3tikltna45"]
+[gd_scene format=3 uid="uid://cat3tikltna45"]
 
 [ext_resource type="Script" uid="uid://d1krtmb1urldl" path="res://addons/flow_nodes_editor/flow_node.gd" id="1_7j8ec"]
+[ext_resource type="Resource" uid="uid://c4vpm1wkhu67y" path="res://demos/subgraph_collapsed.tres" id="2_q6yce"]
 [ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="2_sy7n2"]
+[ext_resource type="Resource" uid="uid://bqulte7bdbneh" path="res://demos/subgraph_collapsed_1.tres" id="3_g72ru"]
 [ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="3_q6yce"]
 
 [sub_resource type="Resource" id="Resource_g72ru"]
@@ -9,153 +11,71 @@ script = ExtResource("3_q6yce")
 data = {
 "frames": [],
 "links": [{
-"from_node": &"id_0001_grid",
+"from_node": &"id_0006_subgraph",
 "from_port": 0,
 "keep_alive": false,
-"to_node": &"id_0002_transform",
-"to_port": 0
-}, {
-"from_node": &"id_0004_make_vector",
-"from_port": 0,
-"keep_alive": false,
-"to_node": &"id_0003_math_op",
-"to_port": 1
-}, {
-"from_node": &"id_0002_transform",
-"from_port": 0,
-"keep_alive": false,
-"to_node": &"id_0003_math_op",
+"to_node": &"id_0005_subgraph",
 "to_port": 0
 }],
-"min_pos": Vector2(100, 220),
+"min_pos": Vector2(-80, 240),
 "nodes": [{
-"args_port": {
-"In": {
-"connected": true,
-"port": 0
-}
-},
-"name": &"id_0002_transform",
-"position": Vector2(180, 0),
-"settings": {
-"debug_bulk": 0,
-"debug_color": Color(1, 1, 1, 1),
-"debug_enabled": false,
-"debug_mode": 0,
-"debug_modulate_by": "",
-"debug_output": 0,
-"debug_scale": 1.0,
-"disabled": true,
-"inspect_enabled": false,
-"offset_max": Vector3(1, 0, 0),
-"offset_min": Vector3(1, 0, 0),
-"random_seed": 1813447328,
-"rotation_max": Vector3(0, 0, 0),
-"rotation_min": Vector3(0, 0, 0),
-"scale_max": Vector3(1, 1, 1),
-"scale_min": Vector3(1, 1, 1),
-"title": "Transform",
-"trace": false,
-"uniform_scale": true
-},
-"show_disconnected_inputs": false,
-"template": "transform"
-}, {
 "args_port": {},
-"name": &"id_0001_grid",
+"name": &"id_0006_subgraph",
 "position": Vector2(0, 0),
 "settings": {
 "debug_bulk": 0,
 "debug_color": Color(1, 1, 1, 1),
 "debug_enabled": false,
-"debug_mode": 1,
-"debug_modulate_by": "",
-"debug_output": 0,
-"debug_scale": 0.675,
-"disabled": false,
-"inspect_enabled": false,
-"origin": Vector3(0, 0, 0),
-"random_seed": 3717709074,
-"rotation": Vector3(0, 0, 0),
-"size": 1.0,
-"step": Vector3(1, 1, 1),
-"title": "Grid",
-"trace": false,
-"x": 1,
-"y": 1,
-"z": 1
-},
-"show_disconnected_inputs": false,
-"template": "grid"
-}, {
-"args_port": {},
-"name": &"id_0004_make_vector",
-"position": Vector2(200, 140),
-"settings": {
-"debug_bulk": 0,
-"debug_color": Color(1, 1, 1, 1),
-"debug_enabled": false,
 "debug_mode": 0,
 "debug_modulate_by": "",
 "debug_output": 0,
 "debug_scale": 1.0,
 "disabled": false,
+"graph": ExtResource("3_g72ru"),
 "inspect_enabled": false,
-"out_name": "Vector",
-"random_seed": 3658767773,
-"title": "Make Vector",
-"trace": false,
-"x": 0.0,
-"y": 1.0,
-"z": 0.0
-},
-"show_disconnected_inputs": false,
-"template": "make_vector"
-}, {
-"args_port": {
-"In A": {
-"connected": true,
-"port": 0
-},
-"In B": {
-"connected": true,
-"port": 1
-}
-},
-"name": &"id_0003_math_op",
-"position": Vector2(380, 40),
-"settings": {
-"debug_bulk": 0,
-"debug_color": Color(1, 1, 1, 1),
-"debug_enabled": false,
-"debug_mode": 0,
-"debug_modulate_by": "",
-"debug_output": 0,
-"debug_scale": 1.0,
-"disabled": false,
-"in_nameA": "position",
-"in_nameB": "@last",
-"inspect_enabled": true,
-"operation": 0,
-"out_name": "position",
-"random_seed": 4095248465,
-"title": "Math",
+"random_seed": 2562027382,
+"title": "Subgraph",
 "trace": false
 },
 "show_disconnected_inputs": false,
-"template": "math_op"
+"template": "subgraph"
+}, {
+"args_port": {
+"in_id_0002_transform_In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0005_subgraph",
+"position": Vector2(460, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"graph": ExtResource("2_q6yce"),
+"inspect_enabled": false,
+"random_seed": 3698303702,
+"title": "Subgraph",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "subgraph"
 }],
 "type": "flow_graph_nodes",
 "version": 1
 }
-view_zoom = 1.0
-view_offset = Vector2(102, -12)
-new_name_counter = 4
-in_params = Array[ExtResource("2_sy7n2")]([])
+view_zoom = 1.2875421
+view_offset = Vector2(-187.84027, -120.39685)
+new_name_counter = 7
 
-[node name="DemoRegenerate" type="Node3D"]
+[node name="DemoRegenerate" type="Node3D" unique_id=635690407]
 
-[node name="FlowGraphNode3D" type="Node3D" parent="."]
+[node name="FlowGraphNode3D" type="Node3D" parent="." unique_id=512804987]
 script = ExtResource("1_7j8ec")
 graph = SubResource("Resource_g72ru")
 refresh_inputs = Callable()

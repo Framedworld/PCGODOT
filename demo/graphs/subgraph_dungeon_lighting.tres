@@ -1,0 +1,277 @@
+[gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://dm0wyk2gb7nft"]
+
+[ext_resource type="PackedScene" uid="uid://crgqm2tj13bya" path="res://addons/kaykit_dungeon_remastered/Assets/gltf/torch_mounted.gltf.glb" id="1_27qfm"]
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="2_sg46r"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="3_78h6u"]
+
+[sub_resource type="Resource" id="Resource_nfhhd"]
+script = ExtResource("2_sg46r")
+name = "points"
+
+[resource]
+script = ExtResource("3_78h6u")
+data = {
+"frames": [],
+"links": [{
+"from_node": &"input_points",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"filter_torch",
+"to_port": 0
+}, {
+"from_node": &"filter_torch",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"spawn_torch_meshes",
+"to_port": 0
+}, {
+"from_node": &"filter_torch",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"add_torch_color",
+"to_port": 0
+}, {
+"from_node": &"add_torch_color",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"add_light_energy",
+"to_port": 0
+}, {
+"from_node": &"add_light_energy",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"add_shadow_enabled",
+"to_port": 0
+}, {
+"from_node": &"add_shadow_enabled",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"spawn_lights",
+"to_port": 0
+}],
+"min_pos": Vector2(0, 150),
+"nodes": [{
+"args_port": {},
+"name": &"input_points",
+"position": Vector2(0, 50),
+"settings": {
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "points",
+"random_seed": 1390677869,
+"title": "Input",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "input"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"filter_torch",
+"position": Vector2(300, 50),
+"settings": {
+"condition": 0,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "type",
+"in_nameB": "3",
+"inspect_enabled": false,
+"random_seed": 3540292562,
+"threshold": 0.1,
+"title": "Filter",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "filter"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"add_light_energy",
+"position": Vector2(850, 150),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 1.8,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 0,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "light_energy",
+"random_seed": 2056052316,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"add_shadow_enabled",
+"position": Vector2(1100, 150),
+"settings": {
+"cte_bool": true,
+"cte_color": Color(1, 1, 1, 1),
+"cte_float": 0.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 4,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "shadow_enabled",
+"random_seed": 2097580966,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"spawn_lights",
+"position": Vector2(1350, 150),
+"settings": {
+"assign_attributes": {
+"light_color": "torch_color",
+"light_energy": "light_energy",
+"shadow_enabled": "shadow_enabled"
+},
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"node_class": "OmniLight3D",
+"random_seed": 2457235974,
+"title": "Spawn Nodes",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "spawn_nodes"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"spawn_torch_meshes",
+"position": Vector2(600, 0),
+"settings": {
+"assign_attributes": {},
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"random_seed": 1274504340,
+"scene": ExtResource("1_27qfm"),
+"scene_attribute": "",
+"title": "Spawn Scenes",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "spawn_scenes"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"add_torch_color",
+"position": Vector2(600, 150),
+"settings": {
+"cte_bool": false,
+"cte_color": Color(1, 0.45, 0.08, 1),
+"cte_float": 0.0,
+"cte_int": 0,
+"cte_resource": null,
+"cte_string": "",
+"cte_vector": Vector3(0, 0, 0),
+"data_type": 3,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "torch_color",
+"random_seed": 2425448530,
+"title": "Add Attribute",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "add_attribute"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+view_zoom = 0.82644624
+view_offset = Vector2(-68.36743, -290.3036)
+new_name_counter = 3
+in_params = Array[ExtResource("2_sg46r")]([SubResource("Resource_nfhhd")])
+out_params = Array[ExtResource("2_sg46r")]([])

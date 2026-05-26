@@ -20,8 +20,11 @@ GDKdTree::~GDKdTree() {
 }
 
 int GDKdTree::find_nearest_idx( const Vector3& pos ) const {
+  if (!tree || all.points.size() == 0) {
+    return -1;
+  }
   nanoflann::KNNResultSet<float> results(1);
-  size_t return_idx;
+  size_t return_idx = -1;
   float out_distance;
   results.init(&return_idx, &out_distance);
   tree->findNeighbors(results, &pos.x, nanoflann::SearchParams(3));
@@ -35,9 +38,14 @@ PackedInt32Array GDKdTree::find_nearest_indices( const PackedVector3Array& in_po
   PackedInt32Array idxs;
   idxs.resize( num_elems );
 
+  if (!tree || all.points.size() == 0) {
+    idxs.fill(-1);
+    return idxs;
+  }
+
   // Setup 
   nanoflann::KNNResultSet<float> results(1);
-  size_t nearest_idx;
+  size_t nearest_idx = -1;
   float out_distance;
 
   // This could be executed in parallel
@@ -53,7 +61,12 @@ PackedInt32Array GDKdTree::find_nearest_indices( const PackedVector3Array& in_po
 
 void GDKdTree::set_points( const PackedVector3Array& in_pos ) {
   all.points = in_pos;
-  if( tree )
+  if( tree ) {
     delete tree;
+    tree = nullptr;
+  }
+  if (in_pos.size() == 0) {
+    return;
+  }
   tree = new jTree(3, all, nanoflann::KDTreeSingleIndexAdaptorParams());
 }

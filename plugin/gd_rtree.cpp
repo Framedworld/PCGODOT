@@ -33,7 +33,7 @@ bool GDRTree::add( const PackedVector3Array& in_centers, const PackedVector3Arra
   const Vector3 *centers_data = in_centers.ptr();
   const Vector3 *sizes_data = in_sizes.ptr();
 
-  int id = 0;
+  int id = size;
   const size_t i_max = in_centers.size();
   for( size_t i=0; i<i_max; ++i, ++id ) {
     const float* center = &in_centers[i].x;
@@ -72,27 +72,29 @@ Dictionary GDRTree::selfPrune( const PackedVector3Array& in_centers, const Packe
     const Vector3 *centers_data = in_centers.ptr();
     const Vector3 *sizes_data = in_sizes.ptr();
 
-    int id = 0;
-    for( int i=0; i<i_max; ++i, ++id ) {
+    int insert_id = size;
+    for( int i=0; i<i_max; ++i ) {
       const float* center = &in_centers[i].x;
       const float* size = &sizes_data[i].x;
       float pmin[3] = { center[0] - size[0] * 0.5f, center[1] - size[1] * 0.5f, center[2] - size[2] * 0.5f };
       float pmax[3] = { center[0] + size[0] * 0.5f, center[1] + size[1] * 0.5f, center[2] + size[2] * 0.5f };
-      dbg( "selfPrune.Testing ", id ); //, " : ", center[0], ", ", center[1], ", ", center[2], ", ", size[0], ", ", size[1], ", ", size[2] );
+      dbg( "selfPrune.Testing ", i ); //, " : ", center[0], ", ", center[1], ", ", center[2], ", ", size[0], ", ", size[1], ", ", size[2] );
 
       // Check if center + Size is empty
       if( tree.Search(pmin, pmax, [&](const int& id) -> bool {
         dbg( "  Overlaps of ", i, " with!! ", id );
         return true;
         })) {
-        bb_my_idxs_overlapped_by_others.set_bit( id, true );
+        bb_my_idxs_overlapped_by_others.set_bit( i, true );
         continue;
       }
 
       // If no intersection found... insert it
-      tree.Insert(pmin, pmax, i);
+      tree.Insert(pmin, pmax, insert_id);
+      insert_id += 1;
       tree_size += 1;
     }
+    size = insert_id;
     result = true;
   }
   return createResult( result, i_max, bb_my_idxs_overlapped_by_others, return_overlapped);

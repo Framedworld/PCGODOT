@@ -53,6 +53,106 @@ func addDistanceAttribute( output : FlowData.Data, target_points : PackedVector3
 		sdists[src_idx] = ( spos[src_idx] - target_points[nearest_idx] ).length()
 	if settings.trace: print( "spline.dist: %f" % [ Time.get_ticks_usec() - time_start_distance ])	
 
+func randomFillCurveInXZ(poly2d : PackedVector2Array, bounds : Rect2, count : int, rng : RandomNumberGenerator) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	if poly2d.size() < 3:
+		return points
+	var attempts = 0
+	var max_attempts = count * 20
+	while points.size() < count and attempts < max_attempts:
+		attempts += 1
+		var p = Vector2(
+			rng.randf_range(bounds.position.x, bounds.end.x),
+			rng.randf_range(bounds.position.y, bounds.end.y)
+		)
+		if Geometry2D.is_point_in_polygon(p, poly2d):
+			points.append(p)
+	return points
+
+func poissonFillCurveInXZ(poly2d : PackedVector2Array, bounds : Rect2, min_dist : float, rng : RandomNumberGenerator) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	if poly2d.size() < 3:
+		return points
+	
+	var cell_size = min_dist / 1.41421356
+	var grid_width = int(ceil(bounds.size.x / cell_size)) + 1
+	var grid_height = int(ceil(bounds.size.y / cell_size)) + 1
+	
+	var grid = []
+	grid.resize(grid_width)
+	for x in range(grid_width):
+		grid[x] = []
+		grid[x].resize(grid_height)
+		grid[x].fill(-1)
+		
+	var active_list := []
+	var start_found = false
+	var start_p : Vector2
+	for attempt in range(100):
+		var p = Vector2(
+			rng.randf_range(bounds.position.x, bounds.end.x),
+			rng.randf_range(bounds.position.y, bounds.end.y)
+		)
+		if Geometry2D.is_point_in_polygon(p, poly2d):
+			start_p = p
+			start_found = true
+			break
+			
+	if not start_found:
+		return points
+		
+	points.append(start_p)
+	active_list.append(0)
+	
+	var gx = int((start_p.x - bounds.position.x) / cell_size)
+	var gy = int((start_p.y - bounds.position.y) / cell_size)
+	grid[gx][gy] = 0
+	
+	while active_list.size() > 0:
+		var active_idx = rng.randi() % active_list.size()
+		var point_idx = active_list[active_idx]
+		var base_p = points[point_idx]
+		var found_candidate = false
+		
+		for k in range(30):
+			var angle = rng.randf() * TAU
+			var dist = rng.randf_range(min_dist, 2.0 * min_dist)
+			var candidate = base_p + Vector2(cos(angle), sin(angle)) * dist
+			
+			if not bounds.has_point(candidate):
+				continue
+				
+			if not Geometry2D.is_point_in_polygon(candidate, poly2d):
+				continue
+				
+			var cgx = int((candidate.x - bounds.position.x) / cell_size)
+			var cgy = int((candidate.y - bounds.position.y) / cell_size)
+			
+			var too_close = false
+			for nx in range(max(0, cgx - 2), min(grid_width, cgx + 3)):
+				for ny in range(max(0, cgy - 2), min(grid_height, cgy + 3)):
+					var neighboring_idx = grid[nx][ny]
+					if neighboring_idx != -1:
+						var other_p = points[neighboring_idx]
+						if (candidate - other_p).length_squared() < min_dist * min_dist:
+							too_close = true
+							break
+				if too_close:
+					break
+					
+			if not too_close:
+				points.append(candidate)
+				var new_idx = points.size() - 1
+				active_list.append(new_idx)
+				grid[cgx][cgy] = new_idx
+				found_candidate = true
+				break
+				
+		if not found_candidate:
+			active_list.remove_at(active_idx)
+			
+	return points
+
 func rasterizeCurveInXZ( curve : Curve3D, uniform_interval : float, base : int ) -> PackedVector2Array:
 	var points := curve.tessellate(2, 5)
 	var points_size := points.size()
@@ -109,6 +209,9 @@ func execute( ctx : FlowData.EvaluationContext ):
 	var trace := settings.trace
 		
 	var in_data = get_input(0)
+	if in_data == null:
+		setError("Input 'Splines' is not connected")
+		return null
 	var path3d_nodes = in_data.getContainerChecked( "node", FlowData.DataType.NodePath )
 	if path3d_nodes == null:
 		setError( "Input are not splines")
@@ -133,7 +236,23 @@ func execute( ctx : FlowData.EvaluationContext ):
 			var curve : Curve3D = path_3d.curve
 			var base = spos.size()
 
-			var new_points := rasterizeCurveInXZ( curve, uniform_interval, base )
+			var new_points : PackedVector2Array
+			var fill_mode = getSettingValue( ctx, "fill_mode" )
+			if fill_mode == 1: # Random
+				var fill_count = getSettingValue( ctx, "num_random_samples" )
+				var rng = RandomNumberGenerator.new()
+				rng.seed = settings.random_seed
+				var poly2d = points3d_to_polygon2d(curve.tessellate(2, 5))
+				var bounds = get_polygon_bounds(poly2d)
+				new_points = randomFillCurveInXZ(poly2d, bounds, fill_count, rng)
+			elif fill_mode == 2: # Poisson
+				var rng = RandomNumberGenerator.new()
+				rng.seed = settings.random_seed
+				var poly2d = points3d_to_polygon2d(curve.tessellate(2, 5))
+				var bounds = get_polygon_bounds(poly2d)
+				new_points = poissonFillCurveInXZ(poly2d, bounds, uniform_interval, rng)
+			else: # Grid (0)
+				new_points = rasterizeCurveInXZ( curve, uniform_interval, base )
 			
 			for hit in new_points:
 				var hit3d = path_3d.transform * Vector3( hit.x, 0.0, hit.y )
@@ -150,52 +269,78 @@ func execute( ctx : FlowData.EvaluationContext ):
 				addDistanceAttribute( output, border_points )
 		
 	else:
-		for path_3d in path3d_nodes:
-			var curve : Curve3D = path_3d.curve
-			curve.bake_interval = uniform_interval
-			var base = spos.size()
-			var curve_length := curve.get_baked_length()
-			var num_samples = curve.get_baked_points().size()
-			var expected_length = num_samples * uniform_interval
-			var num_samples_float : float = num_samples - 1
-			#print( "  curve: Base:%d Length:%f vs %f Samples:%d" % [ base, curve_length, expected_length, num_samples ] )
-			if not adjust_to_borders:
-				num_samples_float = ( curve_length / uniform_interval )
-				num_samples = int( num_samples_float ) + 1
-			
-			if getSettingValue( ctx, "sample_segments_centers" ):
-				if num_samples > 2:
-					num_samples -= 1
+		var sampling_mode = getSettingValue( ctx, "sampling_mode" )
+		if sampling_mode == 1: # Random
+			var num_random_samples = getSettingValue( ctx, "num_random_samples" )
+			if num_random_samples > 0:
+				var rng := RandomNumberGenerator.new()
+				rng.seed = settings.random_seed
+				for path_3d in path3d_nodes:
+					var curve : Curve3D = path_3d.curve
+					var curve_length := curve.get_baked_length()
+					var base = spos.size()
+					spos.resize( base + num_random_samples )
+					srot.resize( base + num_random_samples )
+					ssize.resize( base + num_random_samples )
+					var sample_size = Vector3.ONE * uniform_interval
+					for idx in range( num_random_samples ):
+						var offset = rng.randf() * curve_length
+						var t : Transform3D = curve.sample_baked_with_rotation( offset )
+						spos[base + idx] = path_3d.transform * t.origin
+						
+						var b : Basis = path_3d.transform.basis * t.basis
+						srot[base + idx] = FlowData.basisToEuler( b )
+						ssize[base + idx] = sample_size
+		else: # Uniform
+			for path_3d in path3d_nodes:
+				var curve : Curve3D = path_3d.curve
+				curve.bake_interval = uniform_interval
+				var base = spos.size()
+				var curve_length := curve.get_baked_length()
+				var num_samples = curve.get_baked_points().size()
+				var expected_length = num_samples * uniform_interval
+				var num_samples_float : float = num_samples - 1
+				#print( "  curve: Base:%d Length:%f vs %f Samples:%d" % [ base, curve_length, expected_length, num_samples ] )
+				if not adjust_to_borders:
+					num_samples_float = ( curve_length / uniform_interval )
+					num_samples = int( num_samples_float ) + 1
+				
+				if num_samples <= 0:
+					continue
+				
+				if getSettingValue( ctx, "sample_segments_centers" ):
+					if num_samples > 2:
+						num_samples -= 1
+						spos.resize( base + num_samples )
+						srot.resize( base + num_samples )
+						ssize.resize( base + num_samples )
+						for idx in range( num_samples ):
+							var offset0 = idx * curve_length / float(num_samples )
+							var offset1 = ( idx + 1 ) * curve_length / float(num_samples )
+							var t0 : Transform3D = curve.sample_baked_with_rotation( offset0 )
+							var t1 : Transform3D = curve.sample_baked_with_rotation( offset1 )
+							var p0 : Vector3 = path_3d.transform * t0.origin
+							var p1 : Vector3 = path_3d.transform * t1.origin
+							spos[base + idx] = ( p0 + p1 ) * 0.5
+							var front = p1 - p0
+							var b = Basis.looking_at( front )
+							srot[base + idx] = FlowData.basisToEuler( b )
+							ssize[base + idx] = Vector3( 1.0, 1.0, front.length() )
+				else:
 					spos.resize( base + num_samples )
 					srot.resize( base + num_samples )
 					ssize.resize( base + num_samples )
+					var sample_size = Vector3.ONE * uniform_interval
 					for idx in range( num_samples ):
-						var offset0 = idx * curve_length / float(num_samples )
-						var offset1 = ( idx + 1 ) * curve_length / float(num_samples )
-						var t0 : Transform3D = curve.sample_baked_with_rotation( offset0 )
-						var t1 : Transform3D = curve.sample_baked_with_rotation( offset1 )
-						var p0 : Vector3 = path_3d.transform * t0.origin
-						var p1 : Vector3 = path_3d.transform * t1.origin
-						spos[base + idx] = ( p0 + p1 ) * 0.5
-						var front = p1 - p0
-						var b = Basis.looking_at( front )
+						var offset = 0.0 if num_samples_float <= 0.0 else idx * curve_length / num_samples_float
+						var t : Transform3D = curve.sample_baked_with_rotation( offset )
+						spos[base + idx] = path_3d.transform * t.origin
+						
+						var b : Basis = path_3d.transform.basis * t.basis
 						srot[base + idx] = FlowData.basisToEuler( b )
-						ssize[base + idx] = Vector3( 1.0, 1.0, front.length() )
-			else:
-				spos.resize( base + num_samples )
-				srot.resize( base + num_samples )
-				ssize.resize( base + num_samples )
-				var sample_size = Vector3.ONE * uniform_interval
-				for idx in range( num_samples ):
-					var offset = idx * curve_length / num_samples_float
-					var t : Transform3D = curve.sample_baked_with_rotation( offset )
-					spos[base + idx] = path_3d.transform * t.origin
-					
-					var b : Basis = path_3d.transform.basis * t.basis
-					srot[base + idx] = FlowData.basisToEuler( b )
-					ssize[base + idx] = sample_size
+						ssize[base + idx] = sample_size
 
-					#print( "%d : %s %s" % [ idx, spos[ base+idx], srot[ base+idx ] ])
+						#print( "%d : %s %s" % [ idx, spos[ base+idx], srot[ base+idx ] ])
 
 		uniform_interval = 1.0
 				

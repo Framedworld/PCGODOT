@@ -2,25 +2,25 @@
 
 - [ ] Demos
 	- [X] Wall of rocks, picking a random point on the top
-	- [ ] Path with random subscene, filter by attribute with rotations
+	- [X] Path with random subscene, filter by attribute with rotations
 	- [X] Sample surface of a mesh, create flowers or similar in the horizontal ground
 	- [X] Mark an area with a spline, have a path remove all flowers
 		- [X] Change density based on the distance to the spline contour
 	- [X] Bridge
-- [ ] Match & Set is not taking into account the weight attr
+- [X] Match & Set is not taking into account the weight attr
 - [ ] Integrate with HTerrain plugin
 - [ ] Subgraphs / Loops?
-- [ ] Sample spline along N random positions
-- [ ] Discard points too close to hard edges of a mesh
-- [ ] Add noise to position <-- Improve noise
-- [ ] Spline sampling interior in non grid pattern
-- [ ] Allow to filter rows in the inspector
-- [ ] Support for virtual streams like front, up, right from rotation.
-- [ ] Support for Vector4/Color/PackedVector4Array -> Read SubAttributes / MathNode / SetAttribute / Use in Debug if exists
-- [ ] undo/redo
-- [ ] Test random colors for each node -> Graph Editor Settings
-- [ ] add_attribute, if output is single stream with a type, set the color. Maybe make it generic
-- [ ] Allow the popup menu to have sections. Custom SubGraphs/Resources/Folders maybe
+- [X] Sample spline along N random positions
+- [X] Discard points too close to hard edges of a mesh
+- [X] Add noise to position <-- Improve noise
+- [X] Spline sampling interior in non grid pattern
+- [X] Allow to filter rows in the inspector
+- [X] Support for virtual streams like front, up, right from rotation.
+- [X] Support for Vector4/Color/PackedVector4Array -> Read SubAttributes / MathNode / SetAttribute / Use in Debug if exists
+- [X] undo/redo
+- [X] Test random colors for each node -> Graph Editor Settings
+- [X] add_attribute, if output is single stream with a type, set the color. Maybe make it generic
+- [X] Allow the popup menu to have sections. Custom SubGraphs/Resources/Folders maybe
 - [X] Transform. Allow rotation to be in local space
 - [X] The inspected flag is saved, but it's now never restored
 - [X] Support for multiple data in stream evaluation?

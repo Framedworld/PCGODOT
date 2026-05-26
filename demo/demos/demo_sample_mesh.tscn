@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://gr6wud0eqi2g"]
+[gd_scene format=3 uid="uid://gr6wud0eqi2g"]
 
 [ext_resource type="Script" uid="uid://d1krtmb1urldl" path="res://addons/flow_nodes_editor/flow_node.gd" id="1_k33i0"]
 [ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="2_0ulet"]
@@ -27,8 +27,34 @@ data = {
 "to_node": &"id_0020_sample_mesh",
 "to_port": 0
 }],
-"min_pos": Vector2(80, 260),
+"min_pos": Vector2(-180, 160),
 "nodes": [{
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0013_self_pruning",
+"position": Vector2(660, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"keep_self_intersections": false,
+"random_seed": 1138506605,
+"title": "Self Pruning",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "self_pruning"
+}, {
 "args_port": {
 "In A": {
 "connected": true,
@@ -40,13 +66,15 @@ data = {
 }
 },
 "name": &"id_0015_filter",
-"position": Vector2(520, 0),
+"position": Vector2(960, 0),
 "settings": {
 "condition": 2,
+"debug_bulk": 0,
 "debug_color": Color(1, 1, 1, 1),
 "debug_enabled": true,
 "debug_mode": 0,
 "debug_modulate_by": "",
+"debug_output": 0,
 "debug_scale": 1.0,
 "disabled": false,
 "in_nameA": "Pitch",
@@ -60,65 +88,16 @@ data = {
 "show_disconnected_inputs": false,
 "template": "filter"
 }, {
-"args_port": {
-"In": {
-"connected": true,
-"port": 0
-}
-},
-"name": &"id_0013_self_pruning",
-"position": Vector2(320, 0),
-"settings": {
-"debug_color": Color(1, 1, 1, 1),
-"debug_enabled": false,
-"debug_mode": 0,
-"debug_modulate_by": "",
-"debug_scale": 1.0,
-"disabled": false,
-"inspect_enabled": false,
-"keep_self_intersections": false,
-"random_seed": 1138506605,
-"title": "Self Pruning",
-"trace": false
-},
-"show_disconnected_inputs": false,
-"template": "self_pruning"
-}, {
-"args_port": {
-"Meshes": {
-"connected": true,
-"port": 0
-}
-},
-"name": &"id_0020_sample_mesh",
-"position": Vector2(140, 0),
-"settings": {
-"debug_color": Color(1, 1, 1, 1),
-"debug_enabled": false,
-"debug_mode": 0,
-"debug_modulate_by": "",
-"debug_scale": 1.0,
-"density": 0.5,
-"disabled": false,
-"inspect_enabled": false,
-"mode": 0,
-"num_samples": 100,
-"point_size": 1.0,
-"random_seed": 788672317,
-"title": "Sample Mesh",
-"trace": false
-},
-"show_disconnected_inputs": false,
-"template": "sample_mesh"
-}, {
 "args_port": {},
 "name": &"id_0041_scan_meshes",
 "position": Vector2(0, 0),
 "settings": {
+"debug_bulk": 0,
 "debug_color": Color(1, 1, 1, 1),
 "debug_enabled": false,
 "debug_mode": 0,
 "debug_modulate_by": "",
+"debug_output": 0,
 "debug_scale": 1.0,
 "disabled": false,
 "group_name": "",
@@ -130,14 +109,73 @@ data = {
 },
 "show_disconnected_inputs": false,
 "template": "scan_meshes"
+}, {
+"args_port": {
+"Meshes": {
+"connected": true,
+"port": 0
+},
+"density": {
+"connected": false,
+"port": 2
+},
+"discard_hard_edges": {
+"connected": false,
+"port": 5
+},
+"hard_edge_angle_threshold": {
+"connected": false,
+"port": 6
+},
+"hard_edge_distance_threshold": {
+"connected": false,
+"port": 7
+},
+"mode": {
+"connected": false,
+"port": 1
+},
+"num_samples": {
+"connected": false,
+"port": 3
+},
+"point_size": {
+"connected": false,
+"port": 4
+}
+},
+"name": &"id_0020_sample_mesh",
+"position": Vector2(280, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"density": 0.5,
+"disabled": false,
+"discard_hard_edges": true,
+"hard_edge_angle_threshold": 43.65000000002328,
+"hard_edge_distance_threshold": 2.1700000000419095,
+"inspect_enabled": false,
+"mode": 0,
+"num_samples": 100,
+"point_size": 1.0,
+"random_seed": 788672317,
+"title": "Sample Mesh",
+"trace": false
+},
+"show_disconnected_inputs": true,
+"template": "sample_mesh"
 }],
 "type": "flow_graph_nodes",
 "version": 1
 }
-view_zoom = 0.826446
-view_offset = Vector2(10.4509, -110.244)
-new_name_counter = 43
-in_params = Array[ExtResource("2_0ulet")]([])
+view_zoom = 0.75131446
+view_offset = Vector2(-210.20654, -301.02438)
+new_name_counter = 44
 metadata/_custom_type_script = "uid://j6vjeb5cjjoy"
 
 [sub_resource type="TextMesh" id="TextMesh_12aa2"]
@@ -147,18 +185,18 @@ pixel_size = 0.9558
 curve_step = 0.4
 depth = 2.875
 
-[node name="DemoMeshScan" type="Node3D"]
+[node name="DemoMeshScan" type="Node3D" unique_id=939313327]
 
-[node name="FlowGraphNode3D" type="Node3D" parent="."]
+[node name="FlowGraphNode3D" type="Node3D" parent="." unique_id=1389626437]
 script = ExtResource("1_k33i0")
 graph = SubResource("Resource_u7ew1")
 refresh_inputs = Callable()
 metadata/_custom_type_script = "uid://d1krtmb1urldl"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2069674873]
 transform = Transform3D(1.81633, 0.00448315, -0.0210605, -0.00549875, 1.46987, 0.055665, 0.00534047, -0.0113191, 7.22015, 0, 0, 0)
 mesh = SubResource("TextMesh_12aa2")
 
-[node name="RefPoint" type="Node3D" parent="." groups=["RefPoints"]]
+[node name="RefPoint" type="Node3D" parent="." unique_id=999538709 groups=["RefPoints"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9277, 9.07219, -1.45222)
 metadata/Radius = 2.76

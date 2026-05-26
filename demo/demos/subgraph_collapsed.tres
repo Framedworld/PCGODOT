@@ -1,0 +1,207 @@
+[gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://c4vpm1wkhu67y"]
+
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="1_011hi"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="2_8bhj2"]
+
+[sub_resource type="Resource" id="Resource_s3iqj"]
+script = ExtResource("1_011hi")
+name = "in_id_0002_transform_In"
+
+[resource]
+script = ExtResource("2_8bhj2")
+data = {
+"frames": [],
+"links": [{
+"from_node": &"id_0004_make_vector",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0003_math_op",
+"to_port": 1
+}, {
+"from_node": &"id_0002_transform",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0003_math_op",
+"to_port": 0
+}, {
+"from_node": &"input_in_id_0002_transform_In",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0002_transform",
+"to_port": 0
+}, {
+"from_node": &"id_0003_math_op",
+"from_port": 0,
+"keep_alive": false,
+"to_node": &"id_0001_output",
+"to_port": 0
+}],
+"min_pos": Vector2(-80, 220),
+"nodes": [{
+"args_port": {},
+"name": &"input_in_id_0002_transform_In",
+"position": Vector2(0, 0),
+"settings": {
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "in_id_0002_transform_In",
+"random_seed": 3398396264,
+"title": "Input",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "input_in_id_0002_transform_In"
+}, {
+"args_port": {
+"In A": {
+"connected": true,
+"port": 0
+},
+"In B": {
+"connected": true,
+"port": 1
+}
+},
+"name": &"id_0003_math_op",
+"position": Vector2(620, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"in_nameA": "position",
+"in_nameB": "@last",
+"inspect_enabled": false,
+"operation": 0,
+"out_name": "position",
+"random_seed": 4095248465,
+"title": "Math",
+"trace": false
+},
+"show_disconnected_inputs": false,
+"template": "math_op"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+}
+},
+"name": &"id_0002_transform",
+"position": Vector2(360, 0),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": true,
+"inspect_enabled": false,
+"offset_max": Vector3(1, 0, 0),
+"offset_min": Vector3(1, 0, 0),
+"random_seed": 1813447328,
+"rotation_local_space": false,
+"rotation_max": Vector3(0, 0, 0),
+"rotation_min": Vector3(0, 0, 0),
+"scale_max": Vector3(1, 1, 1),
+"scale_min": Vector3(1, 1, 1),
+"title": "Transform",
+"trace": false,
+"uniform_scale": true
+},
+"show_disconnected_inputs": false,
+"template": "transform"
+}, {
+"args_port": {
+"x": {
+"connected": false,
+"port": 0
+},
+"y": {
+"connected": false,
+"port": 1
+},
+"z": {
+"connected": false,
+"port": 2
+}
+},
+"name": &"id_0004_make_vector",
+"position": Vector2(360, 140),
+"settings": {
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"out_name": "Vector",
+"random_seed": 3658767773,
+"title": "Make Vector",
+"trace": false,
+"x": 0.0,
+"y": 1.0,
+"z": 0.0
+},
+"show_disconnected_inputs": true,
+"template": "make_vector"
+}, {
+"args_port": {
+"In": {
+"connected": true,
+"port": 0
+},
+"data_type": {
+"connected": false,
+"port": 2
+},
+"name": {
+"connected": false,
+"port": 1
+}
+},
+"name": &"id_0001_output",
+"position": Vector2(1000, 0),
+"settings": {
+"data_type": 2,
+"debug_bulk": 0,
+"debug_color": Color(1, 1, 1, 1),
+"debug_enabled": false,
+"debug_mode": 0,
+"debug_modulate_by": "",
+"debug_output": 0,
+"debug_scale": 1.0,
+"disabled": false,
+"inspect_enabled": false,
+"name": "out_val",
+"random_seed": 2475130759,
+"title": "Output",
+"trace": false
+},
+"show_disconnected_inputs": true,
+"template": "output"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+view_zoom = 0.7298981
+view_offset = Vector2(-140.75806, -168.38104)
+new_name_counter = 4
+in_params = Array[ExtResource("1_011hi")]([SubResource("Resource_s3iqj")])

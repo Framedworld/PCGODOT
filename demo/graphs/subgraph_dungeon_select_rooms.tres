@@ -1,0 +1,124 @@
+[gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://dpmtn1hiukselect"]
+
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="1_inparam"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="2_graphres"]
+
+[sub_resource type="Resource" id="Resource_candidate"]
+script = ExtResource("1_inparam")
+name = "CandidateRoom"
+data_type = 2
+
+[sub_resource type="Resource" id="Resource_selected"]
+script = ExtResource("1_inparam")
+name = "SelectedRooms"
+data_type = 2
+
+[resource]
+script = ExtResource("2_graphres")
+data = {
+"frames": [],
+"links": [{
+"from_node": "input_CandidateRoom",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_overlap",
+"to_port": 0
+}, {
+"from_node": "input_SelectedRooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_overlap",
+"to_port": 1
+}, {
+"from_node": "input_SelectedRooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "merge_selected",
+"to_port": 0
+}, {
+"from_node": "sub_overlap",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "merge_selected",
+"to_port": 0
+}, {
+"from_node": "merge_selected",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "output_SelectedRooms",
+"to_port": 0
+}, {
+"from_node": "input_CandidateRoom",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_reject",
+"to_port": 0
+}, {
+"from_node": "input_SelectedRooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_reject",
+"to_port": 1
+}, {
+"from_node": "sub_reject",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "output_RejectedRooms",
+"to_port": 0
+}],
+"min_pos": Vector2(0, 0),
+"nodes": [{
+"name": "input_CandidateRoom",
+"position": Vector2(0, 50),
+"settings": {
+"name": "CandidateRoom"
+},
+"template": "input"
+}, {
+"name": "input_SelectedRooms",
+"position": Vector2(0, 200),
+"settings": {
+"name": "SelectedRooms"
+},
+"template": "input"
+}, {
+"name": "sub_overlap",
+"position": Vector2(250, 50),
+"settings": {
+"operation": 0
+},
+"template": "substract"
+}, {
+"name": "merge_selected",
+"position": Vector2(500, 150),
+"settings": {
+"merge_all_attributes": true
+},
+"template": "merge"
+}, {
+"name": "output_SelectedRooms",
+"position": Vector2(700, 150),
+"settings": {
+"name": "SelectedRooms"
+},
+"template": "output"
+}, {
+"name": "sub_reject",
+"position": Vector2(250, 300),
+"settings": {
+"operation": 1
+},
+"template": "substract"
+}, {
+"name": "output_RejectedRooms",
+"position": Vector2(700, 300),
+"settings": {
+"name": "RejectedRooms"
+},
+"template": "output"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+in_params = Array[ExtResource("1_inparam")]([SubResource("Resource_candidate"), SubResource("Resource_selected")])
+out_params = Array[ExtResource("1_inparam")]([])

@@ -5,7 +5,25 @@ extends GraphNode
 # This represent the base class for all nodes in the flow graph
 # The actual nodes are implemented in the nodes subfolder
 
-@export var settings: NodeSettings
+@export var settings: NodeSettings:
+	set(new_value):
+		if settings and settings.changed.is_connected(_on_settings_changed):
+			settings.changed.disconnect(_on_settings_changed)
+		settings = new_value
+		if settings:
+			settings.changed.connect(_on_settings_changed)
+
+func _exit_tree():
+	if settings and settings.changed.is_connected(_on_settings_changed):
+		settings.changed.disconnect(_on_settings_changed)
+
+func _on_settings_changed():
+	dirty = true
+	refreshFromSettings()
+	var editor = getEditor()
+	if editor:
+		editor.queueRegen()
+
 var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 # Common attributes ------------------------------
@@ -48,6 +66,7 @@ func _ready():
 	checkDrawDebug()
 	refreshInspectMark()
 	refreshDebugMark()
+	update_node_style()
 	
 func checkDrawDebug():
 	if not is_instance_valid(draw_debug) or draw_debug.get_parent() != self:
@@ -91,15 +110,163 @@ func refreshInspectMark():
 	
 func onPropChanged( prop_name : String ):
 	dirty = true
+
+func get_deterministic_color() -> Color:
+	var h_hash = node_template.hash()
+	var hue = float(h_hash % 360) / 360.0
+	# We want premium colors, so let's set saturation to around 0.5 and value/brightness to 0.75
+	return Color.from_hsv(hue, 0.5, 0.75)
+
+func update_node_style():
+	var hue = float(node_template.hash() % 360) / 360.0
 	
+	var is_colored = false
+	var editor = getEditor()
+	if editor and "color_nodes" in editor and editor.color_nodes:
+		is_colored = true
+		
+	# Panel colors
+	var panel_bg: Color
+	var panel_selected_bg: Color
+	var panel_border: Color
+	var panel_selected_border: Color
+	
+	if is_colored:
+		panel_bg = Color.from_hsv(hue, 0.25, 0.12, 0.9)
+		panel_selected_bg = Color.from_hsv(hue, 0.25, 0.12, 0.9)
+		panel_border = Color.from_hsv(hue, 0.25, 0.3, 0.9)
+		panel_selected_border = Color("22d3ee") # Cyan #22d3ee accent border
+	else:
+		panel_bg = Color("1b1e28") # #1b1e28 node cards
+		panel_selected_bg = Color("1b1e28")
+		panel_border = Color(1.0, 1.0, 1.0, 0.07) # Translucent white border (Figma 1px rgba(255,255,255,0.07))
+		panel_selected_border = Color("22d3ee") # Cyan #22d3ee accent border
+
+	# Titlebar colors
+	var title_bg: Color
+	var title_selected_bg: Color
+	
+	if is_colored:
+		title_bg = Color.from_hsv(hue, 0.25, 0.18, 1.0)
+		title_selected_bg = Color.from_hsv(hue, 0.25, 0.22, 1.0)
+	else:
+		title_bg = Color("252836") # #252836 node headers
+		title_selected_bg = Color("2e3244") # slightly lighter header when selected
+		
+	# StyleBox Panel
+	var sb_panel = StyleBoxFlat.new()
+	sb_panel.bg_color = panel_bg
+	sb_panel.set_corner_radius_all(6) # Figma: 6px corner radius
+	sb_panel.set_border_width_all(1)
+	sb_panel.border_color = panel_border
+	sb_panel.shadow_size = 16 # Figma: 16px shadow
+	sb_panel.shadow_color = Color(0, 0, 0, 0.5)
+	sb_panel.content_margin_left = 14 # Figma: paddingLeft: 14
+	sb_panel.content_margin_right = 14 # Figma: paddingRight: 14
+	sb_panel.content_margin_top = 0 # Figma: no gap between title and first port
+	sb_panel.content_margin_bottom = 6 # Figma: 6px bottom padding
+	add_theme_stylebox_override("panel", sb_panel)
+	
+	# StyleBox Panel Selected
+	var sb_panel_selected = StyleBoxFlat.new()
+	sb_panel_selected.bg_color = panel_selected_bg
+	sb_panel_selected.set_corner_radius_all(6) # Figma: 6px corner radius
+	sb_panel_selected.set_border_width_all(2)
+	sb_panel_selected.border_color = panel_selected_border
+	sb_panel_selected.shadow_size = 28 # Figma: 28px shadow
+	sb_panel_selected.shadow_color = Color(0, 0, 0, 0.7)
+	sb_panel_selected.content_margin_left = 14
+	sb_panel_selected.content_margin_right = 14
+	sb_panel_selected.content_margin_top = 0
+	sb_panel_selected.content_margin_bottom = 6
+	add_theme_stylebox_override("panel_selected", sb_panel_selected)
+	
+	# StyleBox Titlebar
+	var sb_title = StyleBoxFlat.new()
+	sb_title.bg_color = title_bg
+	sb_title.corner_radius_top_left = 6 # Figma: 6px corner radius
+	sb_title.corner_radius_top_right = 6
+	sb_title.corner_radius_bottom_left = 0
+	sb_title.corner_radius_bottom_right = 0
+	sb_title.border_width_left = 0
+	sb_title.border_width_top = 0
+	sb_title.border_width_right = 0
+	sb_title.border_width_bottom = 1
+	sb_title.border_color = Color(1.0, 1.0, 1.0, 0.05) # Figma: borderBottom: "1px solid rgba(255,255,255,0.05)"
+	sb_title.content_margin_left = 10 # Figma: paddingLeft: 10
+	sb_title.content_margin_right = 10
+	sb_title.content_margin_top = 9 # Figma: 34px total header height
+	sb_title.content_margin_bottom = 9
+	add_theme_stylebox_override("titlebar", sb_title)
+	
+	# StyleBox Titlebar Selected
+	var sb_title_selected = StyleBoxFlat.new()
+	sb_title_selected.bg_color = title_selected_bg
+	sb_title_selected.corner_radius_top_left = 6 # Figma: 6px corner radius
+	sb_title_selected.corner_radius_top_right = 6
+	sb_title_selected.corner_radius_bottom_left = 0
+	sb_title_selected.corner_radius_bottom_right = 0
+	sb_title_selected.border_width_left = 0
+	sb_title_selected.border_width_top = 0
+	sb_title_selected.border_width_right = 0
+	sb_title_selected.border_width_bottom = 1
+	sb_title_selected.border_color = Color(1.0, 1.0, 1.0, 0.05)
+	sb_title_selected.content_margin_left = 10
+	sb_title_selected.content_margin_right = 10
+	sb_title_selected.content_margin_top = 9
+	sb_title_selected.content_margin_bottom = 9
+	add_theme_stylebox_override("titlebar_selected", sb_title_selected)
+	
+	# Title text color overrides
+	add_theme_color_override("title_color", Color("cdd0dc")) # Figma title color
+	add_theme_color_override("title_selected_color", Color("ffffff"))
+	
+	var title_font = null
+	if has_theme_font("bold", "EditorFonts"):
+		title_font = get_theme_font("bold", "EditorFonts")
+	elif has_theme_font("main", "EditorFonts"):
+		title_font = get_theme_font("main", "EditorFonts")
+	if title_font:
+		add_theme_font_override("title_font", title_font)
+	add_theme_font_size_override("title_font_size", 12)
+	
+	# Node width constraint (Figma NODE_WIDTH = 210)
+	custom_minimum_size.x = 210
+	
+	# Port vertical separation (Figma spacing)
+	add_theme_constant_override("separation", 4)
+	
+	self_modulate = Color.WHITE
+
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.double_click:
+		if node_template == "subgraph" and settings and "graph" in settings and settings.graph:
+			var editor = getEditor()
+			if editor:
+				editor.setResourceToEdit(settings.graph, null)
+
 func refreshFromSettings():
 	refreshDebugMark()
 	refreshInspectMark()
 	title = getTitle()
 	modulate = Color( 0.7, 0.7, 0.7, 0.5 ) if settings.disabled else Color.WHITE
 	
+	update_node_style()
+	
 	if ( not settings.debug_enabled and draw_debug ) or settings.disabled:
 		draw_debug.cleanup_multimesh_direct()
+	
+	if settings and "data_type" in settings:
+		var meta := getMeta()
+		var outs = meta.get("outs", [])
+		for idx in range(outs.size()):
+			var out_data = outs[idx]
+			if out_data:
+				var data_type = out_data.get("data_type", FlowData.DataType.Invalid)
+				if data_type == FlowData.DataType.Invalid:
+					var color = getColorForFlowDataType(settings.data_type)
+					set_slot_color_right(idx, color)
+					set_slot_type_right(idx, settings.data_type)
 	
 func setError( new_err : String ):
 	if new_err:
@@ -132,6 +299,17 @@ func _on_draw() -> void:
 		var clr : Color = Color.CYAN / self_modulate
 		draw_circle( Vector2(size.x,0), marker_radius * ui_scale, clr )
 
+	# Draw bottom decoration handle (Figma node style)
+	var handle_w = 22.0 * ui_scale
+	var handle_h = 3.0 * ui_scale
+	var handle_x = (size.x - handle_w) / 2.0
+	var handle_y = size.y - handle_h
+	var handle_sb = StyleBoxFlat.new()
+	handle_sb.bg_color = Color(1.0, 1.0, 1.0, 0.07)
+	handle_sb.corner_radius_top_left = 2
+	handle_sb.corner_radius_top_right = 2
+	draw_style_box(handle_sb, Rect2(handle_x, handle_y, handle_w, handle_h))
+
 func getMeta() -> Dictionary:
 	return meta_node
 	
@@ -154,20 +332,24 @@ static func editorDisplayName(property_name: String) -> String:
 static func getColorForFlowDataType( data_type : FlowData.DataType ) -> Color:
 	match( data_type ):
 		FlowData.DataType.Bool:
-			return Color.RED
+			return Color("ef4444")
 		FlowData.DataType.Int:
-			return Color.CYAN
+			return Color("c8c8c8")
 		FlowData.DataType.Float:
-			return Color.WEB_GREEN
+			return Color("c8c8c8")
 		FlowData.DataType.Vector:
-			return Color.BLUE_VIOLET
+			return Color("a855f7")
+		FlowData.DataType.Color:
+			return Color("eab308")
 		FlowData.DataType.String:
-			return Color.YELLOW
-		FlowData.DataType.NodePath:
-			return Color.SKY_BLUE
+			return Color("3b82f6")
+		FlowData.DataType.Resource:
+			return Color("22c55e")
 		FlowData.DataType.NodeMesh:
-			return Color.MAGENTA
-	return Color.WHEAT
+			return Color("22c55e")
+		FlowData.DataType.NodePath:
+			return Color("14b8a6")
+	return Color("22d3ee") # Default cyan flow color
 
 static func getGdScriptTypeForFlowDataType( data_type : FlowData.DataType ) -> int:
 	match( data_type ):
@@ -181,6 +363,8 @@ static func getGdScriptTypeForFlowDataType( data_type : FlowData.DataType ) -> i
 			return TYPE_STRING
 		FlowData.DataType.Vector:
 			return TYPE_VECTOR3
+		FlowData.DataType.Color:
+			return TYPE_COLOR
 	return TYPE_NIL
 	
 static func getFlowDataTypeFromGdScriptType( gd_type : int  ) -> FlowData.DataType:
@@ -195,6 +379,8 @@ static func getFlowDataTypeFromGdScriptType( gd_type : int  ) -> FlowData.DataTy
 			return FlowData.DataType.String 
 		TYPE_VECTOR3:
 			return FlowData.DataType.Vector
+		TYPE_COLOR:
+			return FlowData.DataType.Color
 	return FlowData.DataType.Invalid
 
 static func getFlowDataTypeFromObject( obj  ) -> FlowData.DataType:
@@ -206,6 +392,8 @@ static func getFlowDataTypeFromObject( obj  ) -> FlowData.DataType:
 	return data_type
 
 func exposedAsInputNode( prop ):
+	if prop.name == "graph":
+		return false
 	return true
 
 func getExposedParams():
@@ -248,7 +436,7 @@ func getExposedParams():
 
 func getEditor():
 	var gedit = get_parent_control() as GraphEdit
-	var flow_editor = gedit.get_parent_control().get_parent_control().get_parent_control() as FlowGraphEditor if gedit else null
+	var flow_editor = gedit.get_parent_control().get_parent_control().get_parent_control() as Control if gedit else null
 	return flow_editor
 
 func initFromScript():
@@ -313,8 +501,30 @@ func initFromScript():
 	for idx in range( 0, num_ports ):
 		var ctrl = connectors_row_prefab.instantiate() as FlowConnectorRow
 		add_child( ctrl )
+		# Figma: PORT_ROW = 26px height
+		ctrl.custom_minimum_size.y = 26
+		
 		var lbl_in = ctrl.getInLabel()
 		var lbl_out = ctrl.getOutLabel()
+		
+		# Figma label typography & color overrides
+		lbl_in.add_theme_color_override("font_color", Color("8b90a8"))
+		lbl_in.add_theme_font_size_override("font_size", 11) # Figma: 11px font size
+		lbl_in.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		lbl_out.add_theme_color_override("font_color", Color("8b90a8"))
+		lbl_out.add_theme_font_size_override("font_size", 11) # Figma: 11px font size
+		lbl_out.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		
+		# Try to use monospaced editor source font
+		var mono_font = null
+		if lbl_in.has_theme_font("source", "EditorFonts"):
+			mono_font = lbl_in.get_theme_font("source", "EditorFonts")
+		elif lbl_in.has_theme_font("doc_source", "EditorFonts"):
+			mono_font = lbl_in.get_theme_font("doc_source", "EditorFonts")
+		if mono_font:
+			lbl_in.add_theme_font_override("font", mono_font)
+			lbl_out.add_theme_font_override("font", mono_font)
 		
 		# Is there an input active
 		if idx < num_inputs:
@@ -359,6 +569,8 @@ func initFromScript():
 				var data_type = out_data.get( "data_type", FlowData.DataType.Invalid )
 				if data_type == FlowData.DataType.Invalid and out_data.has( "type"):
 					data_type = getFlowDataTypeFromGdScriptType( out_data.type )
+				if data_type == FlowData.DataType.Invalid and settings and "data_type" in settings:
+					data_type = settings.data_type
 				if data_type != FlowData.DataType.Invalid:
 					var color = getColorForFlowDataType( data_type )	
 					set_slot_color_right( idx, color )
@@ -461,6 +673,10 @@ func newStream( size : int, new_name : String, init_value, data_type : FlowData.
 					typed_container[idx] = fn.call(idx)
 			FlowData.DataType.Vector:
 				var typed_container : PackedVector3Array = new_container
+				for idx in size:
+					typed_container[idx] = fn.call(idx)
+			FlowData.DataType.Color:
+				var typed_container : PackedColorArray = new_container
 				for idx in size:
 					typed_container[idx] = fn.call(idx)
 			FlowData.DataType.String:

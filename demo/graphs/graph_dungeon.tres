@@ -1,0 +1,178 @@
+[gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://dpmtn1hiukblj"]
+
+[ext_resource type="Resource" uid="uid://ck1mnk4ux41ch" path="res://graphs/subgraph_dungeon_floor.tres" id="1_73p5x"]
+[ext_resource type="Resource" uid="uid://dx0lk0atvbqep" path="res://graphs/subgraph_dungeon_wall.tres" id="2_4swmn"]
+[ext_resource type="Resource" uid="uid://cjm6m6ynrpiag" path="res://graphs/subgraph_dungeon_pillar.tres" id="3_5quuh"]
+[ext_resource type="Resource" uid="uid://o2uhfwqnu0jd" path="res://graphs/subgraph_dungeon_chest.tres" id="4_a5c13"]
+[ext_resource type="Resource" uid="uid://dm0wyk2gb7nft" path="res://graphs/subgraph_dungeon_lighting.tres" id="5_oia4u"]
+[ext_resource type="Resource" uid="uid://dpmtn1hiukselect" path="res://graphs/subgraph_dungeon_select_rooms.tres" id="6_select"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="7_opd0d"]
+
+[resource]
+script = ExtResource("7_opd0d")
+data = {
+"frames": [],
+"links": [{
+"from_node": "dungeon_room_candidates",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "room_selector_loop",
+"to_port": 0
+}, {
+"from_node": "room_selector_loop",
+"from_port": 1,
+"keep_alive": false,
+"to_node": "dungeon_expand_rooms",
+"to_port": 0
+}, {
+"from_node": "room_selector_loop",
+"from_port": 1,
+"keep_alive": false,
+"to_node": "dungeon_connect_rooms",
+"to_port": 0
+}, {
+"from_node": "room_selector_loop",
+"from_port": 1,
+"keep_alive": false,
+"to_node": "sub_chest",
+"to_port": 0
+}, {
+"from_node": "dungeon_expand_rooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "merge_floors",
+"to_port": 0
+}, {
+"from_node": "dungeon_connect_rooms",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "merge_floors",
+"to_port": 0
+}, {
+"from_node": "merge_floors",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "dungeon_walls_and_doors",
+"to_port": 0
+}, {
+"from_node": "merge_floors",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_floor",
+"to_port": 0
+}, {
+"from_node": "dungeon_walls_and_doors",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "sub_wall",
+"to_port": 0
+}, {
+"from_node": "dungeon_walls_and_doors",
+"from_port": 2,
+"keep_alive": false,
+"to_node": "sub_lighting",
+"to_port": 0
+}, {
+"from_node": "dungeon_walls_and_doors",
+"from_port": 3,
+"keep_alive": false,
+"to_node": "sub_pillar",
+"to_port": 0
+}],
+"min_pos": Vector2(0, 0),
+"nodes": [{
+"name": "dungeon_room_candidates",
+"position": Vector2(50, 200),
+"settings": {
+"candidate_count": 40,
+"cell_size": 2.0,
+"grid_height": 24,
+"grid_width": 24,
+"max_room_size": 6,
+"min_room_size": 3,
+"random_seed": 54321
+},
+"template": "dungeon_room_candidates"
+}, {
+"name": "room_selector_loop",
+"position": Vector2(300, 200),
+"settings": {
+"feedback_param_name": "SelectedRooms",
+"graph": ExtResource("6_select"),
+"item_input_name": "CandidateRoom",
+"output_attribute_name": "RejectedRooms"
+},
+"template": "loop"
+}, {
+"name": "dungeon_expand_rooms",
+"position": Vector2(550, 100),
+"settings": {
+"cell_size": 2.0
+},
+"template": "dungeon_expand_rooms"
+}, {
+"name": "dungeon_connect_rooms",
+"position": Vector2(550, 300),
+"settings": {
+"cell_size": 2.0,
+"random_seed": 54321
+},
+"template": "dungeon_connect_rooms"
+}, {
+"name": "merge_floors",
+"position": Vector2(750, 200),
+"settings": {
+"merge_all_attributes": true
+},
+"template": "merge"
+}, {
+"name": "dungeon_walls_and_doors",
+"position": Vector2(950, 300),
+"settings": {
+"cell_size": 2.0,
+"random_seed": 54321,
+"torch_probability": 0.15
+},
+"template": "dungeon_walls_and_doors"
+}, {
+"name": "sub_floor",
+"position": Vector2(950, 50),
+"settings": {
+"graph": ExtResource("1_73p5x")
+},
+"template": "subgraph"
+}, {
+"name": "sub_wall",
+"position": Vector2(1200, 150),
+"settings": {
+"graph": ExtResource("2_4swmn")
+},
+"template": "subgraph"
+}, {
+"name": "sub_pillar",
+"position": Vector2(1200, 300),
+"settings": {
+"graph": ExtResource("3_5quuh")
+},
+"template": "subgraph"
+}, {
+"name": "sub_chest",
+"position": Vector2(550, 450),
+"settings": {
+"graph": ExtResource("4_a5c13")
+},
+"template": "subgraph"
+}, {
+"name": "sub_lighting",
+"position": Vector2(1200, 450),
+"settings": {
+"graph": ExtResource("5_oia4u")
+},
+"template": "subgraph"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+view_zoom = 0.9090909
+view_offset = Vector2(-50.0, -50.0)
+new_name_counter = 1

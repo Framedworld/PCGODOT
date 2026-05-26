@@ -4,7 +4,7 @@ extends EditorPlugin
 # This is the entry point for the plugin
 # Where we register all editors, inspectors and hocks
 
-var graph_dock: FlowGraphEditor
+var graph_dock: Control
 var data_inspector_dock: Control
 var inspector_plugin
 var watched_nodes : Array[Node] = []
@@ -30,7 +30,7 @@ func spawnDock( res_template : String, title : String, bottom : bool ) -> Contro
 
 func _enter_tree():
 	print("Data Flow plugin enabled")
-	graph_dock = spawnDock("res://addons/flow_nodes_editor/flow_editor.tscn", "Data Flow", false ) as FlowGraphEditor
+	graph_dock = spawnDock("res://addons/flow_nodes_editor/flow_editor.tscn", "Data Flow", false ) as Control
 	data_inspector_dock = spawnDock("res://addons/flow_nodes_editor/data_inspector.tscn", "Data Inspector", true)
 	graph_dock.data_inspector = data_inspector_dock
 	graph_dock.make_inspector_visible = func(): make_bottom_panel_item_visible( data_inspector_dock )
@@ -43,6 +43,7 @@ func _enter_tree():
 	# Will refresh everytime the undo/redo subsystem saves a point
 	undo_redo = get_undo_redo()
 	undo_redo.history_changed.connect(_on_history_changed)
+	graph_dock.undo_redo = undo_redo
 	
 	set_process(true)
 	
@@ -69,7 +70,7 @@ func _ready():
 # scene is called first.
 func on_scene_changed(scene_root: Node) -> void:
 	print( "Scene Changed detected %s : %s -> %s" % [graph_dock.current_resource, is_instance_valid(graph_dock.resource_owner), scene_root.name ] )
-	if graph_dock.resource_owner:
+	if is_instance_valid(graph_dock.resource_owner):
 		var node = graph_dock.resource_owner
 		if scene_root and (node.get_owner() != scene_root and not scene_root.is_ancestor_of(node)):
 			graph_dock.setResourceToEdit( null, null )

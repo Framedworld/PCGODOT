@@ -44,6 +44,8 @@ func execute( ctx : FlowData.EvaluationContext ):
 			new_val = getSettingValue( ctx, "cte_float" )
 		FlowData.DataType.Vector:
 			new_val = getSettingValue( ctx, "cte_vector" )
+		FlowData.DataType.Color:
+			new_val = getSettingValue( ctx, "cte_color" )
 		FlowData.DataType.String:
 			new_val = getSettingValue( ctx, "cte_string" )
 		FlowData.DataType.Resource:

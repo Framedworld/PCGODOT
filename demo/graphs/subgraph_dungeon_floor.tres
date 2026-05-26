@@ -1,0 +1,59 @@
+[gd_resource type="Resource" script_class="FlowGraphResource" format=3 uid="uid://ck1mnk4ux41ch"]
+
+[ext_resource type="PackedScene" uid="uid://clegv0xaik6es" path="res://addons/kaykit_dungeon_remastered/Assets/gltf/floor_tile_large.gltf.glb" id="1_mebns"]
+[ext_resource type="Script" uid="uid://co0f3ugd2wj1y" path="res://addons/flow_nodes_editor/graph_input_parameter.gd" id="2_heo7b"]
+[ext_resource type="Script" uid="uid://j6vjeb5cjjoy" path="res://addons/flow_nodes_editor/flow_graph_resource.gd" id="3_6yxkt"]
+
+[sub_resource type="Resource" id="Resource_dwevm"]
+script = ExtResource("2_heo7b")
+name = "points"
+
+[resource]
+script = ExtResource("3_6yxkt")
+data = {
+"frames": [],
+"links": [{
+"from_node": "input_points",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "filter_floor",
+"to_port": 0
+}, {
+"from_node": "filter_floor",
+"from_port": 0,
+"keep_alive": false,
+"to_node": "spawn_floors",
+"to_port": 0
+}],
+"min_pos": Vector2(0, 100),
+"nodes": [{
+"name": "input_points",
+"position": Vector2(0, 100),
+"settings": {
+"data_type": 2,
+"name": "points"
+},
+"template": "input"
+}, {
+"name": "filter_floor",
+"position": Vector2(300, 100),
+"settings": {
+"condition": 0,
+"in_nameA": "type",
+"in_nameB": "0"
+},
+"template": "filter"
+}, {
+"name": "spawn_floors",
+"position": Vector2(600, 100),
+"settings": {
+"assign_attributes": {},
+"scene": ExtResource("1_mebns"),
+"scene_attribute": ""
+},
+"template": "spawn_scenes"
+}],
+"type": "flow_graph_nodes",
+"version": 1
+}
+in_params = Array[ExtResource("2_heo7b")]([SubResource("Resource_dwevm")])

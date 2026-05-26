@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SceneResourceData" format=3 uid="uid://82l0lv6r0c63"]
+
+[ext_resource type="PackedScene" uid="uid://b6q4l56g02tqn" path="res://scenes/scene_3p.tscn" id="1_2kmr2"]
+[ext_resource type="Script" uid="uid://16u53tpnjocb" path="res://scenes/scene_resource_data.gd" id="2_47hbv"]
+
+[resource]
+resource_name = "Scene3P"
+script = ExtResource("2_47hbv")
+scene = ExtResource("1_2kmr2")

@@ -17,6 +17,7 @@ enum DataType {
 	Resource,
 	NodeMesh,
 	NodePath,
+	Color,
 	Invalid = 999
 }
 
@@ -94,6 +95,8 @@ class TransformsStream:
 class Data:
 	var streams : Dictionary = {}
 	var last_added_stream_name : String
+	var tags : PackedStringArray = PackedStringArray()
+
 
 	static func newContainerOfType( data_type : DataType ):
 		match data_type:
@@ -109,6 +112,12 @@ class Data:
 				return PackedStringArray()
 			DataType.Resource:
 				return Array([], TYPE_OBJECT, "Resource", null)
+			DataType.NodeMesh:
+				return Array([], TYPE_OBJECT, "Node", null)
+			DataType.NodePath:
+				return Array([], TYPE_OBJECT, "Node", null)
+			DataType.Color:
+				return PackedColorArray()
 			_:
 				push_error( "newContainerOfType(%d) type not supported" % [ data_type ])
 		return null
@@ -149,12 +158,15 @@ class Data:
 		return name
 		
 	func getSubStreamIndex(  sub_comp : String ):
-		if sub_comp == "X":
+		var sc_up = sub_comp.to_upper()
+		if sc_up == "X" or sc_up == "R":
 			return 0
-		elif sub_comp== "Y":
+		elif sc_up == "Y" or sc_up == "G":
 			return 1
-		elif sub_comp == "Z":
+		elif sc_up == "Z" or sc_up == "B":
 			return 2
+		elif sc_up == "W" or sc_up == "A":
+			return 3
 		return -1
 	
 	func getSubStream( stream : Dictionary, sub_comp : String ):
@@ -162,8 +174,11 @@ class Data:
 		if subcomp_idx == -1:
 			push_error( "Invalid sub_stream name %s" % sub_comp )
 			return null
-		if stream.data_type != DataType.Vector:
-			return "getSubStream.Parent stream must be of type Vector"
+		if stream.data_type != DataType.Vector and stream.data_type != DataType.Color:
+			push_error( "getSubStream.Parent stream must be of type Vector or Color" )
+			return null
+		if stream.data_type == DataType.Vector and subcomp_idx == 3:
+			push_error( "Vector parent does not support W/A component" )
 			return null
 		var big_container = stream.container
 		var new_container = PackedFloat32Array()
@@ -180,8 +195,10 @@ class Data:
 		var subcomp_idx = getSubStreamIndex( sub_comp )
 		if subcomp_idx == -1:
 			return "Invalid sub stream name %s" % sub_comp
-		if stream.data_type != DataType.Vector:
-			return "setSubStream.Parent stream must be of type Vector"
+		if stream.data_type != DataType.Vector and stream.data_type != DataType.Color:
+			return "setSubStream.Parent stream must be of type Vector or Color"
+		if stream.data_type == DataType.Vector and subcomp_idx == 3:
+			return "Vector parent does not support W/A component"
 		var big_container = stream.container
 		if sub_container.size() != big_container.size():
 			return "Container sizes do not match (%d vs %d)" % [sub_container.size(), big_container.size()]
@@ -191,11 +208,36 @@ class Data:
 		# Fixes bug expresion updating position.y and refreshing
 		big_container = big_container.duplicate()
 		for idx in range( big_container.size() ):
-			big_container[idx][ subcomp_idx ] = sub_container[idx]
+			var item = big_container[idx]
+			item[subcomp_idx] = sub_container[idx]
+			big_container[idx] = item
 		stream.container = big_container
 		
 	func findStream( name : String ):
 		name = translateStreamName( name )
+		
+		var name_lower := name.to_lower()
+		if name_lower == "front" or name_lower == "up" or name_lower == "right":
+			var rot_stream = streams.get(AttrRotation, null)
+			if rot_stream != null:
+				var eulers = rot_stream.container
+				var new_container := PackedVector3Array()
+				new_container.resize(eulers.size())
+				for idx in range(eulers.size()):
+					var basis := FlowData.eulerToBasis(eulers[idx])
+					match name_lower:
+						"front":
+							new_container[idx] = -basis.z
+						"up":
+							new_container[idx] = basis.y
+						"right":
+							new_container[idx] = basis.x
+				return {
+					"data_type": DataType.Vector,
+					"container": new_container,
+					"name": name
+				}
+			return null
 		
 		if name == "index":
 			var new_container = PackedInt32Array()
@@ -211,7 +253,7 @@ class Data:
 		var parts = name.split( "." )
 		if parts.size() == 2:
 			#print( "findStream(%s) => %s (Streams:%s)" % [ name, parts, streams])
-			var s0 = streams.get( parts[0], null )
+			var s0 = findStream( parts[0] )
 			if s0 == null:
 				push_error( "Failed to find stream root %s" % parts[0] )
 				return null
@@ -245,6 +287,8 @@ class Data:
 				data_type = FlowData.DataType.Int
 			elif container is PackedVector3Array:
 				data_type = FlowData.DataType.Vector
+			elif container is PackedColorArray:
+				data_type = FlowData.DataType.Color
 			elif container is PackedStringArray:
 				data_type = FlowData.DataType.String
 			elif container is PackedByteArray:
@@ -294,6 +338,8 @@ class Data:
 			DataType.Vector:
 				new_container = PackedVector3Array( prev_stream.container )
 				#print( "Duped container vec3 %s %s" % [ name, new_container ])
+			DataType.Color:
+				new_container = PackedColorArray( prev_stream.container )
 			DataType.String:
 				new_container = PackedStringArray( prev_stream.container )
 			_:  # Resource
@@ -337,6 +383,14 @@ class Data:
 					new_container[idx] = old_container[ indices[idx] ]
 				return new_container
 				
+			DataType.Color:
+				var old_container : PackedColorArray = old_stream.container
+				var new_container := PackedColorArray( )
+				new_container.resize( new_size )
+				for idx in range( new_size ):
+					new_container[idx] = old_container[ indices[idx] ]
+				return new_container
+				
 			DataType.String:
 				var old_container : PackedStringArray = old_stream.container
 				var new_container : PackedStringArray
@@ -352,6 +406,20 @@ class Data:
 				for idx in range( new_size ):
 					new_container[idx] = old_container[ indices[idx] ]
 				return new_container
+			DataType.NodeMesh:
+				var old_container : Array = old_stream.container
+				var new_container : Array = []
+				new_container.resize( new_size )
+				for idx in range( new_size ):
+					new_container[idx] = old_container[ indices[idx] ]
+				return new_container
+			DataType.NodePath:
+				var old_container : Array = old_stream.container
+				var new_container : Array = []
+				new_container.resize( new_size )
+				for idx in range( new_size ):
+					new_container[idx] = old_container[ indices[idx] ]
+				return new_container
 				
 		return null
 
@@ -362,6 +430,7 @@ class Data:
 		for name in streams:
 			s.streams[ name ] = streams[ name ].duplicate()
 		s.last_added_stream_name = last_added_stream_name
+		s.tags = tags.duplicate()
 		return s
 		
 	func filter( indices : PackedInt32Array ) -> Data:
@@ -369,6 +438,7 @@ class Data:
 		for old_stream in streams.values():
 			var new_container = filteredStream( old_stream, indices )
 			new_data.registerStream( old_stream.name, new_container, old_stream.data_type )
+		new_data.tags = tags.duplicate()
 		return new_data
 
 	func dump( title : String ):
@@ -400,15 +470,13 @@ class Data:
 		return container
 
 	func getTransformsStream() -> TransformsStream:
+		if not (streams.has(AttrPosition) and streams.has(AttrRotation) and streams.has(AttrSize)):
+			return null
 		var trs := TransformsStream.new()
 		trs.positions = getVector3Container( AttrPosition )
-		if trs.positions == null:
-			return null
 		trs.eulers = getVector3Container( AttrRotation )
-		if trs.eulers == null:
-			return null	
 		trs.sizes = getVector3Container( AttrSize )
-		if trs.sizes == null:
+		if trs.positions.is_empty() or trs.eulers.is_empty() or trs.sizes.is_empty():
 			return null
 		if trs.sizes.size() == trs.positions.size() && trs.sizes.size() == trs.eulers.size():
 			return trs

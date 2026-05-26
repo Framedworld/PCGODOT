@@ -24,6 +24,9 @@ func execute( ctx : FlowData.EvaluationContext ):
 		indices = GDStreamUtils.get_sorted_indices_i32( sA.container )
 	elif sA.data_type == FlowData.DataType.String:
 		indices = GDStreamUtils.get_sorted_indices_string( sA.container )
+	else:
+		setError( "Unsupported sort data type: %d" % sA.data_type )
+		return
 
 	if settings.sort_descending:
 		indices.reverse()

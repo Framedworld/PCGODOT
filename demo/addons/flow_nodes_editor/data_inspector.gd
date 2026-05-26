@@ -20,6 +20,7 @@ var num_cols : int = 0
 var col_titles : Array[String]
 var col_streams_names : Array[String]
 var data : FlowData.Data 
+var visible_rows : Array[int] = []
 
 # The slot corresponds to InA, InB, or Out streams for example
 # The setetings are not included
@@ -124,35 +125,45 @@ func onColumnBegins( cell : DataTableContainer.CellContents ):
 		cell.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		
 func getCellContentsVectorX(cell : DataTableContainer.CellContents ):
-	cell.text = fmt( container[ cell.row ].x )
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = fmt( container[ real_row ].x )
 	
 func getCellContentsVectorY(cell : DataTableContainer.CellContents ):
-	cell.text = fmt( container[ cell.row ].y )
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = fmt( container[ real_row ].y )
 	
 func getCellContentsVectorZ(cell : DataTableContainer.CellContents ):
-	cell.text = fmt( container[ cell.row ].z )
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = fmt( container[ real_row ].z )
 	
 func getCellContentsFloat(cell : DataTableContainer.CellContents ):
-	cell.text = fmt( container[ cell.row ] )
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = fmt( container[ real_row ] )
 	
 func getCellContentsBool(cell : DataTableContainer.CellContents ):
-	cell.text = "True" if container[ cell.row ] else "False"
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = "True" if container[ real_row ] else "False"
 	
 func getCellContentsInt(cell : DataTableContainer.CellContents ):
-	cell.text = "%d" % container[ cell.row ]
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = "%d" % container[ real_row ]
 	
 func getCellContentsIndex(cell : DataTableContainer.CellContents ):
-	cell.text = "%d" % cell.row
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else cell.row
+	cell.text = "%d" % real_row
 	
 func getCellContentsString(cell : DataTableContainer.CellContents ):
-	cell.text = container[ cell.row ]
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	cell.text = container[ real_row ]
 	
 func getCellContentsResource(cell : DataTableContainer.CellContents ):
-	var res = container[ cell.row ] as Resource
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	var res = container[ real_row ] as Resource
 	cell.text = res.resource_path if res else ""
 			
 func getCellContentsNode(cell : DataTableContainer.CellContents ):
-	var node = container[ cell.row ] as Node3D
+	var real_row = visible_rows[cell.row] if cell.row < visible_rows.size() else 0
+	var node = container[ real_row ] as Node3D
 	cell.text = ( "$" + node.name ) if node else ""
 		
 func refresh():
@@ -185,11 +196,16 @@ func refresh():
 	if data != null:
 
 		updateNumRowsAndCols()
+		var filter_text := ""
+		if has_node("%FilterEdit"):
+			filter_text = %FilterEdit.text
+		update_visible_rows(filter_text)
+		
 		%LabelStats.text = "%d Rows, (%d cols in %d Streams)" % [ num_rows, num_cols, data.numFields()]
 		
 		# Index column
 		tv.addColumn( "Index", 0 )
-		tv.num_rows = num_rows
+		tv.num_rows = visible_rows.size()
 		var row_height := get_theme_default_font_size()
 		tv.setRowHeight( row_height )
 		for title in col_titles:
@@ -200,8 +216,72 @@ func refresh():
 func onCellClicked( row : int, col : int ):
 	tv.setSelectedRow( row )
 	if node:
-		node.debug_row = row
+		if row < visible_rows.size():
+			node.debug_row = visible_rows[row]
+		else:
+			node.debug_row = row
 		node.setupDrawDebug()
+
+func update_visible_rows(filter_text : String):
+	visible_rows.clear()
+	if data == null:
+		return
+	
+	if filter_text.is_empty():
+		for i in range(data.size()):
+			visible_rows.append(i)
+	else:
+		var filter_lower = filter_text.to_lower()
+		for i in range(data.size()):
+			var matched = false
+			if filter_lower in str(i):
+				matched = true
+			else:
+				for stream in data.streams.values():
+					if i >= stream.container.size():
+						continue
+					var val = stream.container[i]
+					match stream.data_type:
+						FlowData.DataType.Vector:
+							if val is Vector3:
+								if filter_lower in fmt(val.x).to_lower() or filter_lower in fmt(val.y).to_lower() or filter_lower in fmt(val.z).to_lower():
+									matched = true
+									break
+						FlowData.DataType.Float:
+							if filter_lower in fmt(val).to_lower():
+								matched = true
+								break
+						FlowData.DataType.Bool:
+							var b_str = "true" if val else "false"
+							if filter_lower in b_str:
+								matched = true
+								break
+						FlowData.DataType.Int:
+							if filter_lower in str(val).to_lower():
+								matched = true
+								break
+						FlowData.DataType.String:
+							if filter_lower in str(val).to_lower():
+								matched = true
+								break
+						FlowData.DataType.Resource:
+							var res = val as Resource
+							if res and filter_lower in res.resource_path.to_lower():
+								matched = true
+								break
+						FlowData.DataType.NodePath, FlowData.DataType.NodeMesh:
+							var node_val = val as Node3D
+							if node_val and filter_lower in ("$" + node_val.name).to_lower():
+								matched = true
+								break
+			if matched:
+				visible_rows.append(i)
+
+func _on_filter_edit_text_changed(new_text : String):
+	update_visible_rows(new_text)
+	if tv:
+		tv.num_rows = visible_rows.size()
+		tv.commitColumns()
 
 func _ready():
 	tv.cell_clicked.connect( onCellClicked )
@@ -262,4 +342,6 @@ func populateBulks():
 	else:
 		for bulk_idx in range( node.input_bulks.size() ):
 			bulk_selector.add_item( "In Bulk %d" % bulk_idx, bulk_idx )
-	bulk_selector.select( current_bulk_index )
+	if bulk_selector.get_item_count() > 0:
+		current_bulk_index = clampi(current_bulk_index, 0, bulk_selector.get_item_count() - 1)
+		bulk_selector.select( current_bulk_index )

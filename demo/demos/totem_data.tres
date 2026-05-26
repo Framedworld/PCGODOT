@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SceneResourceData" format=3 uid="uid://duluelvd82ocy"]
+
+[ext_resource type="PackedScene" uid="uid://bhacwufn13rf6" path="res://scenes/totem.tscn" id="1_oijj6"]
+[ext_resource type="Script" uid="uid://16u53tpnjocb" path="res://scenes/scene_resource_data.gd" id="2_vt5ct"]
+
+[resource]
+resource_name = "Totem"
+script = ExtResource("2_vt5ct")
+scene = ExtResource("1_oijj6")

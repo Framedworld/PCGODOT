@@ -12,6 +12,9 @@ func _init():
 
 func execute( ctx : FlowData.EvaluationContext ):
 	var in_data : FlowData.Data = get_input(0)
+	if in_data == null:
+		setError("Input 'In' is not connected")
+		return null
 	var out_data : FlowData.Data = in_data.duplicate()
 	var spos : PackedVector3Array = out_data.cloneStream( FlowData.AttrPosition )
 	var srot : PackedVector3Array = out_data.cloneStream( FlowData.AttrRotation )

@@ -19,11 +19,20 @@ run/main_scene="uid://bl8p4bid734wo"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MCPScreenshot="*res://addons/godot_mcp/mcp_screenshot_service.gd"
+MCPInputService="*res://addons/godot_mcp/mcp_input_service.gd"
+MCPGameInspector="*res://addons/godot_mcp/mcp_game_inspector_service.gd"
+
 [display]
 
-window/size/viewport_width=1600
-window/size/viewport_height=1024
+window/size/viewport_width=3840.0
+window/size/viewport_height=2160.0
+window/size/window_width_override=1920.0
+window/size/window_height_override=1080.0
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/flow_nodes_editor/plugin.cfg")
+enabled=PackedStringArray("res://addons/flow_nodes_editor/plugin.cfg", "res://addons/godot_mcp/plugin.cfg")

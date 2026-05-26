@@ -14,6 +14,7 @@ extends NodeSettings
 @export var cte_int : int = 0
 @export var cte_float : float = 0.0
 @export var cte_vector : Vector3 = Vector3.ZERO
+@export var cte_color : Color = Color.WHITE
 @export var cte_resource : Resource
 @export var cte_string : String = ""
 

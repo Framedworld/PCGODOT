@@ -64,6 +64,20 @@ size_flags_horizontal = 3
 text = "N Datas"
 horizontal_alignment = 2
 
+[node name="HBoxFilter" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelFilter" type="Label" parent="VBoxContainer/HBoxFilter"]
+layout_mode = 2
+text = "Filter:"
+
+[node name="FilterEdit" type="LineEdit" parent="VBoxContainer/HBoxFilter"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Filter rows (e.g. stone, index, or value)..."
+clear_button_enabled = true
+
 [node name="TableView" parent="VBoxContainer" instance=ExtResource("2_ehj1v")]
 unique_name_in_owner = true
 layout_mode = 2
@@ -72,3 +86,4 @@ size_flags_horizontal = 1
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/BtnRefresh" to="." method="_on_btn_refresh_pressed"]
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/SlotSelector" to="." method="_on_slot_selector_item_selected"]
 [connection signal="item_selected" from="VBoxContainer/HBoxContainer/BulkSelector" to="." method="_on_bulk_selector_item_selected"]
+[connection signal="text_changed" from="VBoxContainer/HBoxFilter/FilterEdit" to="." method="_on_filter_edit_text_changed"]

@@ -5,78 +5,146 @@ func _init():
 	meta_node = {
 		"title" : "Copy",
 		"settings" : CopyNodeSettings,
-		"ins" : [{ "label": "In" }], 
+		"ins" : [{ "label": "Source" }, { "label": "Targets" }], 
 		"outs" : [{ "label" : "Out" }],
-		"tooltip" :"Creates N copies of the current points applying\na repeated translation + rotation offset",
+		"tooltip" :"Copies points using linear repeat offsets or source-to-target placement mode.",
 	}
 
-func execute( ctx : FlowData.EvaluationContext ):
-	var in_data : FlowData.Data = get_input(0)
+func _linear_copy(ctx : FlowData.EvaluationContext, in_data : FlowData.Data) -> FlowData.Data:
 	var out_data := FlowData.Data.new()
 	var trace := settings.trace
-	
-	var num_copies : int = getSettingValue( ctx, "num_copies" )
-	if trace: print( "Copy.num_copies %d" % [ num_copies ] )
+	var num_copies : int = getSettingValue(ctx, "num_copies")
+	if trace:
+		print("Copy.num_copies %d" % [num_copies])
+	if num_copies <= 0:
+		return FlowData.Data.new()
 
-	var time_start = Time.get_ticks_usec()	
 	# First create all the containers with the correct type
 	for stream_name in in_data.streams:
-		var istream = in_data.streams[ stream_name ]
-		var container = out_data.newContainerOfType( istream.data_type )
-		#print( "Copy.Registering stream %s of data type %s . container %s" % [ stream_name, istream.data_type, container ] )
-		out_data.registerStream( stream_name, container )
+		var istream = in_data.streams[stream_name]
+		var container = out_data.newContainerOfType(istream.data_type)
+		out_data.registerStream(stream_name, container)
 
 	# Then duplicate the data N times
 	for stream_name in in_data.streams:
-		var ocontainer = out_data.streams[ stream_name ].container
-		var icontainer = in_data.streams[ stream_name ].container
-		for n in range( num_copies ):
-			ocontainer.append_array( icontainer )
+		var ocontainer = out_data.streams[stream_name].container
+		var icontainer = in_data.streams[stream_name].container
+		for _n in range(num_copies):
+			ocontainer.append_array(icontainer)
 
 	# Transform data of each copy
 	var isize := in_data.size()
 	var in_trs := in_data.getTransformsStream()
-	if trace: print( "Copy.Setup: %f (%d)" % [ Time.get_ticks_usec() - time_start, isize ] )
-	
 	if in_trs:
 		var step3d : Transform3D = Transform3D.IDENTITY
-		var step_translation = getSettingValue( ctx, "translation" )
-		var step_rotation = getSettingValue( ctx, "rotation" )
+		var step_translation = getSettingValue(ctx, "translation")
+		var step_rotation = getSettingValue(ctx, "rotation")
 		step3d.origin = step_translation
-		step3d.basis = FlowData.eulerToBasis( step_rotation )
-		#print( "Step3d is %s" % [ step3d ] )
-		
-		var spos := out_data.getVector3Container( FlowData.AttrPosition )
-		var srot := out_data.getVector3Container( FlowData.AttrRotation )
-		var ssize := out_data.getVector3Container( FlowData.AttrSize )
+		step3d.basis = FlowData.eulerToBasis(step_rotation)
 
-		var acc_transforms : Array[ Transform3D ]
+		var spos := out_data.getVector3Container(FlowData.AttrPosition)
+		var srot := out_data.getVector3Container(FlowData.AttrRotation)
+
+		var acc_transforms : Array[Transform3D]
 		var delta : Transform3D = Transform3D.IDENTITY
-		for j in range( num_copies ):
-			acc_transforms.push_back( delta )
+		for _j in range(num_copies):
+			acc_transforms.push_back(delta)
 			delta = delta * step3d
-		
-		var time_start_trs = Time.get_ticks_usec()
-		# For each point...
-		for j in range( isize ):
-			var itrans : = in_trs.atIndex(j)
-			# For each copy
-			for n in range( num_copies ):
-				var base := n * isize
-				var otrans : Transform3D = itrans * acc_transforms[ n ]
-				spos[ base + j ] = otrans.origin
-				srot[ base + j ] = otrans.basis.get_euler() * 180.0 / PI	# FlowData.basisToEuler( otrans.basis )
-		if trace: print( "Copy.Transform: %f" % [ Time.get_ticks_usec() - time_start_trs ] )
-			
-	if settings.generate_copy_id:
-		var time_start_id = Time.get_ticks_usec()
-		var container = PackedInt32Array()
-		container.resize( num_copies * isize )
-		for n in range( num_copies ):
-			var base := n * isize
-			for j in range( isize ):
-				container[base+j] = n
-		out_data.registerStream( settings.generate_copy_id, container )
-		if trace: print( "Copy.GenerateId: %f" % [ Time.get_ticks_usec() - time_start_id ] )
 
-	set_output( 0, out_data )
+		for j in range(isize):
+			var itrans := in_trs.atIndex(j)
+			for n in range(num_copies):
+				var base := n * isize
+				var otrans : Transform3D = itrans * acc_transforms[n]
+				spos[base + j] = otrans.origin
+				srot[base + j] = otrans.basis.get_euler() * 180.0 / PI
+
+	if settings.generate_copy_id:
+		var container = PackedInt32Array()
+		container.resize(num_copies * isize)
+		for n in range(num_copies):
+			var base := n * isize
+			for j in range(isize):
+				container[base + j] = n
+		out_data.registerStream(settings.generate_copy_id, container)
+
+	return out_data
+
+func _pick_source_index(target_idx : int, source_size : int) -> int:
+	if source_size <= 0:
+		return 0
+	if settings.source_selection == CopyNodeSettings.eSourceSelection.RandomDeterministic:
+		var local_rng := RandomNumberGenerator.new()
+		local_rng.seed = settings.random_seed + target_idx * 7919
+		return local_rng.randi_range(0, source_size - 1)
+	return target_idx % source_size
+
+func _source_to_targets_copy(source_data : FlowData.Data, targets_data : FlowData.Data) -> FlowData.Data:
+	var source_size = source_data.size()
+	var target_size = targets_data.size()
+	if source_size == 0 or target_size == 0:
+		return FlowData.Data.new()
+
+	var selected_source := PackedInt32Array()
+	selected_source.resize(target_size)
+	for i in range(target_size):
+		selected_source[i] = _pick_source_index(i, source_size)
+
+	var out_data = source_data.filter(selected_source)
+	var source_trs = source_data.getTransformsStream()
+	var target_trs = targets_data.getTransformsStream()
+	if source_trs and target_trs:
+		var out_pos = out_data.getVector3Container(FlowData.AttrPosition)
+		var out_rot = out_data.getVector3Container(FlowData.AttrRotation)
+		var out_size = out_data.getVector3Container(FlowData.AttrSize)
+
+		for i in range(target_size):
+			var src_idx = selected_source[i]
+			var src_tr = source_trs.atIndex(src_idx)
+			var tgt_tr = target_trs.atIndex(i)
+
+			var final_tr : Transform3D
+			if settings.combine_source_with_target_transform:
+				final_tr = tgt_tr * src_tr
+			else:
+				final_tr = tgt_tr
+
+			out_pos[i] = final_tr.origin
+			out_rot[i] = FlowData.basisToEuler(final_tr.basis)
+			if settings.inherit_target_scale:
+				out_size[i] = target_trs.sizes[i]
+
+	if settings.generate_copy_id.strip_edges() != "":
+		var copy_ids := PackedInt32Array()
+		copy_ids.resize(target_size)
+		for i in range(target_size):
+			copy_ids[i] = selected_source[i]
+		out_data.registerStream(settings.generate_copy_id, copy_ids, FlowData.DataType.Int)
+
+	if settings.write_target_index_attribute.strip_edges() != "":
+		var target_ids := PackedInt32Array()
+		target_ids.resize(target_size)
+		for i in range(target_size):
+			target_ids[i] = i
+		out_data.registerStream(settings.write_target_index_attribute, target_ids, FlowData.DataType.Int)
+
+	return out_data
+
+func execute(ctx : FlowData.EvaluationContext):
+	var in_data : FlowData.Data = get_input(0)
+	if in_data == null:
+		setError("Source input is missing")
+		return
+
+	if settings.mode == CopyNodeSettings.eMode.SourceToTargets:
+		var targets_data : FlowData.Data = get_optional_input(1)
+		if targets_data == null:
+			if Engine.is_editor_hint() and ctx.owner == null:
+				set_output(0, FlowData.Data.new())
+				return
+			setError("Targets input is required for SourceToTargets mode")
+			return
+		set_output(0, _source_to_targets_copy(in_data, targets_data))
+		return
+
+	set_output(0, _linear_copy(ctx, in_data))

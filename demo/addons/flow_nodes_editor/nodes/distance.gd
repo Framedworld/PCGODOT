@@ -18,11 +18,19 @@ func execute( ctx : FlowData.EvaluationContext ):
 		
 	var in_dataA : FlowData.Data = get_input(0)
 	if not in_dataA.hasStreamOfType( settings.in_nameA, FlowData.DataType.Vector ):
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_data = FlowData.Data.new()
+			set_output(0, empty_data)
+			return
 		setError( "Input A %s not found" % [settings.in_nameA])
 		return
 		
 	var in_dataB : FlowData.Data = get_input(1)
 	if not  in_dataB.hasStreamOfType( settings.in_nameB, FlowData.DataType.Vector ):
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_data = FlowData.Data.new()
+			set_output(0, empty_data)
+			return
 		setError( "Input B %s not found" % [settings.in_nameB])
 		return
 		

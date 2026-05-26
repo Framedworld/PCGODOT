@@ -59,9 +59,18 @@ static func dict_to_resource(data: Dictionary, resource: Resource) -> void:
 			TYPE_VECTOR3:
 				resource.set(name, _parse_vector3(value))
 			_:
-				resource.set(name, value)
+				if type == TYPE_ARRAY and typeof(value) == TYPE_ARRAY:
+					var target_arr = resource.get(name)
+					if target_arr != null and target_arr.is_typed():
+						target_arr.clear()
+						for item in value:
+							target_arr.append(item)
+					else:
+						resource.set(name, value)
+				else:
+					resource.set(name, value)
 
-static func nodes_as_dict( nodes, frames, editor : FlowGraphEditor ):
+static func nodes_as_dict( nodes, frames, editor : Control ):
 	var exported_node_names = {}
 	
 	# Find the top-left coord of all nodes
@@ -115,7 +124,7 @@ static func nodes_as_dict( nodes, frames, editor : FlowGraphEditor ):
 	}
 	return data
 
-static func _paste_nodes_from_dict( dict, editor : FlowGraphEditor, at_graph_coords = null):
+static func _paste_nodes_from_dict( dict, editor : Control, at_graph_coords = null):
 	if typeof(dict) != TYPE_DICTIONARY:
 		return []
 	# Read paste coords from mouse
@@ -132,7 +141,7 @@ static func _paste_nodes_from_dict( dict, editor : FlowGraphEditor, at_graph_coo
 	for node in new_nodes:
 		node.selected = true
 
-static func create_nodes_from_dict( dict, editor : FlowGraphEditor, paste_offset = null):		
+static func create_nodes_from_dict( dict, editor : Control, paste_offset = null):		
 	if dict.get( "type", null) != "flow_graph_nodes":
 		push_error( "Invalid dict to paste nodes from" )
 		return []
@@ -148,8 +157,8 @@ static func create_nodes_from_dict( dict, editor : FlowGraphEditor, paste_offset
 			return null
 		var in_pos = _parse_vector2( in_node.position )
 		node.position_offset = ( in_pos + paste_offset ) * editor.ui_scale
-		node.show_disconnected_inputs = in_node.show_disconnected_inputs
-		node.args_ports_by_name = in_node.args_port
+		node.show_disconnected_inputs = in_node.get("show_disconnected_inputs", false)
+		node.args_ports_by_name = in_node.get("args_port", {})
 		
 		# Apply saved settings...
 		dict_to_resource( in_node.settings, node.settings )
@@ -191,30 +200,30 @@ static func create_nodes_from_dict( dict, editor : FlowGraphEditor, paste_offset
 
 	return new_nodes
 
-static func copySelectionToClipboard( editor : FlowGraphEditor ):
+static func copySelectionToClipboard( editor : Control ):
 	var nodes = editor.getSelectedNodes()
 	var frames = editor.getSelectedFrames()
 	var json_str = JSON.stringify( nodes_as_dict( nodes, frames, editor ), "\t")
 	DisplayServer.clipboard_set( json_str )
 
-static func pasteNodeFromClipboard( editor : FlowGraphEditor ):
+static func pasteNodeFromClipboard( editor : Control ):
 	var json_str = DisplayServer.clipboard_get( )
 	var dict := JSON.parse_string(json_str)
 	_paste_nodes_from_dict( dict, editor )
 
-static func duplicateSelecteddNodes( editor : FlowGraphEditor ):
+static func duplicateSelecteddNodes( editor : Control ):
 	var nodes = editor.getSelectedNodes()
 	var frames = editor.getSelectedFrames()
 	var dict = nodes_as_dict(nodes, frames, editor )
 	_paste_nodes_from_dict( dict, editor )
 
-static func saveToResource( editor : FlowGraphEditor ):
+static func saveToResource( editor : Control ):
 	var current_resource = editor.current_resource
 	if current_resource == null:
 		return
 	var gedit = editor.gedit
 	var all_nodes = gedit.get_children().filter( func( n ):
-		return n is FlowNodeBase
+		return n is GraphNode
 	)
 	var all_frames = gedit.get_children().filter( func( n ):
 		return n is GraphFrame
@@ -224,14 +233,17 @@ static func saveToResource( editor : FlowGraphEditor ):
 	current_resource.view_offset = gedit.scroll_offset
 	current_resource.new_name_counter = editor.new_name_counter
 
-static func loadFromResource( editor : FlowGraphEditor ):
+static func loadFromResource( editor : Control ):
 	var current_resource = editor.current_resource
 	if current_resource == null:
 		return
 
-	# Register the input_* nodes before trying to load the nodes
+	# Register the input_* and output_* nodes before trying to load the nodes
 	for input in current_resource.in_params:
 		editor.registerInputNodeType( input )
+	if "out_params" in current_resource:
+		for output in current_resource.out_params:
+			editor.registerOutputNodeType( output )
 		
 	if current_resource.data and not current_resource.data.is_empty():
 		var paste_offset = _parse_vector2( current_resource.data.min_pos )
@@ -241,3 +253,167 @@ static func loadFromResource( editor : FlowGraphEditor ):
 	editor.gedit.scroll_offset = current_resource.view_offset
 	editor.new_name_counter = current_resource.new_name_counter
 	editor.data_inspector.setNode( null )
+
+static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary, parent_ctx: FlowData.EvaluationContext) -> Dictionary:
+	var instances = {}
+	var node_list = []
+	for n_data in graph.data.get("nodes", []):
+		var template = n_data.template
+		var name = n_data.name
+		var script_path = "res://addons/flow_nodes_editor/nodes/" + template + ".gd"
+		if template.begins_with("input_"):
+			script_path = "res://addons/flow_nodes_editor/nodes/input.gd"
+		elif template.begins_with("output_"):
+			script_path = "res://addons/flow_nodes_editor/nodes/output.gd"
+		var node_script = load(script_path)
+		if not node_script:
+			push_error("Failed to load node script for template: %s" % template)
+			continue
+		var instance = node_script.new() as FlowNodeBase
+		instance.name = name
+		instance.node_template = template
+		
+		# Initialize settings resource if defined
+		var meta = instance.getMeta()
+		if meta.has("settings") and meta.settings:
+			instance.settings = meta.settings.new()
+		
+		# Apply saved settings
+		dict_to_resource(n_data.settings, instance.settings)
+		
+		instance.refreshFromSettings()
+		
+		instances[name] = instance
+		node_list.append(instance)
+
+	# Build connections (deps and dependants)
+	for conn in graph.data.get("links", []):
+		var src_node = instances.get(conn.from_node)
+		var dst_node = instances.get(conn.to_node)
+		if src_node and dst_node:
+			src_node.dependants.append(conn)
+			dst_node.deps.append(conn)
+
+	# Topological sort
+	var get_deps_recursive = func(node, this_func) -> Array:
+		var deps = [node]
+		for conn in node.deps:
+			var dep_node = instances.get(conn.from_node)
+			if dep_node:
+				deps.append_array(this_func.call(dep_node, this_func))
+		return deps
+		
+	var finals = node_list.filter(func(node):
+		return node.node_template == "output" or node.getMeta().get("is_final", false) or node.settings.debug_enabled or node.settings.inspect_enabled
+	)
+	
+	var all_deps = []
+	for node in finals:
+		all_deps.append_array(get_deps_recursive.call(node, get_deps_recursive))
+	all_deps.reverse()
+	
+	var ordered_nodes = []
+	var visited = {}
+	for node in all_deps:
+		if not visited.has(node.name):
+			visited[node.name] = true
+			ordered_nodes.append(node)
+			
+	# Construct EvaluationContext for subgraph
+	var ctx = load("res://addons/flow_nodes_editor/flow_data.gd").EvaluationContext.new()
+	ctx.graph = graph
+	ctx.owner = parent_ctx.owner
+	ctx.eval_id = parent_ctx.eval_id
+	ctx.gedit_nodes_by_name = instances
+	
+	# Feed subgraph inputs from input_data_map
+	for node in ordered_nodes:
+		if node.node_template == "input":
+			for i in range(graph.in_params.size()):
+				var param = graph.in_params[i]
+				if param:
+					var val = input_data_map.get(param.name, null)
+					var target_data = load("res://addons/flow_nodes_editor/flow_data.gd").Data.new()
+					if val:
+						for stream_name in val.streams:
+							var stream = val.streams[stream_name]
+							target_data.registerStream(stream_name, stream.container, stream.data_type)
+						if val.streams.size() > 0 and not target_data.hasStream(param.name):
+							var main_stream_name = val.last_added_stream_name
+							if main_stream_name == "" or not val.hasStream(main_stream_name):
+								main_stream_name = val.streams.keys()[val.streams.size() - 1]
+							var main_stream = val.streams[main_stream_name]
+							target_data.registerStream(param.name, main_stream.container, main_stream.data_type)
+					else:
+						var new_value = param.get_default_value()
+						var container = target_data.addStream(param.name, param.data_type)
+						if container != null:
+							container.resize(1)
+							container[0] = new_value
+					node.set_output(i, target_data)
+		elif node.node_template.begins_with("input_"):
+			var input_name = node.settings.name
+			var val = input_data_map.get(input_name, null)
+			if val:
+				# Create a new Data object to rename/register the stream under the input's name
+				var target_data = load("res://addons/flow_nodes_editor/flow_data.gd").Data.new()
+				for stream_name in val.streams:
+					var stream = val.streams[stream_name]
+					target_data.registerStream(stream_name, stream.container, stream.data_type)
+				
+				# Ensure that the main stream is registered under input_name
+				if val.streams.size() > 0 and not target_data.hasStream(input_name):
+					var main_stream_name = val.last_added_stream_name
+					if main_stream_name == "" or not val.hasStream(main_stream_name):
+						main_stream_name = val.streams.keys()[val.streams.size() - 1]
+					var main_stream = val.streams[main_stream_name]
+					target_data.registerStream(input_name, main_stream.container, main_stream.data_type)
+				node.set_output(0, target_data)
+
+	# Execute nodes in topological order
+	for node in ordered_nodes:
+		if (node.node_template.begins_with("input_") or node.node_template == "input") and node.generated_bulks.size() > 0:
+			continue
+			
+		node.inputs.clear()
+		var num_ins = node.getMeta().get("ins", []).size()
+		node.inputs.resize(num_ins)
+		for conn in node.deps:
+			var src = instances.get(conn.from_node)
+			if src and src.generated_bulks.size() > 0:
+				var src_bulk = src.generated_bulks[src.generated_bulks.size() - 1]
+				if conn.from_port < src_bulk.size():
+					node.inputs[conn.to_port] = src_bulk[conn.from_port]
+					
+		node.preExecute(ctx)
+		node.execute(ctx)
+		
+	# Collect output data
+	var outputs = {}
+	for node in node_list:
+		if node.node_template == "output":
+			if "out_params" in graph and graph.out_params.size() > 0:
+				for i in range(graph.out_params.size()):
+					var param = graph.out_params[i]
+					if not param:
+						continue
+					if node.inputs.size() > i and node.inputs[i] != null:
+						outputs[param.name] = node.inputs[i]
+			else:
+				var out_name = node.settings.name
+				if node.generated_bulks.size() > 0:
+					var bulk = node.generated_bulks[node.generated_bulks.size() - 1]
+					if bulk.size() > 0:
+						outputs[out_name] = bulk[0]
+				elif node.inputs.size() > 0 and node.inputs[0] != null:
+					outputs[out_name] = node.inputs[0]
+		elif node.node_template.begins_with("output_"):
+			var out_name = node.settings.name
+			if node.generated_bulks.size() > 0:
+				var bulk = node.generated_bulks[node.generated_bulks.size() - 1]
+				if bulk.size() > 0:
+					outputs[out_name] = bulk[0]
+			elif node.inputs.size() > 0 and node.inputs[0] != null:
+				outputs[out_name] = node.inputs[0]
+	return outputs
+

@@ -1,0 +1,131 @@
+@tool
+extends FlowNodeBase
+
+func _init():
+	meta_node = {
+		"title" : "Output",
+		"settings" : OutputNodeSettings,
+		"ins" : [{ "label" : "In", "data_type" : FlowData.DataType.Float }],
+		"outs" : [],
+		"tooltip" : "Exposes an output parameter of the Subgraph",
+		"auto_register" : true,
+		"hide_outputs" : true
+	}
+
+func getMeta() -> Dictionary:
+	if node_template == "output":
+		var ins = []
+		var editor = getEditor()
+		if editor and editor.current_resource:
+			for param in editor.current_resource.out_params:
+				if param:
+					ins.append({
+						"label": param.name,
+						"data_type": param.data_type
+					})
+		meta_node.ins = ins
+		meta_node.title = "Outputs"
+	else:
+		meta_node.title = "Output"
+		if settings:
+			meta_node.ins = [{ "label" : settings.name, "data_type" : settings.data_type }]
+		else:
+			meta_node.ins = [{ "label" : "In", "data_type" : FlowData.DataType.Float }]
+	return meta_node
+
+func getTitle() -> String:
+	if node_template == "output":
+		return "Outputs"
+	return settings.name
+
+func refreshFromSettings():
+	super.refreshFromSettings()
+	if node_template == "output":
+		pass
+	else:
+		var color := getColorForFlowDataType( settings.data_type )
+		set_slot_color_left( 0, color )
+
+func onPropChanged( prop_name : String ):
+	super.onPropChanged( prop_name )
+	if prop_name == "data_type" or prop_name == "name":
+		refreshFromSettings()
+
+func _ready():
+	super._ready()
+	if node_template == "output":
+		var editor = getEditor()
+		if editor and editor.current_resource:
+			if not editor.current_resource.in_params_changed.is_connected(_on_in_params_changed):
+				editor.current_resource.in_params_changed.connect(_on_in_params_changed)
+			initFromScript()
+
+func _exit_tree():
+	super._exit_tree()
+	if node_template == "output":
+		var editor = getEditor()
+		if editor and editor.current_resource:
+			if editor.current_resource.in_params_changed.is_connected(_on_in_params_changed):
+				editor.current_resource.in_params_changed.disconnect(_on_in_params_changed)
+
+func _on_in_params_changed():
+	initFromScript()
+
+func initFromScript():
+	super.initFromScript()
+	if node_template == "output":
+		var spacer = Control.new()
+		spacer.custom_minimum_size.y = 4
+		add_child(spacer)
+		
+		var btn = Button.new()
+		btn.text = "+ Add Output Parameter"
+		btn.alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_CENTER
+		btn.add_theme_font_size_override("font_size", 10)
+		if not btn.pressed.is_connected(_on_add_output_pressed):
+			btn.pressed.connect(_on_add_output_pressed)
+		add_child(btn)
+
+func _on_add_output_pressed():
+	var editor = getEditor()
+	if editor and editor.current_resource:
+		var index = 1
+		var uname = "out_val"
+		while editor._has_output_node_named(uname) or _has_out_param_named(editor.current_resource, uname):
+			uname = "out_val_%d" % index
+			index += 1
+			
+		var new_output = GraphInputParameter.new()
+		new_output.name = uname
+		new_output.data_type = FlowData.DataType.Float
+		editor.current_resource.out_params.append( new_output )
+		editor.current_resource.in_params_changed.emit()
+		editor.queueSave()
+
+func _has_out_param_named(res, uname: String) -> bool:
+	for param in res.out_params:
+		if param and param.name == uname:
+			return true
+	return false
+
+func execute( ctx : FlowData.EvaluationContext ):
+	if node_template == "output":
+		pass
+	else:
+		var in_data = get_optional_input( 0 )
+		if in_data:
+			var target_data = FlowData.Data.new()
+			for stream_name in in_data.streams:
+				var stream = in_data.streams[stream_name]
+				target_data.registerStream(stream_name, stream.container, stream.data_type)
+				
+			var main_stream_name = in_data.last_added_stream_name
+			if main_stream_name == "" or not in_data.hasStream(main_stream_name):
+				main_stream_name = in_data.streams.keys()[in_data.streams.size() - 1]
+				
+			if in_data.streams.size() > 0 and not target_data.hasStream(settings.name):
+				var main_stream = in_data.streams[main_stream_name]
+				target_data.registerStream(settings.name, main_stream.container, settings.data_type)
+				
+			set_output( 0, target_data )
+

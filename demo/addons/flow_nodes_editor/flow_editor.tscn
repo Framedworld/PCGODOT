@@ -49,6 +49,12 @@ layout_mode = 2
 button_pressed = true
 text = "Auto Regen"
 
+[node name="CheckColorNodes" type="CheckBox" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Color Nodes"
+
 [node name="ButtonRegenerate" type="Button" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 layout_mode = 2
 text = "Regenerate"
@@ -58,8 +64,8 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Info"
 
-[node name="VSplitContainer" type="VSplitContainer" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
+[node name="VSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -81,6 +87,7 @@ show_grid_buttons = false
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/ButtonInputs" to="." method="_on_button_inputs_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/ButtonSave" to="." method="_on_button_save_pressed"]
 [connection signal="toggled" from="VBoxContainer/ScrollContainer/HBoxContainer/AutoRegen" to="." method="_on_auto_regen_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/HBoxContainer/CheckColorNodes" to="." method="_on_color_nodes_toggled"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/ButtonRegenerate" to="." method="_on_button_regenerate_pressed"]
 [connection signal="connection_from_empty" from="VBoxContainer/VSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_from_empty"]
 [connection signal="connection_request" from="VBoxContainer/VSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]

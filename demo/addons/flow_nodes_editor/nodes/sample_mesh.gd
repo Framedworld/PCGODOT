@@ -62,6 +62,9 @@ static func sampleMeshSurface(mi: MeshInstance3D, n: int = -1, density: float = 
 			# Per-triangle normal (world space)
 			tri_normals.append(((b - a).cross(c - a)).normalized())
 
+	if tris.is_empty() or total_area <= 0.0:
+		return { "points": PackedVector3Array(), "normals": PackedVector3Array() }
+
 	# Decide sample count
 	if n <= 0 and density > 0.0:
 		n = int(round(total_area * density))
@@ -116,6 +119,96 @@ static func sampleMeshSurface(mi: MeshInstance3D, n: int = -1, density: float = 
 
 	return { "points": out_pts, "normals": out_nrm }
 
+static func distance_to_segment(p: Vector3, a: Vector3, b: Vector3) -> float:
+	var ab = b - a
+	var ap = p - a
+	var l2 = ab.length_squared()
+	if l2 == 0.0:
+		return (p - a).length()
+	var t = ap.dot(ab) / l2
+	t = clamp(t, 0.0, 1.0)
+	var closest_point = a + ab * t
+	return (p - closest_point).length()
+
+static func get_hard_edges(mi: MeshInstance3D, angle_threshold_deg: float) -> Array:
+	var mesh := mi.mesh
+	if not mesh:
+		return []
+		
+	var gt := mi.global_transform
+	var edge_map := {}
+	
+	for s in mesh.get_surface_count():
+		var arrs := mesh.surface_get_arrays(s)
+		var vtx : PackedVector3Array = arrs[Mesh.ARRAY_VERTEX]
+		var idx : PackedInt32Array = arrs[Mesh.ARRAY_INDEX]
+		
+		if idx.is_empty():
+			idx = PackedInt32Array()
+			idx.resize(vtx.size())
+			for i in range(vtx.size()):
+				idx[i] = i
+				
+		for i in range(0, idx.size(), 3):
+			var a := gt * vtx[idx[i + 0]]
+			var b := gt * vtx[idx[i + 1]]
+			var c := gt * vtx[idx[i + 2]]
+			
+			var normal = (b - a).cross(c - a).normalized()
+			
+			var edges = [
+				[a, b],
+				[b, c],
+				[c, a]
+			]
+			
+			for edge in edges:
+				var v0 = edge[0]
+				var v1 = edge[1]
+				
+				# unique rounded key for vertex coordinates
+				var k0 = Vector3i(int(round(v0.x * 1000.0)), int(round(v0.y * 1000.0)), int(round(v0.z * 1000.0)))
+				var k1 = Vector3i(int(round(v1.x * 1000.0)), int(round(v1.y * 1000.0)), int(round(v1.z * 1000.0)))
+				
+				var key
+				var actual_vertices
+				if k0 < k1:
+					key = [k0, k1]
+					actual_vertices = [v0, v1]
+				else:
+					key = [k1, k0]
+					actual_vertices = [v1, v0]
+					
+				if not edge_map.has(key):
+					edge_map[key] = {
+						"vertices": actual_vertices,
+						"normals": [],
+					}
+				edge_map[key].normals.append(normal)
+				
+	var hard_edges = []
+	var angle_threshold_rad = deg_to_rad(angle_threshold_deg)
+	
+	for key in edge_map:
+		var edge_data = edge_map[key]
+		var normals = edge_data.normals
+		var is_hard = false
+		
+		if normals.size() == 1:
+			is_hard = true # Boundary edge
+		elif normals.size() == 2:
+			var dot = normals[0].dot(normals[1])
+			var angle = acos(clamp(dot, -1.0, 1.0))
+			if angle >= angle_threshold_rad:
+				is_hard = true
+		else:
+			is_hard = true # Non-manifold edge
+			
+		if is_hard:
+			hard_edges.append(edge_data.vertices)
+			
+	return hard_edges
+
 ## Build a stable orthonormal Basis from a surface normal.
 ## - `normal` is the axis you want to align (default aligns to +Z).
 ## - `up` is your preferred up; a safe fallback is chosen if nearly parallel.
@@ -153,6 +246,9 @@ func execute( ctx : FlowData.EvaluationContext ):
 		return null
 		
 	var in_data = get_input(0)
+	if in_data == null:
+		setError("Input 'Meshes' is not connected")
+		return null
 	var nodes = in_data.getContainerChecked( "node", FlowData.DataType.NodeMesh )
 	if nodes == null:
 		setError( "Input are not meshes")
@@ -171,6 +267,10 @@ func execute( ctx : FlowData.EvaluationContext ):
 	var num_samples = getSettingValue(ctx, "num_samples" )
 	var density = getSettingValue(ctx, "density")
 	var point_size = getSettingValue(ctx, "point_size")
+	
+	var discard_hard_edges = getSettingValue(ctx, "discard_hard_edges")
+	var hard_edge_angle = getSettingValue(ctx, "hard_edge_angle_threshold")
+	var hard_edge_dist = getSettingValue(ctx, "hard_edge_distance_threshold")
 
 	if settings.mode == SampleMeshNodeSettings.eMode.UseDensity:
 		num_samples = -1
@@ -184,6 +284,27 @@ func execute( ctx : FlowData.EvaluationContext ):
 		var ans = sampleMeshSurface( node, num_samples, density, settings.random_seed )
 		var points : PackedVector3Array = ans.points
 		var normals : PackedVector3Array = ans.normals
+		
+		# Discard points close to hard edges
+		if discard_hard_edges:
+			var hard_edges = get_hard_edges(node, hard_edge_angle)
+			if not hard_edges.is_empty():
+				var filtered_pts := PackedVector3Array()
+				var filtered_nrms := PackedVector3Array()
+				for i in range(points.size()):
+					var p = points[i]
+					var too_close = false
+					for edge in hard_edges:
+						var dist = distance_to_segment(p, edge[0], edge[1])
+						if dist < hard_edge_dist:
+							too_close = true
+							break
+					if not too_close:
+						filtered_pts.append(p)
+						filtered_nrms.append(normals[i])
+				points = filtered_pts
+				normals = filtered_nrms
+
 		var num_points := points.size()
 		var base := spos.size()			
 		spos.resize( base + num_points )

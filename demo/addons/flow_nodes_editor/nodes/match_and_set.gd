@@ -35,13 +35,22 @@ func execute( ctx : FlowData.EvaluationContext ):
 		input_lut_container = input_lut_stream.container
 		var attr_index := 0
 		for value in match_stream.container:
-			if not value in lut:
+			var value_str := str(value)
+			if not value_str in lut:
 				var empty_int_array: Array[int] = []
-				lut[ value ] = empty_int_array
-			lut[ value ].append( attr_index )
+				lut[ value_str ] = empty_int_array
+			lut[ value_str ].append( attr_index )
 			attr_index += 1
 		using_lut = true
 	
+	var weight_attr : String = getSettingValue( ctx, "weight_attr" )
+	var weight_stream = null
+	if weight_attr:
+		weight_stream = attrs_data.findStream( weight_attr )
+		if weight_stream == null:
+			setError( "Can't find weight attribute %s in Attributes input" % weight_attr )
+			return
+
 	# Create the new streams
 	var out_data : FlowData.Data = in_data.duplicate()
 	var in_containers = []
@@ -60,7 +69,30 @@ func execute( ctx : FlowData.EvaluationContext ):
 			if lut.has( in_lut_value ):
 				var candidate_indices : Array[int] = lut[in_lut_value]
 				var num_choices := candidate_indices.size()
-				var choice_index := rng.randi_range( 0, num_choices - 1 )
+				var choice_index := 0
+				if weight_stream != null:
+					var weights : Array[float] = []
+					var total_weight : float = 0.0
+					for c_idx in candidate_indices:
+						var w : float = float(weight_stream.container[c_idx])
+						if w < 0.0:
+							w = 0.0
+						weights.append(w)
+						total_weight += w
+					
+					if total_weight > 0.0:
+						var r := rng.randf() * total_weight
+						var accumulated := 0.0
+						for i in range(num_choices):
+							accumulated += weights[i]
+							if r <= accumulated:
+								choice_index = i
+								break
+					else:
+						choice_index = rng.randi_range( 0, num_choices - 1 )
+				else:
+					choice_index = rng.randi_range( 0, num_choices - 1 )
+				
 				var attr_idx := candidate_indices[ choice_index ]
 				#print( "OutPoint: %d Using attr index %d" % [ idx, attr_idx ])
 				for j in range(num_new_streams):
@@ -73,8 +105,32 @@ func execute( ctx : FlowData.EvaluationContext ):
 	else:
 		var num_choices = attrs_data.size()
 		if num_choices > 0 && num_new_streams > 0:
+			var weights : Array[float] = []
+			var total_weight : float = 0.0
+			var has_weights := weight_stream != null
+			
+			if has_weights:
+				for idx in range(num_choices):
+					var w : float = float(weight_stream.container[idx])
+					if w < 0.0:
+						w = 0.0
+					weights.append(w)
+					total_weight += w
+			
 			for idx in range( out_data.size() ):
-				var attr_idx = rng.randi_range( 0, num_choices - 1 )
+				var attr_idx : int = -1
+				if has_weights && total_weight > 0.0:
+					var r := rng.randf() * total_weight
+					var accumulated := 0.0
+					for i in range(num_choices):
+						accumulated += weights[i]
+						if r <= accumulated:
+							attr_idx = i
+							break
+					if attr_idx == -1:
+						attr_idx = rng.randi_range( 0, num_choices - 1 )
+				else:
+					attr_idx = rng.randi_range( 0, num_choices - 1 )
 				# print( "Copy all attr of in_attr[%d] into out_data[%d]" % [attr_idx, idx])
 				for j in range(num_new_streams):
 					out_containers[ j ][ idx ] = in_containers[ j ][ attr_idx ]

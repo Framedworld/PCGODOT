@@ -4,8 +4,9 @@ extends NodeSettings
 
 @export_group("Select")
 
-@export_range(0.0, 1.0) var ratio : float = 0.2
-@export var weight_name : String
+@export var select_b: bool = false
+@export var use_attribute: bool = false
+@export var attribute_name: String = ""
 
 func _init():
 	super._init()
