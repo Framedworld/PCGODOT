@@ -157,8 +157,8 @@ static func create_nodes_from_dict( dict, editor : Control, paste_offset = null)
 			return null
 		var in_pos = _parse_vector2( in_node.position )
 		node.position_offset = ( in_pos + paste_offset ) * editor.ui_scale
-		node.show_disconnected_inputs = in_node.show_disconnected_inputs
-		node.args_ports_by_name = in_node.args_port
+		node.show_disconnected_inputs = in_node.get("show_disconnected_inputs", false)
+		node.args_ports_by_name = in_node.get("args_port", {})
 		
 		# Apply saved settings...
 		dict_to_resource( in_node.settings, node.settings )
@@ -238,9 +238,12 @@ static func loadFromResource( editor : Control ):
 	if current_resource == null:
 		return
 
-	# Register the input_* nodes before trying to load the nodes
+	# Register the input_* and output_* nodes before trying to load the nodes
 	for input in current_resource.in_params:
 		editor.registerInputNodeType( input )
+	if "out_params" in current_resource:
+		for output in current_resource.out_params:
+			editor.registerOutputNodeType( output )
 		
 	if current_resource.data and not current_resource.data.is_empty():
 		var paste_offset = _parse_vector2( current_resource.data.min_pos )
@@ -260,6 +263,8 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 		var script_path = "res://addons/flow_nodes_editor/nodes/" + template + ".gd"
 		if template.begins_with("input_"):
 			script_path = "res://addons/flow_nodes_editor/nodes/input.gd"
+		elif template.begins_with("output_"):
+			script_path = "res://addons/flow_nodes_editor/nodes/output.gd"
 		var node_script = load(script_path)
 		if not node_script:
 			push_error("Failed to load node script for template: %s" % template)
@@ -323,7 +328,30 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 	
 	# Feed subgraph inputs from input_data_map
 	for node in ordered_nodes:
-		if node.node_template.begins_with("input_") or node.node_template == "input":
+		if node.node_template == "input":
+			for i in range(graph.in_params.size()):
+				var param = graph.in_params[i]
+				if param:
+					var val = input_data_map.get(param.name, null)
+					var target_data = load("res://addons/flow_nodes_editor/flow_data.gd").Data.new()
+					if val:
+						for stream_name in val.streams:
+							var stream = val.streams[stream_name]
+							target_data.registerStream(stream_name, stream.container, stream.data_type)
+						if val.streams.size() > 0 and not target_data.hasStream(param.name):
+							var main_stream_name = val.last_added_stream_name
+							if main_stream_name == "" or not val.hasStream(main_stream_name):
+								main_stream_name = val.streams.keys()[val.streams.size() - 1]
+							var main_stream = val.streams[main_stream_name]
+							target_data.registerStream(param.name, main_stream.container, main_stream.data_type)
+					else:
+						var new_value = param.get_default_value()
+						var container = target_data.addStream(param.name, param.data_type)
+						if container != null:
+							container.resize(1)
+							container[0] = new_value
+					node.set_output(i, target_data)
+		elif node.node_template.begins_with("input_"):
 			var input_name = node.settings.name
 			var val = input_data_map.get(input_name, null)
 			if val:
@@ -364,6 +392,22 @@ static func evaluate_graph(graph: FlowGraphResource, input_data_map: Dictionary,
 	var outputs = {}
 	for node in node_list:
 		if node.node_template == "output":
+			if "out_params" in graph and graph.out_params.size() > 0:
+				for i in range(graph.out_params.size()):
+					var param = graph.out_params[i]
+					if not param:
+						continue
+					if node.inputs.size() > i and node.inputs[i] != null:
+						outputs[param.name] = node.inputs[i]
+			else:
+				var out_name = node.settings.name
+				if node.generated_bulks.size() > 0:
+					var bulk = node.generated_bulks[node.generated_bulks.size() - 1]
+					if bulk.size() > 0:
+						outputs[out_name] = bulk[0]
+				elif node.inputs.size() > 0 and node.inputs[0] != null:
+					outputs[out_name] = node.inputs[0]
+		elif node.node_template.begins_with("output_"):
 			var out_name = node.settings.name
 			if node.generated_bulks.size() > 0:
 				var bulk = node.generated_bulks[node.generated_bulks.size() - 1]

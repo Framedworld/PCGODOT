@@ -13,7 +13,7 @@ func _init():
 func getTitle() -> String:
 	return MathOpNodeSettings.eOperation.keys()[settings.operation]	
 
-func execute( _ctx : FlowData.EvaluationContext ):
+func execute( ctx : FlowData.EvaluationContext ):
 	var time_start_init = Time.get_ticks_usec()	
 	
 	var is_single_arg = settings.isSingleArgument()
@@ -26,6 +26,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 	var in_dataA: FlowData.Data = get_input(0)
 	var sA = in_dataA.findStream( settings.in_nameA )
 	if sA == null:
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_data = FlowData.Data.new()
+			set_output(0, empty_data)
+			return
 		setError( "Input A %s not found" % [settings.in_nameA])
 		return
 	var num_elemsA := in_dataA.size()
@@ -46,6 +50,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 			sB = newFloatStream( in_dataA.size(), "Constant %s" % settings.in_nameB, v )
 		else:
 			if not is_single_arg:
+				if ctx.owner == null and Engine.is_editor_hint():
+					var empty_data = FlowData.Data.new()
+					set_output(0, empty_data)
+					return
 				setError( "Input B %s not found, and can't be interpreted as a constant number" % [settings.in_nameB])
 				return
 
@@ -61,9 +69,17 @@ func execute( _ctx : FlowData.EvaluationContext ):
 			elif sB.data_type == FlowData.DataType.Color:
 				sB = newStream( num_elemsA, sA.name + " as color", sB.container[0], FlowData.DataType.Color )
 			else:
+				if ctx.owner == null and Engine.is_editor_hint():
+					var empty_data = FlowData.Data.new()
+					set_output(0, empty_data)
+					return
 				setError( "Num elements from A nd B do not match (%d vs %d). But In B data type must be a float, Vector3, or Color" % [num_elemsA, num_elemsB])
-				
+				return
 		else:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				return
 			setError( "Num elements from A nd B do not match (%d vs %d)" % [num_elemsA, num_elemsB])
 			return
 	var num_elems := num_elemsA
@@ -340,6 +356,10 @@ func execute( _ctx : FlowData.EvaluationContext ):
 			out_container = outC
 	
 		else:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				return
 			setError( "Input A and B have incompatible/unsupported data types (%s vs %s)" % [sA.data_type, sB.data_type])
 			return
 

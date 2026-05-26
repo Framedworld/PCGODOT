@@ -20,6 +20,11 @@ func execute( ctx : FlowData.EvaluationContext ):
 	if settings.use_attribute and settings.attribute_name != "":
 		var stream = in_data.findStream(settings.attribute_name)
 		if stream == null:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				set_output(1, empty_data)
+				return
 			setError("Attribute '%s' not found" % settings.attribute_name)
 			return
 		if stream.container.size() > 0:

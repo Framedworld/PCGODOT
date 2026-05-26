@@ -56,6 +56,7 @@ var ui_scale = 1.0
 var node_types = { }
 
 var popup_menu_inputs : PopupMenu
+var popup_menu_outputs : PopupMenu
 var popup_on_over_input = null
 const IDM_PROMOTE_TO_PARAMETER : int = 100
 const IDM_COLLAPSE_TO_SUBGRAPH : int = 200
@@ -270,6 +271,10 @@ func registerInputNodeType( input ):
 	var node_type_name := "input_%s" % input.name
 	registerNodeType( node_type_name, "input.gd")
 
+func registerOutputNodeType( output ):
+	var node_type_name := "output_%s" % output.name
+	registerNodeType( node_type_name, "output.gd")
+
 func scanAvailableNodes():
 	var files := ResourceLoader.list_directory(directory_path) 
 	for file in files:
@@ -291,6 +296,20 @@ func populatePopupInputsMenu():
 	if popup_menu_inputs.get_item_count() == 0:
 		popup_menu_inputs.add_item( "No inputs defined", -1 )
 		popup_menu_inputs.set_item_disabled(0, true)
+
+func populatePopupOutputsMenu():
+	if not popup_menu_outputs:
+		return
+	popup_menu_outputs.clear()
+
+	if current_resource and "out_params" in current_resource:
+		for idx in range(current_resource.out_params.size()):
+			var label : String = current_resource.out_params[idx].name
+			popup_menu_outputs.add_item( FlowNodeBase.editorDisplayName( label ), idx)
+
+	if popup_menu_outputs.get_item_count() == 0:
+		popup_menu_outputs.add_item( "No outputs defined", -1 )
+		popup_menu_outputs.set_item_disabled(0, true)
 
 func populatePopupMenu() -> PopupMenu:
 	min_id = 1000
@@ -337,6 +356,16 @@ func populatePopupMenu() -> PopupMenu:
 		pm.add_separator( "", -1 )
 		populatePopupInputsMenu()
 
+		if popup_menu_outputs:
+			popup_menu_outputs.queue_free()
+		popup_menu_outputs = PopupMenu.new()
+		popup_menu_outputs.name = "outputs_menu"
+		popup_menu_outputs.id_pressed.connect( _on_outputs_menu_id_pressed )
+		pm.add_child(popup_menu_outputs)
+		pm.add_submenu_item("Outputs...", popup_menu_outputs.name)
+		pm.add_separator( "", -1 )
+		populatePopupOutputsMenu()
+
 	# Categorized node submenus
 	var cat_map = {
 		"Attributes": ["add_attribute", "remove_attribute"],
@@ -344,7 +373,7 @@ func populatePopupMenu() -> PopupMenu:
 		"Splines": ["create_spline", "sample_spline", "distance", "scan_splines"],
 		"Meshes": ["sample_mesh", "scan_meshes"],
 		"Assets": ["assets", "spawn_meshes", "spawn_scenes"],
-		"Generators": ["grid", "noise", "relax", "self_pruning"],
+		"Generators": ["grid", "noise", "relax", "self_pruning", "dungeon_generator"],
 		"Utility": ["input", "output", "subgraph", "loop", "debug", "sort", "merge", "partition", "filter", "copy"]
 	}
 	
@@ -532,6 +561,9 @@ func _ready():
 	search_add_node_popup.input_selected.connect(func(input_idx):
 		_on_inputs_menu_id_pressed(input_idx)
 	)
+	search_add_node_popup.output_selected.connect(func(output_idx):
+		_on_outputs_menu_id_pressed(output_idx)
+	)
 	search_add_node_popup.popup_hide.connect(func():
 		auto_connect_from_node = ""
 		auto_connect_to_node = ""
@@ -617,7 +649,11 @@ func _on_in_params_changed():
 	if current_resource:
 		for input in current_resource.in_params:
 			registerInputNodeType(input)
+		if "out_params" in current_resource:
+			for output in current_resource.out_params:
+				registerOutputNodeType(output)
 		populatePopupInputsMenu()
+		populatePopupOutputsMenu()
 		if inspector and inspector.current_settings == current_resource:
 			inspector.edit(current_resource)
 	
@@ -626,6 +662,13 @@ func onNodePropertyChanged( prop_name : String):
 		#print( "Node %s.%s has changed" % [ inspected_node.name, prop_name ])
 		inspected_node.onPropChanged( prop_name )
 		inspected_node.refreshFromSettings()
+		if inspected_node is FlowNodeBase and (inspected_node.node_template == "input" or inspected_node.node_template.begins_with("input_")):
+			if prop_name == "name" or prop_name == "data_type":
+				syncGraphParameters()
+		elif inspected_node is FlowNodeBase and (inspected_node.node_template == "output" or inspected_node.node_template.begins_with("output_")):
+			if prop_name == "name" or prop_name == "data_type":
+				syncGraphOutputs()
+		queueSave()
 		queueRegen()
 		
 # ------------------------------------------------
@@ -652,7 +695,13 @@ func getSelectedNodes() -> Array[GraphNode]:
 	return nodes
 
 func deleteNodes( nodes : Array[GraphNode] ):
+	var has_input_nodes := false
+	var has_output_nodes := false
 	for node in nodes:
+		if node is FlowNodeBase and (node.node_template == "input" or node.node_template.begins_with("input_")):
+			has_input_nodes = true
+		elif node is FlowNodeBase and (node.node_template == "output" or node.node_template.begins_with("output_")):
+			has_output_nodes = true
 		for n in range( node.num_ports ):
 			remove_all_inputs_to_target_connection( node.name, n )
 		for n in range( node.getMeta().outs.size() ):
@@ -660,6 +709,10 @@ func deleteNodes( nodes : Array[GraphNode] ):
 		gedit_nodes_by_name.erase( node.name )
 		gedit.remove_child( node )
 		node.queue_free()
+	if has_input_nodes:
+		syncGraphParameters()
+	if has_output_nodes:
+		syncGraphOutputs()
 
 func deleteGraphElementsAndRefresh( nodes : Array[GraphNode], frames : Array[GraphFrame] ):
 	deleteFrames( frames )
@@ -737,9 +790,22 @@ func addNodeFromTemplate( node_template, node_name : String, settings = null ):
 		node.settings = settings
 	else:
 		if meta.has( "settings" ):
-			#print( "Assigning settings of type %s" % meta.settings )
-			#print( "node is %s" % node )
-			node.settings = meta.settings.new()
+			var s = meta.settings.new()
+			if node_template == "input" and s.name == "in_val":
+				var index = 1
+				var uname = "in_val"
+				while _has_input_node_named(uname):
+					uname = "in_val_%d" % index
+					index += 1
+				s.name = uname
+			elif node_template == "output" and s.name == "out_val":
+				var index = 1
+				var uname = "out_val"
+				while _has_output_node_named(uname):
+					uname = "out_val_%d" % index
+					index += 1
+				s.name = uname
+			node.settings = s
 		else:
 			#print( "Assigning default settings" )
 			node.settings = NodeSettings.new()
@@ -754,6 +820,22 @@ func addNodeFromTemplate( node_template, node_name : String, settings = null ):
 	gedit.add_child(node)
 	gedit_nodes_by_name[ node.name ] = node
 	return node
+
+func _has_input_node_named(uname: String) -> bool:
+	for child in gedit.get_children():
+		var node = child as FlowNodeBase
+		if node and (node.node_template == "input" or node.node_template.begins_with("input_")):
+			if node.settings and node.settings.name == uname:
+				return true
+	return false
+
+func _has_output_node_named(uname: String) -> bool:
+	for child in gedit.get_children():
+		var node = child as FlowNodeBase
+		if node and node.node_template == "output":
+			if node.settings and node.settings.name == uname:
+				return true
+	return false
 	
 func canConnect( src : FlowNodeBase, src_port : int, dst : FlowNodeBase, dst_port : int ):
 	# Discard self connections and null values
@@ -804,6 +886,10 @@ func addNode( node_template, settings = null ):
 	node.visible = true
 	
 	record_undo_action("Add Node", before_state)
+	if node_template == "input" or node_template.begins_with("input_"):
+		syncGraphParameters()
+	elif node_template == "output" or node_template.begins_with("output_"):
+		syncGraphOutputs()
 	return node
 
 # ------------------------------------------------
@@ -932,7 +1018,86 @@ func registerAsParameter( name : String, data_type : FlowData.DataType ):
 	new_input.name = name
 	new_input.data_type = data_type
 	current_resource.in_params.append( new_input )
+	current_resource.in_params_changed.emit()
 	registerInputNodeType( current_resource.in_params.back() )
+
+func syncGraphParameters():
+	if not current_resource:
+		return
+	var input_nodes = []
+	for child in gedit.get_children():
+		var node = child as FlowNodeBase
+		if node and (node.node_template == "input" or node.node_template.begins_with("input_")):
+			input_nodes.append(node)
+	var new_in_params : Array[GraphInputParameter] = []
+	var seen_names = {}
+	for input_node in input_nodes:
+		var param_name = input_node.settings.name
+		if param_name == "":
+			continue
+		if seen_names.has(param_name):
+			continue
+		seen_names[param_name] = true
+		var existing = null
+		for p in current_resource.in_params:
+			if p and p.name == param_name:
+				existing = p
+				break
+		if existing:
+			if existing.data_type != input_node.settings.data_type:
+				existing.data_type = input_node.settings.data_type
+			new_in_params.append(existing)
+		else:
+			var new_param = GraphInputParameter.new()
+			new_param.name = param_name
+			new_param.data_type = input_node.settings.data_type
+			new_in_params.append(new_param)
+	current_resource.in_params = new_in_params
+	current_resource.in_params_changed.emit()
+
+func syncGraphOutputs():
+	if not current_resource:
+		return
+	var has_multi_port_output = false
+	var output_nodes = []
+	for child in gedit.get_children():
+		var node = child as FlowNodeBase
+		if node:
+			if node.node_template == "output":
+				has_multi_port_output = true
+			elif node.node_template.begins_with("output_"):
+				output_nodes.append(node)
+	var new_out_params : Array[GraphInputParameter] = []
+	var seen_names = {}
+	
+	if has_multi_port_output:
+		for p in current_resource.out_params:
+			if p and not seen_names.has(p.name):
+				seen_names[p.name] = true
+				new_out_params.append(p)
+				
+	for output_node in output_nodes:
+		var param_name = output_node.settings.name
+		if param_name == "" or seen_names.has(param_name):
+			continue
+		seen_names[param_name] = true
+		var existing = null
+		if "out_params" in current_resource:
+			for p in current_resource.out_params:
+				if p and p.name == param_name:
+					existing = p
+					break
+		if existing:
+			if existing.data_type != output_node.settings.data_type:
+				existing.data_type = output_node.settings.data_type
+			new_out_params.append(existing)
+		else:
+			var new_param = GraphInputParameter.new()
+			new_param.name = param_name
+			new_param.data_type = output_node.settings.data_type
+			new_out_params.append(new_param)
+	current_resource.out_params = new_out_params
+	current_resource.in_params_changed.emit()
 
 func _on_in_popup_menu_pressed( id: int, row : FlowConnectorRow ) -> void:
 	if id == IDM_PROMOTE_TO_PARAMETER and row:
@@ -999,10 +1164,13 @@ func _on_graph_edit_popup_request(at_position):
 			required_output_type = iport.get( "data_type", FlowData.DataType.Invalid )
 
 	var in_params = []
+	var out_params = []
 	if current_resource:
 		in_params = current_resource.in_params
+		if "out_params" in current_resource:
+			out_params = current_resource.out_params
 		
-	search_add_node_popup.setup(node_types, in_params, getSelectedNodes().size() > 0, required_input_type, required_output_type)
+	search_add_node_popup.setup(node_types, in_params, out_params, getSelectedNodes().size() > 0, required_input_type, required_output_type)
 	search_add_node_popup.position = get_screen_position() + at_position
 	search_add_node_popup.popup()
 	
@@ -1018,6 +1186,15 @@ func _on_inputs_menu_id_pressed(id: int):
 	var settings := InputNodeSettings.new()
 	settings.name = input.name
 	settings.data_type = input.data_type
+	return addNode( node_type, settings )
+
+func _on_outputs_menu_id_pressed(id: int):
+	var output = current_resource.out_params[id]
+	var node_type = "output_%s" % output.name
+	print( "Creating an output node: %s (%d) -> %s" % [ output.name, output.data_type, node_type] )
+	var settings := OutputNodeSettings.new()
+	settings.name = output.name
+	settings.data_type = output.data_type
 	return addNode( node_type, settings )
 
 func _on_popup_menu_id_pressed(id: int) -> void:

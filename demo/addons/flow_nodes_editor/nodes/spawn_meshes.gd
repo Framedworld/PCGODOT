@@ -35,6 +35,10 @@ func execute( ctx : FlowData.EvaluationContext ):
 		setError( "Input is invalid")
 		return
 
+	if in_data.size() == 0:
+		set_output(0, in_data)
+		return
+
 	var meshes = null
 	if settings.mesh_attribute:
 		var stream_meshes = in_data.findStream( settings.mesh_attribute )
@@ -53,6 +57,9 @@ func execute( ctx : FlowData.EvaluationContext ):
 
 	var root = ctx.owner
 	if not root:
+		if Engine.is_editor_hint():
+			set_output(0, in_data)
+			return
 		setError("Failed to find root")
 		return
 		

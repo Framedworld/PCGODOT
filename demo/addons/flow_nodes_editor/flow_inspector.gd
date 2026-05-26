@@ -85,6 +85,18 @@ func edit(target_node: Object):
 	if target_node is GraphFrame:
 		_populate_frame_properties(target_node)
 	elif target_node is GraphNode:
+		if target_node.node_template == "input":
+			var editor_instance = target_node.getEditor()
+			if editor_instance and editor_instance.current_resource:
+				current_settings = editor_instance.current_resource
+				_populate_graph_resource_properties(editor_instance.current_resource)
+				return
+		elif target_node.node_template == "output":
+			var editor_instance = target_node.getEditor()
+			if editor_instance and editor_instance.current_resource:
+				current_settings = editor_instance.current_resource
+				_populate_graph_resource_outputs(editor_instance.current_resource)
+				return
 		if "settings" in target_node and target_node.settings != null:
 			current_settings = target_node.settings
 			_populate_node_properties(target_node, target_node.settings)
@@ -655,6 +667,139 @@ func _show_file_dialog_for_param_resource(param: GraphInputParameter, label: Lab
 	)
 	add_child(fd)
 	fd.popup_centered_ratio(0.4)
+
+func _populate_graph_resource_outputs(res: FlowGraphResource):
+	_add_header("Graph Outputs", res.resource_path.get_file() if res.resource_path != "" else "Unsaved Resource")
+	
+	# Outputs list
+	var list_box = VBoxContainer.new()
+	list_box.add_theme_constant_override("separation", 12)
+	content_vbox.add_child(list_box)
+	
+	for idx in range(res.out_params.size()):
+		var param = res.out_params[idx]
+		if not param:
+			continue
+			
+		var param_panel = PanelContainer.new()
+		var p_style = StyleBoxFlat.new()
+		p_style.bg_color = Color("252836") # card HSL background
+		p_style.set_corner_radius_all(6)
+		p_style.content_margin_left = 8
+		p_style.content_margin_right = 8
+		p_style.content_margin_top = 8
+		p_style.content_margin_bottom = 8
+		param_panel.add_theme_stylebox_override("panel", p_style)
+		
+		var param_vbox = VBoxContainer.new()
+		param_vbox.add_theme_constant_override("separation", 6)
+		param_panel.add_child(param_vbox)
+		
+		# Name row with Delete button
+		var name_row = HBoxContainer.new()
+		name_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		var lbl_name = Label.new()
+		lbl_name.text = "Name"
+		lbl_name.add_theme_font_size_override("font_size", 11)
+		lbl_name.custom_minimum_size.x = 50
+		name_row.add_child(lbl_name)
+		
+		var le_name = LineEdit.new()
+		le_name.text = param.name
+		le_name.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		le_name.add_theme_font_size_override("font_size", 11)
+		
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("111318")
+		sb.set_corner_radius_all(3)
+		sb.content_margin_left = 6
+		sb.content_margin_right = 6
+		le_name.add_theme_stylebox_override("normal", sb)
+		
+		# Hook up focus/submitted to rename parameter and refresh
+		le_name.text_submitted.connect(func(new_text):
+			param.name = new_text
+			param.emit_changed()
+			res.emit_changed()
+			property_edited.emit("out_params")
+		)
+		le_name.focus_exited.connect(func():
+			if param.name != le_name.text:
+				param.name = le_name.text
+				param.emit_changed()
+				res.emit_changed()
+				property_edited.emit("out_params")
+		)
+		name_row.add_child(le_name)
+		
+		var btn_del = Button.new()
+		btn_del.text = "X"
+		btn_del.flat = true
+		btn_del.add_theme_color_override("font_color", Color("ef4444"))
+		btn_del.pressed.connect(func():
+			res.out_params.remove_at(idx)
+			res.emit_changed()
+			property_edited.emit("out_params")
+			edit(res) # refresh inspector
+		)
+		name_row.add_child(btn_del)
+		param_vbox.add_child(name_row)
+		
+		# Type row
+		var type_row = HBoxContainer.new()
+		var lbl_type = Label.new()
+		lbl_type.text = "Type"
+		lbl_type.add_theme_font_size_override("font_size", 11)
+		lbl_type.custom_minimum_size.x = 50
+		type_row.add_child(lbl_type)
+		
+		var opt_type = OptionButton.new()
+		opt_type.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		opt_type.add_theme_font_size_override("font_size", 11)
+		
+		var types_to_show = [
+			FlowData.DataType.Bool,
+			FlowData.DataType.Int,
+			FlowData.DataType.Float,
+			FlowData.DataType.Vector,
+			FlowData.DataType.String,
+			FlowData.DataType.Resource
+		]
+		for t_idx in range(types_to_show.size()):
+			var t_val = types_to_show[t_idx]
+			var t_name = FlowData.DataType.keys()[t_val]
+			opt_type.add_item(t_name, t_val)
+			if param.data_type == t_val:
+				opt_type.selected = t_idx
+				
+		opt_type.item_selected.connect(func(id_index):
+			var new_type = opt_type.get_item_id(id_index)
+			param.data_type = new_type
+			param.emit_changed()
+			res.emit_changed()
+			property_edited.emit("out_params")
+			edit(res) # refresh to update value control type
+		)
+		type_row.add_child(opt_type)
+		param_vbox.add_child(type_row)
+		
+		list_box.add_child(param_panel)
+		
+	# Add Parameter Button
+	var btn_add = Button.new()
+	btn_add.text = "+ Add Parameter"
+	btn_add.add_theme_color_override("font_color", Color("22d3ee")) # Cyan
+	btn_add.pressed.connect(func():
+		var new_param = GraphInputParameter.new()
+		new_param.name = "new_out_%d" % (res.out_params.size() + 1)
+		new_param.data_type = FlowData.DataType.Float
+		res.out_params.append(new_param)
+		res.emit_changed()
+		property_edited.emit("out_params")
+		edit(res) # refresh
+	)
+	content_vbox.add_child(btn_add)
 
 func _populate_generic_resource_properties(res: Resource):
 	_add_header(res.resource_path.get_file() if res.resource_path != "" else res.get_class(), res.get_class())

@@ -17,6 +17,12 @@ extends NodeSettings
 		output_attribute_name = value
 		emit_changed()
 
+@export var feedback_param_name : String = "":
+	set(value):
+		feedback_param_name = value
+		emit_changed()
+
 func _init():
 	super._init()
 	resource_name = "Loop"
+

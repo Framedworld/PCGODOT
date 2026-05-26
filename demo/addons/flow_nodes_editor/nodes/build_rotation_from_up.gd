@@ -29,6 +29,10 @@ func execute( ctx : FlowData.EvaluationContext ):
 	if not use_constant and attr_name != "":
 		stream_up = in_data.findStream(attr_name)
 		if stream_up == null:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_data = FlowData.Data.new()
+				set_output(0, empty_data)
+				return
 			setError("Up vector attribute '%s' not found" % attr_name)
 			return
 			

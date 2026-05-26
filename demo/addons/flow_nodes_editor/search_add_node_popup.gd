@@ -5,6 +5,7 @@ class_name SearchAddNodePopup
 signal node_selected(template_name: String)
 signal action_selected(action_id: int)
 signal input_selected(input_idx: int)
+signal output_selected(output_idx: int)
 
 const IDM_COLLAPSE_TO_SUBGRAPH = 200
 
@@ -15,6 +16,7 @@ const ACCENT_COLOR = Color("22d3ee") # Cyan accent
 
 var node_types = {}
 var inputs_list = []
+var outputs_list = []
 var has_selected_nodes = false
 var search_query = ""
 var current_category: String = ""
@@ -168,9 +170,10 @@ func _ready():
 		rebuild_list()
 	)
 
-func setup(p_node_types: Dictionary, p_inputs: Array, p_has_selected_nodes: bool, p_req_in: int = FlowData.DataType.Invalid, p_req_out: int = FlowData.DataType.Invalid):
+func setup(p_node_types: Dictionary, p_inputs: Array, p_outputs: Array, p_has_selected_nodes: bool, p_req_in: int = FlowData.DataType.Invalid, p_req_out: int = FlowData.DataType.Invalid):
 	node_types = p_node_types
 	inputs_list = p_inputs
+	outputs_list = p_outputs
 	has_selected_nodes = p_has_selected_nodes
 	
 	# Cache all items
@@ -185,7 +188,7 @@ func setup(p_node_types: Dictionary, p_inputs: Array, p_has_selected_nodes: bool
 			"category": "Actions"
 		})
 		
-	# 2. Input items (only when no drag connecting is happening)
+	# 2. Input/Output items (only when no drag connecting is happening)
 	if p_req_in == FlowData.DataType.Invalid and p_req_out == FlowData.DataType.Invalid:
 		for idx in range(inputs_list.size()):
 			var input_name = inputs_list[idx].name
@@ -195,6 +198,14 @@ func setup(p_node_types: Dictionary, p_inputs: Array, p_has_selected_nodes: bool
 				"label": "Input: " + input_name,
 				"category": "Inputs"
 			})
+		for idx in range(outputs_list.size()):
+			var output_name = outputs_list[idx].name
+			all_items.append({
+				"type": "output",
+				"key": idx,
+				"label": "Output: " + output_name,
+				"category": "Outputs"
+			})
 		
 	# 3. Node items
 	var cat_map = {
@@ -203,12 +214,12 @@ func setup(p_node_types: Dictionary, p_inputs: Array, p_has_selected_nodes: bool
 		"Density": ["curve_remap_density", "density_remap", "distance_to_density"],
 		"Filter": ["filter", "filter_data_by_tag", "filter_data_by_attribute", "filter_data_by_type", "self_pruning"],
 		"Math": ["math_op", "expression", "reduce"],
-		"Metadata": ["add_attribute", "remove_attribute", "make_vector", "match_and_set", "random_color"],
-		"Point Ops": ["bounds_modifier", "transform", "build_rotation_from_up", "combine_points", "duplicate_point"],
-		"Sampler": ["copy", "sample_mesh", "select_points", "sample_spline"],
+		"Metadata": ["add_attribute", "remove_attribute", "make_vector", "compose_vector", "decompose_vector", "attribute_random", "match_and_set", "random_color"],
+		"Point Ops": ["bounds_modifier", "transform", "build_rotation_from_up", "combine_points", "duplicate_point", "snap_to_grid"],
+		"Sampler": ["copy", "sample_mesh", "select_points", "sample_spline", "surface_sampler"],
 		"Spatial": ["create_spline", "distance", "ray_cast"],
 		"Assets": ["assets", "spawn_meshes", "spawn_scenes", "spawn_nodes"],
-		"Generators": ["grid", "noise", "relax"],
+		"Generators": ["grid", "noise", "relax", "dungeon_generator", "make_bounds"],
 		"Utility": ["input", "output", "subgraph", "loop", "sort", "merge", "partition", "scan_meshes", "scan_splines", "scan_nodes", "sequence_sample", "size"]
 	}
 
@@ -379,9 +390,9 @@ func rebuild_list():
 		else:
 			# We are at the root list: show Actions, Inputs, and Categories
 			
-			# Render Actions & Inputs first (flat)
+			# Render Actions, Inputs & Outputs first (flat)
 			for item in all_items:
-				if item.type in ["action", "input"]:
+				if item.type in ["action", "input", "output"]:
 					var btn = Button.new()
 					btn.text = item.label.to_upper()
 					_style_menu_button(btn)
@@ -533,6 +544,9 @@ func _select_item(item: Dictionary):
 		hide()
 	elif item.type == "input":
 		input_selected.emit(item.key)
+		hide()
+	elif item.type == "output":
+		output_selected.emit(item.key)
 		hide()
 	elif item.type == "category":
 		current_category = item.key

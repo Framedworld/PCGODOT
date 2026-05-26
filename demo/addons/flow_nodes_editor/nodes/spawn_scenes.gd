@@ -31,6 +31,10 @@ func execute( ctx : FlowData.EvaluationContext ):
 		setError( "Input is invalid")
 		return
 
+	if in_data.size() == 0:
+		set_output(0, in_data)
+		return
+
 	var scenes = null
 	if settings.scene_attribute:
 		var stream_scenes = in_data.findStream( settings.scene_attribute )
@@ -42,14 +46,17 @@ func execute( ctx : FlowData.EvaluationContext ):
 			return
 		scenes = stream_scenes.container
 	
+	var root = ctx.owner
+	if not root:
+		if Engine.is_editor_hint():
+			set_output(0, in_data)
+			return
+		setError("Failed to find root")
+		return
+
 	var transforms = in_data.getTransformsStream()
 	if transforms == null:
 		setError("Missing required streams %s/%s" % [ FlowData.AttrPosition, FlowData.AttrRotation ])
-		return
-
-	var root = ctx.owner
-	if not root:
-		setError("Failed to find root")
 		return
 		
 	var in_size = in_data.size()

@@ -52,6 +52,19 @@ func getMeta() -> Dictionary:
 						outs[0].data_type = out_type
 						outs[0].label = out_name
 						break
+		if settings.feedback_param_name != "":
+			var fb_type = FlowData.DataType.Invalid
+			if settings.graph.data and settings.graph.data.has("nodes"):
+				for n_data in settings.graph.data["nodes"]:
+					if n_data.get("template") == "output":
+						var node_settings = n_data.get("settings", {})
+						if node_settings.get("name", "out_val") == settings.feedback_param_name:
+							fb_type = node_settings.get("data_type", FlowData.DataType.Float)
+							break
+			outs.append({
+				"label": settings.feedback_param_name,
+				"data_type": fb_type
+			})
 	meta_node.ins = ins
 	meta_node.outs = outs
 	return meta_node
@@ -72,7 +85,7 @@ func refreshFromSettings():
 
 func onPropChanged( prop_name : String ):
 	super.onPropChanged( prop_name )
-	if prop_name == "graph" or prop_name == "item_input_name" or prop_name == "output_attribute_name":
+	if prop_name == "graph" or prop_name == "item_input_name" or prop_name == "output_attribute_name" or prop_name == "feedback_param_name":
 		if settings:
 			_connect_graph(settings.graph)
 		initFromScript()
@@ -101,10 +114,34 @@ func execute( ctx : FlowData.EvaluationContext ):
 	var in_data = get_optional_input(0)
 	if not in_data or in_data.size() == 0:
 		set_output(0, FlowData.Data.new())
+		if settings.feedback_param_name != "":
+			var feedback_data : FlowData.Data = null
+			var input_idx = 1
+			for param in settings.graph.in_params:
+				if param and param.name != settings.item_input_name:
+					if param.name == settings.feedback_param_name:
+						feedback_data = get_optional_input(input_idx)
+						break
+					input_idx += 1
+			if not feedback_data:
+				feedback_data = FlowData.Data.new()
+			set_output(1, feedback_data)
 		return
 		
 	var results = []
 	var size = in_data.size()
+	
+	var feedback_data : FlowData.Data = null
+	if settings.feedback_param_name != "":
+		var input_idx = 1
+		for param in settings.graph.in_params:
+			if param and param.name != settings.item_input_name:
+				if param.name == settings.feedback_param_name:
+					feedback_data = get_optional_input(input_idx)
+					break
+				input_idx += 1
+		if not feedback_data:
+			feedback_data = FlowData.Data.new()
 	
 	for idx in range(size):
 		var item_data = in_data.filter(PackedInt32Array([idx]))
@@ -115,9 +152,12 @@ func execute( ctx : FlowData.EvaluationContext ):
 		var input_idx = 1
 		for param in settings.graph.in_params:
 			if param and param.name != settings.item_input_name:
-				var extra_in = get_optional_input(input_idx)
-				if extra_in:
-					input_data_map[param.name] = extra_in
+				if param.name == settings.feedback_param_name:
+					input_data_map[param.name] = feedback_data
+				else:
+					var extra_in = get_optional_input(input_idx)
+					if extra_in:
+						input_data_map[param.name] = extra_in
 				input_idx += 1
 				
 		var FlowNodeIOClass = load("res://addons/flow_nodes_editor/flow_nodes_io.gd")
@@ -125,6 +165,11 @@ func execute( ctx : FlowData.EvaluationContext ):
 		
 		var result_data = outputs.get(settings.output_attribute_name, null)
 		results.append(result_data)
+		
+		if settings.feedback_param_name != "":
+			feedback_data = outputs.get(settings.feedback_param_name, null)
+			if not feedback_data:
+				feedback_data = FlowData.Data.new()
 		
 	# Merge results
 	var out_data := FlowData.Data.new()
@@ -154,6 +199,9 @@ func execute( ctx : FlowData.EvaluationContext ):
 				stream.container.resize(offset)
 				
 	set_output(0, out_data)
+	if settings.feedback_param_name != "":
+		set_output(1, feedback_data)
+
 
 func _gui_input(event: InputEvent):
 	if event is InputEventMouseButton and event.double_click and event.button_index == MOUSE_BUTTON_LEFT:

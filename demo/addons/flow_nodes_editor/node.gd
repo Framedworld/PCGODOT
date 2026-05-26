@@ -392,6 +392,8 @@ static func getFlowDataTypeFromObject( obj  ) -> FlowData.DataType:
 	return data_type
 
 func exposedAsInputNode( prop ):
+	if prop.name == "graph":
+		return false
 	return true
 
 func getExposedParams():

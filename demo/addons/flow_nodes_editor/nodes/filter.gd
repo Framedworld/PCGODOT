@@ -17,8 +17,17 @@ func execute( ctx : FlowData.EvaluationContext ):
 	if in_dataA == null:
 		setError( "Input A %s not found" % [settings.in_nameA])
 		return
+	if in_dataA.size() == 0:
+		set_output( 0, in_dataA )
+		set_output( 1, in_dataA )
+		return
 	var sA = in_dataA.findStream( settings.in_nameA )
 	if sA == null:
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_out = FlowData.Data.new()
+			set_output( 0, empty_out )
+			set_output( 1, empty_out )
+			return
 		setError( "Input A stream %s not found" % [settings.in_nameA])
 		return
 	var num_elemsA := in_dataA.size()
@@ -43,6 +52,11 @@ func execute( ctx : FlowData.EvaluationContext ):
 			sB = newFloatStream( in_dataA.size(), "Constant %s" % settings.in_nameB, 1.0 )
 		else:
 			if requires_two_operands:
+				if ctx.owner == null and Engine.is_editor_hint():
+					var empty_out = FlowData.Data.new()
+					set_output( 0, empty_out )
+					set_output( 1, empty_out )
+					return
 				setError( "Input B %s not found, and can't be interpreted as a constant number (Op:%d)" % [settings.in_nameB, settings.condition])
 				return
 
@@ -53,6 +67,11 @@ func execute( ctx : FlowData.EvaluationContext ):
 		if num_elemsB == 1 and num_elemsA > 0 and sB.data_type == FlowData.DataType.Float:
 			sB = newFloatStream( num_elemsA, sA.name + " as float", sB.container[0])
 		else:
+			if ctx.owner == null and Engine.is_editor_hint():
+				var empty_out = FlowData.Data.new()
+				set_output( 0, empty_out )
+				set_output( 1, empty_out )
+				return
 			setError( "Num elements from A nd B do not match (%d vs %d)" % [num_elemsA, num_elemsB])
 			return
 	var num_elems := num_elemsA
@@ -162,6 +181,11 @@ func execute( ctx : FlowData.EvaluationContext ):
 					else:
 						indices_false.append(i)
 	else:
+		if ctx.owner == null and Engine.is_editor_hint():
+			var empty_out = FlowData.Data.new()
+			set_output( 0, empty_out )
+			set_output( 1, empty_out )
+			return
 		setError( "Input A and B must have int/float type" )
 		return
 

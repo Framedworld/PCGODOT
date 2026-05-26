@@ -9,6 +9,7 @@ func _init():
 		"settings" : SubgraphNodeSettings,
 		"ins" : [],
 		"outs" : [],
+		"is_final" : true,
 		"tooltip" : "Evaluates a nested graph inside this node",
 	}
 
@@ -42,7 +43,14 @@ func getMeta() -> Dictionary:
 					"label": param.name,
 					"data_type": param.data_type
 				})
-		if settings.graph.data and settings.graph.data.has("nodes"):
+		if "out_params" in settings.graph and settings.graph.out_params.size() > 0:
+			for param in settings.graph.out_params:
+				if param:
+					outs.append({
+						"label": param.name,
+						"data_type": param.data_type
+					})
+		elif settings.graph.data and settings.graph.data.has("nodes"):
 			for n_data in settings.graph.data["nodes"]:
 				if n_data.get("template") == "output":
 					var node_settings = n_data.get("settings", {})
