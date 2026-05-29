@@ -63,6 +63,7 @@ func execute( ctx : FlowData.EvaluationContext ):
 		priorities[i] = rng.randf()
 		
 	output.registerStream("RoomID", ids, FlowData.DataType.Int)
+	output.registerStream("room_id", ids, FlowData.DataType.Int)
 	output.registerStream("RoomWidth", widths, FlowData.DataType.Float)
 	output.registerStream("RoomHeight", heights, FlowData.DataType.Float)
 	output.registerStream("RoomPriority", priorities, FlowData.DataType.Float)

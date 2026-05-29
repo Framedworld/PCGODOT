@@ -69,6 +69,7 @@ func execute( ctx : FlowData.EvaluationContext ):
 		ssize[idx] = Vector3(cell_size, 1.0, cell_size)
 		
 	output.registerStream("RoomID", out_room_ids, FlowData.DataType.Int)
+	output.registerStream("room_id", out_room_ids, FlowData.DataType.Int)
 	output.registerStream("CellType", out_cell_types, FlowData.DataType.String)
 	
 	var out_types = PackedFloat32Array()
